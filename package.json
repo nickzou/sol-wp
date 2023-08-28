@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "A modern toolchain for WordPress development.",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "wp-env": "wp-env start --update",
@@ -14,6 +15,9 @@
   "author": "Nick Zou",
   "license": "ISC",
   "devDependencies": {
-    "@wordpress/env": "^8.6.0"
+    "@digitak/esrun": "^3.2.24",
+    "@types/node": "^20.5.7",
+    "@wordpress/env": "^8.6.0",
+    "typescript": "^5.2.2"
   }
 }
