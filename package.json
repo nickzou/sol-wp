@@ -1,0 +1,19 @@
+{
+  "name": "sol-wp",
+  "version": "1.0.0",
+  "description": "A modern toolchain for WordPress development.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "wp-env": "wp-env start --update",
+    "wp-env:stop": "wp-env stop",
+    "wp-env:reset": "wp-env clean all",
+    "wp-env:destroy": "wp-env destroy",
+    "create-theme": "./sh/generate_starter_theme.sh"
+  },
+  "author": "Nick Zou",
+  "license": "ISC",
+  "devDependencies": {
+    "@wordpress/env": "^8.6.0"
+  }
+}

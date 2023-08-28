@@ -1,0 +1,14 @@
+{
+  "name": "nickzou/sol-wp",
+  "description": "A modern toolchain for WordPress development",
+  "type": "project",
+  "require": {
+    "league/plates": "3.*"
+  },
+  "autoload": {
+    "psr-4": {
+      "Nickzou\\SolWp\\": "./"
+    }
+  },
+  "minimum-stability": "dev"
+}
