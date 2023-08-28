@@ -4,6 +4,5 @@
     "moduleResolution": "NodeNext",
     "target": "ES6",
     "esModuleInterop": true
-  },
-  "include": ["./src"]
+  }
 }
