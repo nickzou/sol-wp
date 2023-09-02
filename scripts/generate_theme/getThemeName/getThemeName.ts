@@ -1,16 +1,12 @@
-import inquirer from "inquirer";
+import { input } from "@inquirer/prompts";
 
 const getThemeName = async () => {
-  const answer = await inquirer.prompt({
-    name: "theme_name",
-    type: "input",
-    message: "Please create a name for your theme",
-    default() {
-      return "Sol WP";
-    },
-  });
-
-  return answer.theme_name;
+  return (
+    (await input({
+      message: "Provide a name for your theme",
+      default: "Sol WP",
+    })) || "Sol WP"
+  );
 };
 
 export default getThemeName;

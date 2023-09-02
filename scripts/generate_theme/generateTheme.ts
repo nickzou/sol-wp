@@ -1,5 +1,7 @@
+import getThemeName from "./getThemeName/getThemeName";
+
 const generateTheme = async () => {
-  console.log("hello!");
+  const themeName = await getThemeName();
 };
 
 (async () => {
