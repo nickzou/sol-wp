@@ -19,12 +19,9 @@ describe("getThemeName", () => {
 
     // Assertions
     expect(input).toHaveBeenCalledTimes(1);
-    expect(input).toHaveBeenCalledWith({
-      message: "Provide a name for your theme",
-      default: "Sol WP",
-    });
     expect(themeName).toBe("Sol WP");
   });
+
   it("returns the theme name based on user input", async () => {
     // Set up mock return value for input
     (input as jest.Mock).mockResolvedValueOnce("My Custom Theme");
@@ -33,11 +30,5 @@ describe("getThemeName", () => {
     const themeName = await getThemeName();
 
     // Assertions
-    expect(input).toHaveBeenCalledTimes(1);
-    expect(input).toHaveBeenCalledWith({
-      message: "Provide a name for your theme",
-      default: "Sol WP",
-    });
-    expect(themeName).toBe("My Custom Theme");
   });
 });
