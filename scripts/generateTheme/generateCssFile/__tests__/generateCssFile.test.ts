@@ -1,13 +1,13 @@
-import createCssFile from "../createCssFile";
+import generateCssFile from "../generateCssFile";
 
-describe("createCssFile", () => {
+describe("generateCssFile", () => {
   it("should return an object with the correct name and content", () => {
     const themeName = "MyTheme";
     const themeAuthor = "Myself";
     const themeDescription = "This is a theme description.";
     const themeVersion = "0.1.4";
 
-    const cssFile = createCssFile({
+    const cssFile = generateCssFile({
       name: themeName,
       author: themeAuthor,
       description: themeDescription,

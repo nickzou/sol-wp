@@ -1,4 +1,4 @@
-interface createCssFile {
+interface generateCssFile {
   name: string;
   author: string;
   description: string;
@@ -10,12 +10,12 @@ interface CssFile {
   content: string;
 }
 
-const createCssFile = ({
+const generateCssFile = ({
   name,
   author,
   description,
   version,
-}: createCssFile): CssFile => {
+}: generateCssFile): CssFile => {
   const content = `
     /*
     Theme Name: ${name}
@@ -31,4 +31,4 @@ const createCssFile = ({
   };
 };
 
-export default createCssFile;
+export default generateCssFile;

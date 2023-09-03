@@ -1,6 +1,8 @@
+import fs from "fs";
+import path from "path";
 import { intro, outro, text } from "@clack/prompts";
 import createFolder from "./createFolder/createFolder";
-import createCssFile from "./createCssFile/createCssFile";
+import generateCssFile from "./generateCssFile/generateCssFile";
 
 const htmlRegex = /<\/?[a-z][\s\S]*>/i;
 const spacesRegex = /\s+/;
@@ -55,6 +57,11 @@ const version = getVersion ? (getVersion as string) : "1.0.0";
 
 createFolder(directory);
 
-const cssFile = createCssFile({ name, author, description, version });
+const cssFile = generateCssFile({ name, author, description, version });
+
+fs.writeFileSync(
+  path.join(`wp/themes/${directory}`, cssFile.name),
+  cssFile.content
+);
 
 outro(`Your theme has been generated!`);
