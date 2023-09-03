@@ -1,7 +1,9 @@
 import { intro, outro, text } from "@clack/prompts";
 import createFolder from "./createFolder/createFolder";
 import generateCssFile from "./generateCssFile/generateCssFile";
+import generatePhpFile from "./generatePhpFile/generatePhpFile";
 import createFile from "./createFile/createFile";
+import editWpEnv from "./editWpEnv/editWpEnv";
 
 const htmlRegex = /<\/?[a-z][\s\S]*>/i;
 const spacesRegex = /\s+/;
@@ -56,6 +58,8 @@ const version = getVersion ? (getVersion as string) : "1.0.0";
 
 const cssFile = generateCssFile({ name, author, description, version });
 
+const phpFile = generatePhpFile();
+
 createFolder(directory);
 
 createFile({
@@ -63,5 +67,13 @@ createFile({
   fileName: cssFile.name,
   fileContent: cssFile.content,
 });
+
+createFile({
+  directoryPath: `wp/themes/${directory}`,
+  fileName: phpFile.name,
+  fileContent: phpFile.content,
+});
+
+editWpEnv({ wpEnvFile: `.wp-env.json`, directory: directory });
 
 outro(`Your theme has been generated!`);
