@@ -21,7 +21,7 @@ describe("createFolder", () => {
 
   it("should create a folder if it does not exist", () => {
     const result = createFolder("test-folder");
-    expect(result).toBe(true);
+    expect(result).toBe("wp/themes/test-folder");
     expect(fs.existsSync(testFolderPath)).toBe(true);
   });
 
