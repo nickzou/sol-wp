@@ -25,8 +25,9 @@ describe("createFolder", () => {
     expect(fs.existsSync(testFolderPath)).toBe(true);
   });
 
-  it("should return false if the folder already exists", () => {
-    const result = createFolder("test-folder");
-    expect(result).toBe(false);
+  it("should throw error if the folder already exists", () => {
+    expect(() => createFolder("test-folder")).toThrow(
+      'Folder "test-folder" already exists.'
+    );
   });
 });

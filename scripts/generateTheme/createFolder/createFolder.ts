@@ -5,8 +5,7 @@ const createFolder = (folderName: string) => {
   const folderPath = path.join("wp/themes", folderName);
 
   if (fs.existsSync(folderPath)) {
-    console.log(`Folder "${folderName}" already exists.`);
-    return false;
+    throw new Error(`Folder "${folderName}" already exists.`);
   }
 
   fs.mkdirSync(folderPath);
