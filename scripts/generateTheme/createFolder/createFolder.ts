@@ -1,5 +1,6 @@
 import fs from "fs";
 import path from "path";
+import chalk from "chalk";
 
 const createFolder = (folderName: string) => {
   const folderPath = path.join("wp/themes", folderName);
@@ -9,7 +10,7 @@ const createFolder = (folderName: string) => {
   }
 
   fs.mkdirSync(folderPath);
-  console.log(`Folder "${folderName}" has been created.`);
+  console.log(chalk.green(`Folder "${folderName}" has been created.`));
   return true;
 };
 
