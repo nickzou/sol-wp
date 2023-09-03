@@ -31,6 +31,11 @@ const getAuthor = await text({
   placeholder: `Your name here`,
 });
 
+const getDescription = await text({
+  message: `Provide a description (optional)`,
+  placeholder: `Your theme description here`,
+});
+
 const getVersion = await text({
   message: `Provide a version (optional):`,
   placeholder: `1.0.0`,
@@ -40,10 +45,16 @@ const name = getName ? (getName as string) : "Sol WP";
 
 const directory = getDirectory ? (getDirectory as string) : "sol-wp";
 
+const author = getAuthor ? (getAuthor as string) : "Sol WPer";
+
+const description = getDescription
+  ? (getDescription as string)
+  : "Theme description";
+
+const version = getVersion ? (getVersion as string) : "1.0.0";
+
 createFolder(directory);
 
-//const cssFile = createCssFile(name as string);
-
-//console.log(name);
+const cssFile = createCssFile({ name, author, description, version });
 
 outro(`Your theme has been generated!`);
