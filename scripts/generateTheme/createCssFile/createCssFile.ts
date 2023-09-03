@@ -1,15 +1,27 @@
+interface createCssFile {
+  name: string;
+  author: string;
+  description: string;
+  version: string;
+}
+
 interface CssFile {
   name: string;
   content: string;
 }
 
-const createCssFile = (name: string): CssFile => {
+const createCssFile = ({
+  name,
+  author,
+  description,
+  version,
+}: createCssFile): CssFile => {
   const content = `
     /*
     Theme Name: ${name}
-    Author: Your Name
-    Description: My first WordPress theme
-    Version: 1.0
+    Author: ${author}
+    Description: ${description}
+    Version: ${version}
     */
   `;
 
