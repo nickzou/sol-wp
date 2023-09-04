@@ -4,7 +4,7 @@ import generateCssFile from "./generateCssFile/generateCssFile";
 import generatePhpFile from "./generatePhpFile/generatePhpFile";
 import createFile from "./createFile/createFile";
 import editWpEnv from "./editWpEnv/editWpEnv";
-import executeCommand from "../executeCommand/executeCommand";
+import executeCommand from "../utils/executeCommand/executeCommand";
 
 const htmlRegex = /<\/?[a-z][\s\S]*>/i;
 const spacesRegex = /\s+/;
