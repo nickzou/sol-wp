@@ -85,6 +85,6 @@ createFile({
 
 editWpEnv({ wpEnvFile: `.wp-env.json`, directory: directory });
 
-setupTooling && executeCommand("npm install tailwindcss --save-dev");
+//setupTooling && executeCommand("npm install tailwindcss --save-dev");
 
 outro(`Your theme has been generated!`);
