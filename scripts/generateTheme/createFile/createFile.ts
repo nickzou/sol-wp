@@ -1,6 +1,6 @@
 import path from "path";
 import fs from "fs";
-import { red, gray } from "colorette";
+import formatMessage from "../formatMessage/formatMessage";
 
 interface createFile {
   directoryPath: string;
@@ -11,7 +11,10 @@ interface createFile {
 const createFile = ({ directoryPath, fileName, fileContent }: createFile) => {
   if (!fs.existsSync(directoryPath)) {
     throw new Error(
-      `${gray(`│`)}  ${red(`Directory "${directoryPath}" does not exist`)}`
+      formatMessage({
+        message: `Directory "${directoryPath}" does not exist`,
+        color: "red",
+      })
     );
   }
 
@@ -19,9 +22,10 @@ const createFile = ({ directoryPath, fileName, fileContent }: createFile) => {
 
   if (fs.existsSync(filePath)) {
     throw new Error(
-      `${gray(`│`)}  ${red(
-        `File "${fileName}" already exists in "${directoryPath}"`
-      )}`
+      formatMessage({
+        message: `File "${fileName}" already exists in "${directoryPath}"`,
+        color: "red",
+      })
     );
   }
 

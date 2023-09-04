@@ -1,9 +1,10 @@
-import { intro, outro, text } from "@clack/prompts";
+import { intro, outro, text, select } from "@clack/prompts";
 import createFolder from "./createFolder/createFolder";
 import generateCssFile from "./generateCssFile/generateCssFile";
 import generatePhpFile from "./generatePhpFile/generatePhpFile";
 import createFile from "./createFile/createFile";
 import editWpEnv from "./editWpEnv/editWpEnv";
+import executeCommand from "../executeCommand/executeCommand";
 
 const htmlRegex = /<\/?[a-z][\s\S]*>/i;
 const spacesRegex = /\s+/;
@@ -44,6 +45,14 @@ const getVersion = await text({
   placeholder: `1.0.0`,
 });
 
+const setupTooling = await select({
+  message: `Do you want us to configure the tooling for theme development?`,
+  options: [
+    { value: true, label: `Yes, please!` },
+    { value: false, label: `No, thank you. I'll take it from here.` },
+  ],
+});
+
 const name = getName ? (getName as string) : "Sol WP";
 
 const directory = getDirectory ? (getDirectory as string) : "sol-wp";
@@ -75,5 +84,7 @@ createFile({
 });
 
 editWpEnv({ wpEnvFile: `.wp-env.json`, directory: directory });
+
+//setupTooling && executeCommand("npm install tailwindcss --save-dev");
 
 outro(`Your theme has been generated!`);
