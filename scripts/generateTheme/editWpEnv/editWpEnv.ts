@@ -1,5 +1,5 @@
 import fs from "fs";
-import { red, gray } from "colorette";
+import formatMessage from "../formatMessage/formatMessage";
 
 interface editWpEnv {
   wpEnvFile: string;
@@ -10,14 +10,18 @@ const editWpEnv = ({ wpEnvFile, directory }: editWpEnv) => {
   const fileContent = fs.readFileSync(wpEnvFile, "utf8");
 
   if (!fileContent) {
-    throw new Error(`${gray(`│`)}  ${red(`"${fileContent}" does not exist`)}`);
+    formatMessage({ message: `"${fileContent}" does not exist`, color: "red" });
   }
 
   const jsonData = JSON.parse(fileContent);
 
   if (jsonData.mappings[`wp-content/themes/${directory}`]) {
-    throw new Error(`${gray(`│`)}  
-      ${red(`"${directory}" has alreay been mapped in .wp-env.json`)}`);
+    throw new Error(
+      formatMessage({
+        message: `"${directory}" has alreay been mapped in .wp-env.json`,
+        color: "red",
+      })
+    );
   } else if (!jsonData[`wp-content/themes/${directory}`]) {
     jsonData.mappings[
       `wp-content/themes/${directory}`

@@ -1,19 +1,25 @@
 import fs from "fs";
 import path from "path";
-import { red, green, gray } from "colorette";
+import formatMessage from "../formatMessage/formatMessage";
 
 const createFolder = (folderName: string) => {
   const folderPath = path.join("wp/themes", folderName);
 
   if (fs.existsSync(folderPath)) {
     throw new Error(
-      `${gray(`│`)}  ${red(`Folder "${folderName}" already exists.`)}`
+      formatMessage({
+        message: `Folder "${folderName}" already exists.`,
+        color: "red",
+      })
     );
   }
 
   fs.mkdirSync(folderPath);
   console.log(
-    `${gray(`│`)}  ${green(`Folder "${folderName}" has been created.`)}`
+    formatMessage({
+      message: `Folder "${folderName}" has been created.`,
+      color: "red",
+    })
   );
   return folderPath;
 };
