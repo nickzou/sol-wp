@@ -10,6 +10,7 @@
     "wp-env:stop": "wp-env stop",
     "wp-env:reset": "wp-env clean all",
     "wp-env:destroy": "wp-env destroy",
+    "init": "esrun ./scripts/init/init.ts",
     "create-theme": "esrun ./scripts/generateTheme/generateTheme.ts"
   },
   "author": "Nick Zou",
