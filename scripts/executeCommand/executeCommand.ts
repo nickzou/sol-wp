@@ -1,7 +1,7 @@
 import { exec } from "child_process";
 
-const installTailwind = () => {
-  exec("npm install tailwindcss --save-dev", (error, stdout, stderr) => {
+const executeCommand = (command: string) => {
+  exec(`${command}`, (error, stdout, stderr) => {
     if (error) {
       console.error(`Error executing command: ${error.message}`);
       return;
@@ -16,4 +16,4 @@ const installTailwind = () => {
   });
 };
 
-export default installTailwind;
+export default executeCommand;

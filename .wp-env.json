@@ -1,5 +1,3 @@
 {
-  "mappings": {
-    "wp-content/themes/sol-wp": "./wp/themes/sol-wp"
-  }
+  "mappings": {}
 }

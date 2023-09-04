@@ -4,7 +4,7 @@ import generateCssFile from "./generateCssFile/generateCssFile";
 import generatePhpFile from "./generatePhpFile/generatePhpFile";
 import createFile from "./createFile/createFile";
 import editWpEnv from "./editWpEnv/editWpEnv";
-import installTailwind from "./setupTooling/tailwind/installTailwind/installTailwind";
+import executeCommand from "../executeCommand/executeCommand";
 
 const htmlRegex = /<\/?[a-z][\s\S]*>/i;
 const spacesRegex = /\s+/;
@@ -85,6 +85,6 @@ createFile({
 
 editWpEnv({ wpEnvFile: `.wp-env.json`, directory: directory });
 
-setupTooling ? installTailwind() : "not installing";
+setupTooling && executeCommand("npm install tailwindcss --save-dev");
 
 outro(`Your theme has been generated!`);

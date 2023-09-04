@@ -1,9 +1,9 @@
 import { exec } from "child_process";
-import installTailwind from "../installTailwind"; // replace with the actual path to your function
+import executeCommand from "../executeCommand"; // replace with the actual path to your function
 
 jest.mock("child_process");
 
-describe("installTailwind", () => {
+describe("executeCommand", () => {
   let execMock: jest.Mock;
 
   beforeEach(() => {
@@ -18,7 +18,7 @@ describe("installTailwind", () => {
     });
 
     const logSpy = jest.spyOn(console, "log").mockImplementation();
-    installTailwind();
+    executeCommand("npm install");
     expect(logSpy).toHaveBeenCalledWith("Standard Output: \nsuccess message");
     logSpy.mockRestore();
   });
@@ -30,7 +30,7 @@ describe("installTailwind", () => {
     });
 
     const errorSpy = jest.spyOn(console, "error").mockImplementation();
-    installTailwind();
+    executeCommand("npm install");
     expect(errorSpy).toHaveBeenCalledWith(
       "Error executing command: Test error"
     );
@@ -44,7 +44,7 @@ describe("installTailwind", () => {
     });
 
     const errorSpy = jest.spyOn(console, "error").mockImplementation();
-    installTailwind();
+    executeCommand("npm install");
     expect(errorSpy).toHaveBeenCalledWith("Standard Error: stderr message");
     errorSpy.mockRestore();
   });
