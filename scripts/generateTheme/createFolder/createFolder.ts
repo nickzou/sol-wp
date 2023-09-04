@@ -18,7 +18,7 @@ const createFolder = (folderName: string) => {
   console.log(
     formatMessage({
       message: `Folder "${folderName}" has been created.`,
-      color: "red",
+      color: "green",
     })
   );
   return folderPath;
