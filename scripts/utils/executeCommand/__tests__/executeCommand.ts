@@ -1,5 +1,5 @@
 import { exec } from "child_process";
-import executeCommand from "../executeCommand.js"; // replace with the actual path to your function
+import executeCommand from "../executeCommand"; // replace with the actual path to your function
 
 jest.mock("child_process");
 
