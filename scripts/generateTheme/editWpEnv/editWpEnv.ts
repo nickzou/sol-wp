@@ -15,7 +15,7 @@ const editWpEnv = ({ wpEnvFile, directory }: editWpEnv) => {
 
   const jsonData = JSON.parse(fileContent);
 
-  if (jsonData.mappings[`wp-content/themmes/${directory}`]) {
+  if (jsonData.mappings[`wp-content/themes/${directory}`]) {
     throw new Error(`${gray(`│`)}  
       ${red(`"${directory}" has alreay been mapped in .wp-env.json`)}`);
   } else if (!jsonData[`wp-content/themes/${directory}`]) {

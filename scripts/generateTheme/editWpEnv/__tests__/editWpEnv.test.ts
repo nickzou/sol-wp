@@ -5,13 +5,13 @@ import editWpEnv from "../editWpEnv";
 jest.mock("fs");
 
 describe("editWpEnv", () => {
-  beforeEach(() => {
+  afterEach(() => {
     // Reset the mock implementations before each test
     jest.resetAllMocks();
   });
 
   it("should throw an error if the file does not exist", () => {
-    (fs.readFileSync as jest.Mock).mockResolvedValue(null);
+    (fs.readFileSync as jest.Mock).mockReturnValue(null);
 
     expect(() =>
       editWpEnv({ wpEnvFile: "test.json", directory: "some-dir" })
@@ -25,7 +25,7 @@ describe("editWpEnv", () => {
       },
     });
 
-    (fs.readFileSync as jest.Mock).mockResolvedValue(fileContent);
+    (fs.readFileSync as jest.Mock).mockReturnValue(fileContent);
 
     expect(() =>
       editWpEnv({ wpEnvFile: "test.json", directory: "some-dir" })
@@ -47,7 +47,7 @@ describe("editWpEnv", () => {
       2
     );
 
-    (fs.readFileSync as jest.Mock).mockResolvedValue(initialContent);
+    (fs.readFileSync as jest.Mock).mockReturnValue(initialContent);
 
     editWpEnv({ wpEnvFile: "test.json", directory: "some-dir" });
 
