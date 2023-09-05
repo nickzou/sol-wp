@@ -1,18 +1,19 @@
-import { exec } from "child_process";
+import { spawn } from "child_process";
+import { red } from "colorette";
 
-const executeCommand = (command: string, hideLogs: boolean = false) => {
-  exec(`${command}`, (error, stdout, stderr) => {
-    if (error && !hideLogs) {
-      console.error(`Error executing command: ${error.message}`);
-      return;
-    }
+const executeCommand = async (command, args) => {
+  return new Promise<void>((resolve, reject) => {
+    const child = spawn(command, args, {
+      stdio: "inherit",
+    });
 
-    if (stderr && !hideLogs) {
-      console.error(`Standard Error: ${stderr}`);
-      return;
-    }
-
-    !hideLogs && console.log(`Standard Output: \n${stdout}`);
+    child.on("exit", (code) => {
+      if (code !== 0) {
+        reject(new Error(red(`Command failed with exit code ${code}`)));
+      } else {
+        resolve();
+      }
+    });
   });
 };
 
