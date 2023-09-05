@@ -1,10 +1,13 @@
 import { intro, outro, text, select } from "@clack/prompts";
+import executeCommand from "../utils/executeCommand/executeCommand";
+import formatMessage from "./formatMessage/formatMessage";
 import createFolder from "./createFolder/createFolder";
 import generateCssFile from "./generateCssFile/generateCssFile";
 import generatePhpFile from "./generatePhpFile/generatePhpFile";
 import createFile from "./createFile/createFile";
 import editWpEnv from "./editWpEnv/editWpEnv";
-import executeCommand from "../utils/executeCommand/executeCommand";
+import createTailwindConfig from "./createTailwindConfig/createTailwindConfig";
+import { bold, green } from "colorette";
 
 const htmlRegex = /<\/?[a-z][\s\S]*>/i;
 const spacesRegex = /\s+/;
@@ -85,6 +88,20 @@ createFile({
 
 editWpEnv({ wpEnvFile: `.wp-env.json`, directory: directory });
 
-//setupTooling && executeCommand("npm install tailwindcss --save-dev");
+// Finalize setup and display outro
+async function finalizeSetup() {
+  if (setupTooling) {
+    try {
+      await executeCommand("npm", ["install", "tailwindcss", "--save-dev"]);
 
-outro(`Your theme has been generated!`);
+      createTailwindConfig({ content: [`wp/themes/${directory}/**/*.php`] });
+    } catch (error) {
+      console.error(
+        formatMessage({ message: `An error occurred: ${error}`, color: "red" })
+      );
+    }
+  }
+  outro(green(bold("Your theme has been generated!")));
+}
+
+finalizeSetup();
