@@ -7,8 +7,7 @@ describe("generateTailwindCssFile", () => {
   });
 
   it("should generate a file with the correct content", () => {
-    const expectedContent = `
-@tailwind base;
+    const expectedContent = `@tailwind base;
 @tailwind components;
 @tailwind utilities;
   `;
