@@ -97,6 +97,8 @@ async function finalizeSetup() {
     try {
       const functionFile = generateFunctionsFile();
 
+      createFolder(`${directory}/functions`);
+
       createFile({
         directoryPath: `wp/themes/${directory}`,
         fileName: functionFile.name,
