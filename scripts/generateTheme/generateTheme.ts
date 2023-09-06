@@ -11,6 +11,7 @@ import { bold, green } from "colorette";
 import generateTailwindCssFile from "./setupTooling/tailwind/generateTailwindCssFile/generateTailwindCssFile";
 import addTailwindNpmScripts from "./setupTooling/tailwind/addTailwindNpmScripts/addTailwindNpmScripts";
 import generateFunctionsFile from "./generateFunctionsFile/generateFunctionsFile";
+import generatePhpFunctionFile from "./generatePhpFunctionFile/generatePhpFunctionFile";
 
 const htmlRegex = /<\/?[a-z][\s\S]*>/i;
 const spacesRegex = /\s+/;
@@ -97,6 +98,12 @@ async function finalizeSetup() {
     try {
       const functionFile = generateFunctionsFile();
 
+      const enqueueAssetsFile = generatePhpFunctionFile({
+        name: "enqueue_assets",
+        functionBody: `    wp_enqueue_style( 'tailwind', get_template_directory_uri() . '/css/tailwind.css', [], '1.0.0', 'all' );
+      `,
+      });
+
       createFolder(`${directory}/functions`);
 
       createFile({
@@ -118,6 +125,12 @@ async function finalizeSetup() {
       });
 
       await executeCommand("mkdir", [`wp/themes/${directory}/css`]);
+
+      createFile({
+        directoryPath: `wp/themes/${directory}/functions`,
+        fileName: enqueueAssetsFile.name,
+        fileContent: enqueueAssetsFile.content,
+      });
 
       addTailwindNpmScripts();
     } catch (error) {
