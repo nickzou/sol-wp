@@ -6,9 +6,9 @@ import generateCssFile from "./generateCssFile/generateCssFile";
 import generatePhpFile from "./generatePhpFile/generatePhpFile";
 import createFile from "./createFile/createFile";
 import editWpEnv from "./editWpEnv/editWpEnv";
-import createTailwindConfig from "./createTailwindConfig/createTailwindConfig";
+import createTailwindConfig from "./setupTooling/tailwind/createTailwindConfig/createTailwindConfig";
 import { bold, green } from "colorette";
-import generateTailwindCssFile from "./generateTailwindCssFile/generateTailwindCssFile";
+import generateTailwindCssFile from "./setupTooling/tailwind/generateTailwindCssFile/generateTailwindCssFile";
 
 const htmlRegex = /<\/?[a-z][\s\S]*>/i;
 const spacesRegex = /\s+/;

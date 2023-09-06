@@ -1,4 +1,4 @@
-import { File } from "../../utils/types/File";
+import { File } from "../../../../utils/types/File";
 
 const generateTailwindCssFile = (): File => {
   const content = `@tailwind base;
