@@ -1,6 +1,6 @@
 import { File } from "../../utils/types/File";
 
-const generatePhpFile = (): File => {
+const generateIndexFile = (): File => {
   const content = `<!DOCTYPE html>
 <html <?php language_attributes(); ?>>
 <head>
@@ -41,4 +41,4 @@ const generatePhpFile = (): File => {
   };
 };
 
-export default generatePhpFile;
+export default generateIndexFile;

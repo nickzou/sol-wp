@@ -3,7 +3,7 @@ import executeCommand from "../utils/executeCommand/executeCommand";
 import formatMessage from "./formatMessage/formatMessage";
 import createFolder from "./createFolder/createFolder";
 import generateCssFile from "./generateCssFile/generateCssFile";
-import generatePhpFile from "./generatePhpFile/generatePhpFile";
+import generatePhpFile from "./generateIndexFile/generateIndexFile";
 import createFile from "./createFile/createFile";
 import editWpEnv from "./editWpEnv/editWpEnv";
 import createTailwindConfig from "./setupTooling/tailwind/createTailwindConfig/createTailwindConfig";
