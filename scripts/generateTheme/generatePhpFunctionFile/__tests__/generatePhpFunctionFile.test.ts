@@ -10,7 +10,7 @@ describe("generatePhpFunctionFile", () => {
     const result = generatePhpFunctionFile(params);
 
     const expectedContent = `<?php
-function myFunction {
+function myFunction() {
     echo "Hello, world!";
   }
   `;
