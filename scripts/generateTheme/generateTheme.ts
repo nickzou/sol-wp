@@ -105,6 +105,7 @@ async function finalizeSetup() {
       });
 
       createFolder(`${directory}/functions`);
+      createFolder(`${directory}/css`);
 
       createFile({
         directoryPath: `wp/themes/${directory}`,
@@ -123,8 +124,6 @@ async function finalizeSetup() {
         fileName: tailwindCssFile.name,
         fileContent: tailwindCssFile.content,
       });
-
-      await executeCommand("mkdir", [`wp/themes/${directory}/css`]);
 
       createFile({
         directoryPath: `wp/themes/${directory}/functions`,
