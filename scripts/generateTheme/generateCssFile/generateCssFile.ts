@@ -1,3 +1,4 @@
+import { File } from "../../utils/types/File";
 interface generateCssFile {
   name: string;
   author: string;
@@ -5,17 +6,12 @@ interface generateCssFile {
   version: string;
 }
 
-interface CssFile {
-  name: string;
-  content: string;
-}
-
 const generateCssFile = ({
   name,
   author,
   description,
   version,
-}: generateCssFile): CssFile => {
+}: generateCssFile): File => {
   const content = `
     /*
     Theme Name: ${name}

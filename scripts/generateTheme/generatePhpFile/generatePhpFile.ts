@@ -1,9 +1,6 @@
-interface PhpFile {
-  name: string;
-  content: string;
-}
+import { File } from "../../utils/types/File";
 
-const generatePhpFile = (): PhpFile => {
+const generatePhpFile = (): File => {
   const content = `
 <!DOCTYPE html>
 <html <?php language_attributes(); ?>>
