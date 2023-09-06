@@ -12,8 +12,7 @@ const generateCssFile = ({
   description,
   version,
 }: generateCssFile): File => {
-  const content = `
-    /*
+  const content = `/*
     Theme Name: ${name}
     Author: ${author}
     Description: ${description}

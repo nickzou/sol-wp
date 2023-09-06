@@ -5,8 +5,7 @@ interface createTailwindConfig {
 }
 
 const createTailwindConfig = ({ content }: createTailwindConfig) => {
-  const fileContent = `
-  import { Config } from 'tailwindcss';
+  const fileContent = `import { Config } from 'tailwindcss';
 
   const config: Config = {
     content: ${JSON.stringify(content)},

@@ -1,8 +1,7 @@
 import { File } from "../../utils/types/File";
 
 const generateTailwindCssFile = (): File => {
-  const content = `
-@tailwind base;
+  const content = `@tailwind base;
 @tailwind components;
 @tailwind utilities;
   `;

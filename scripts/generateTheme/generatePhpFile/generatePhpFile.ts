@@ -1,8 +1,7 @@
 import { File } from "../../utils/types/File";
 
 const generatePhpFile = (): File => {
-  const content = `
-<!DOCTYPE html>
+  const content = `<!DOCTYPE html>
 <html <?php language_attributes(); ?>>
 <head>
     <meta charset=\"<?php bloginfo( 'charset' ); ?>\">
