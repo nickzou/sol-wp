@@ -16,8 +16,8 @@ const addTailwindNpmScripts = () => {
     }
 
     // Check if scripts already exist
-    const scriptKeys = ["tailwind", "tailwind:prod", "tailwind:watch"];
-    for (const key of scriptKeys) {
+    const tailwindKeys = ["tailwind", "tailwind:prod", "tailwind:watch"];
+    for (const key of tailwindKeys) {
       if (packageJson.scripts.hasOwnProperty(key)) {
         throw new Error(
           red(`Script key "${key}" already exists in package.json`)
