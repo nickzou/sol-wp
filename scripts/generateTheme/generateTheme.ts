@@ -9,6 +9,7 @@ import editWpEnv from "./editWpEnv/editWpEnv";
 import createTailwindConfig from "./setupTooling/tailwind/createTailwindConfig/createTailwindConfig";
 import { bold, green } from "colorette";
 import generateTailwindCssFile from "./setupTooling/tailwind/generateTailwindCssFile/generateTailwindCssFile";
+import addTailwindNpmScripts from "./setupTooling/tailwind/addTailwindNpmScripts/addTailwindNpmScripts";
 
 const htmlRegex = /<\/?[a-z][\s\S]*>/i;
 const spacesRegex = /\s+/;
@@ -104,6 +105,10 @@ async function finalizeSetup() {
         fileName: tailwindCssFile.name,
         fileContent: tailwindCssFile.content,
       });
+
+      await executeCommand("mkdir", [`wp/themes/${directory}/css`]);
+
+      addTailwindNpmScripts();
     } catch (error) {
       console.error(
         formatMessage({ message: `An error occurred: ${error}`, color: "red" })
