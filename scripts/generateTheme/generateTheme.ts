@@ -10,6 +10,7 @@ import createTailwindConfig from "./setupTooling/tailwind/createTailwindConfig/c
 import { bold, green } from "colorette";
 import generateTailwindCssFile from "./setupTooling/tailwind/generateTailwindCssFile/generateTailwindCssFile";
 import addTailwindNpmScripts from "./setupTooling/tailwind/addTailwindNpmScripts/addTailwindNpmScripts";
+import generateFunctionsFile from "./generateFunctionsFile/generateFunctionsFile";
 
 const htmlRegex = /<\/?[a-z][\s\S]*>/i;
 const spacesRegex = /\s+/;
@@ -94,6 +95,14 @@ editWpEnv({ wpEnvFile: `.wp-env.json`, directory: directory });
 async function finalizeSetup() {
   if (setupTooling) {
     try {
+      const functionFile = generateFunctionsFile();
+
+      createFile({
+        directoryPath: `wp/themes/${directory}`,
+        fileName: functionFile.name,
+        fileContent: functionFile.content,
+      });
+
       await executeCommand("npm", ["install", "tailwindcss", "--save-dev"]);
 
       createTailwindConfig({ content: [`wp/themes/${directory}/**/*.php`] });
