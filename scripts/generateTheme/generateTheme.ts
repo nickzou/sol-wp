@@ -134,7 +134,7 @@ async function finalizeSetup() {
 
       appendToFunctionsFile({
         themeFolder: directory,
-        functionName: enqueueAssetsFile.name,
+        functionName: enqueueAssetsFile.functionName,
       });
 
       addTailwindNpmScripts();
