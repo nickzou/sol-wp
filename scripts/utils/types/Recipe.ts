@@ -8,7 +8,7 @@ export type Recipe = {
   };
   setUpTooling: boolean;
   tooling: {
-    css: "tailwind" | "unocss" | "postcss" | "sass" | "css" | "none";
+    css: "tailwind" | "uno" | "postcss" | "sass" | "css" | "none";
     ts: boolean;
   };
 };
