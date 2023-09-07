@@ -4,7 +4,7 @@ import addTailwindNpmScripts from "../addTailwindNpmScripts";
 jest.mock("fs");
 
 describe("addTailwindNpmScripts", () => {
-  afterEach(() => {
+  beforeEach(() => {
     jest.clearAllMocks();
   });
 
