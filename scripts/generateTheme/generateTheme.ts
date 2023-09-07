@@ -1,10 +1,10 @@
 import { intro, outro, text, select } from "@clack/prompts";
 import executeCommand from "../utils/executeCommand/executeCommand";
 import formatMessage from "./formatMessage/formatMessage";
-import createFolder from "./createFolder/createFolder";
+import createFolder from "../utils/createFolder/createFolder";
 import generateCssFile from "./generateCssFile/generateCssFile";
 import generatePhpFile from "./generateIndexFile/generateIndexFile";
-import createFile from "./createFile/createFile";
+import createFile from "../utils/createFile/createFile";
 import editWpEnv from "./editWpEnv/editWpEnv";
 import createTailwindConfig from "./setupTooling/tailwind/createTailwindConfig/createTailwindConfig";
 import { bold, green } from "colorette";
