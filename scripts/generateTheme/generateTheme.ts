@@ -12,7 +12,6 @@ import generateTailwindCssFile from "./setupTooling/tailwind/generateTailwindCss
 import addTailwindNpmScripts from "./setupTooling/tailwind/addTailwindNpmScripts/addTailwindNpmScripts";
 import generateFunctionsFile from "./generateFunctionsFile/generateFunctionsFile";
 import generatePhpFunctionFile from "./generatePhpFunctionFile/generatePhpFunctionFile";
-import { appendFile } from "fs";
 import appendToFunctionsFile from "./appendToFunctionsFile/appendToFunctionsFile";
 
 const htmlRegex = /<\/?[a-z][\s\S]*>/i;
