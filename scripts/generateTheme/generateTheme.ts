@@ -12,7 +12,6 @@ import generateTailwindCssFile from "./setupTooling/tailwind/generateTailwindCss
 import addTailwindNpmScripts from "./setupTooling/tailwind/addTailwindNpmScripts/addTailwindNpmScripts";
 import generateFunctionsFile from "./generateFunctionsFile/generateFunctionsFile";
 import generatePhpFunctionFile from "./generatePhpFunctionFile/generatePhpFunctionFile";
-import { appendFile } from "fs";
 import appendToFunctionsFile from "./appendToFunctionsFile/appendToFunctionsFile";
 
 const htmlRegex = /<\/?[a-z][\s\S]*>/i;
@@ -62,6 +61,18 @@ const setupTooling = await select({
   ],
 });
 
+const cssOptions = await select({
+  message: `What CSS tools would you like?`,
+  options: [
+    { value: "tailwind", label: "Tailwind" },
+    { value: "uno", label: "UnoCSS" },
+    { value: "sass", label: "Sass" },
+    { value: "postcss", label: "PostCSS" },
+    { value: "css", label: "CSS" },
+    { value: "none", label: "None, I'll figure it out my own damn self." },
+  ],
+});
+
 const name = getName ? (getName as string) : "Sol WP";
 
 const directory = getDirectory ? (getDirectory as string) : "sol-wp";
@@ -96,7 +107,7 @@ editWpEnv({ wpEnvFile: `.wp-env.json`, directory: directory });
 
 // Finalize setup and display outro
 async function finalizeSetup() {
-  if (setupTooling) {
+  if (setupTooling && cssOptions === "tailwind") {
     try {
       const functionFile = generateFunctionsFile();
 
@@ -138,6 +149,14 @@ async function finalizeSetup() {
       });
 
       addTailwindNpmScripts();
+    } catch (error) {
+      console.error(
+        formatMessage({ message: `An error occurred: ${error}`, color: "red" })
+      );
+    }
+  } else if (setupTooling && cssOptions === "uno") {
+    try {
+      console.log("unocss coming soon!");
     } catch (error) {
       console.error(
         formatMessage({ message: `An error occurred: ${error}`, color: "red" })
