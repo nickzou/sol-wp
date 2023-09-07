@@ -1,8 +1,8 @@
-import generatePhpFile from "../generatePhpFile";
+import generateIndexFile from "../generateIndexFile";
 
 describe("generatePhpFile", () => {
   it("should return an object with correct name and content", () => {
-    const generatedFile = generatePhpFile();
+    const generatedFile = generateIndexFile();
 
     // Check if name is 'index.php'
     expect(generatedFile.name).toBe("index.php");

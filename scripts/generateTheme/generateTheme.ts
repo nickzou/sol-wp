@@ -1,13 +1,19 @@
 import { intro, outro, text, select } from "@clack/prompts";
 import executeCommand from "../utils/executeCommand/executeCommand";
 import formatMessage from "./formatMessage/formatMessage";
-import createFolder from "./createFolder/createFolder";
+import createFolder from "../utils/createFolder/createFolder";
 import generateCssFile from "./generateCssFile/generateCssFile";
-import generatePhpFile from "./generatePhpFile/generatePhpFile";
-import createFile from "./createFile/createFile";
+import generatePhpFile from "./generateIndexFile/generateIndexFile";
+import createFile from "../utils/createFile/createFile";
 import editWpEnv from "./editWpEnv/editWpEnv";
-import createTailwindConfig from "./createTailwindConfig/createTailwindConfig";
+import createTailwindConfig from "./setupTooling/tailwind/createTailwindConfig/createTailwindConfig";
 import { bold, green } from "colorette";
+import generateTailwindCssFile from "./setupTooling/tailwind/generateTailwindCssFile/generateTailwindCssFile";
+import addTailwindNpmScripts from "./setupTooling/tailwind/addTailwindNpmScripts/addTailwindNpmScripts";
+import generateFunctionsFile from "./generateFunctionsFile/generateFunctionsFile";
+import generatePhpFunctionFile from "./generatePhpFunctionFile/generatePhpFunctionFile";
+import { appendFile } from "fs";
+import appendToFunctionsFile from "./appendToFunctionsFile/appendToFunctionsFile";
 
 const htmlRegex = /<\/?[a-z][\s\S]*>/i;
 const spacesRegex = /\s+/;
@@ -92,9 +98,46 @@ editWpEnv({ wpEnvFile: `.wp-env.json`, directory: directory });
 async function finalizeSetup() {
   if (setupTooling) {
     try {
+      const functionFile = generateFunctionsFile();
+
+      const enqueueAssetsFile = generatePhpFunctionFile({
+        name: "enqueue_assets",
+        functionBody: `wp_enqueue_style( 'tailwind', get_template_directory_uri() . '/css/tailwind.css', [], '1.0.0', 'all' );`,
+      });
+
+      createFolder(`${directory}/functions`);
+      createFolder(`${directory}/css`);
+
+      createFile({
+        directoryPath: `wp/themes/${directory}`,
+        fileName: functionFile.name,
+        fileContent: functionFile.content,
+      });
+
       await executeCommand("npm", ["install", "tailwindcss", "--save-dev"]);
 
       createTailwindConfig({ content: [`wp/themes/${directory}/**/*.php`] });
+
+      const tailwindCssFile = generateTailwindCssFile();
+
+      createFile({
+        directoryPath: `src/css/`,
+        fileName: tailwindCssFile.name,
+        fileContent: tailwindCssFile.content,
+      });
+
+      createFile({
+        directoryPath: `wp/themes/${directory}/functions`,
+        fileName: enqueueAssetsFile.name,
+        fileContent: `${enqueueAssetsFile.content} \nadd_action( 'wp_enqueue_scripts', 'enqueue_assets' );`,
+      });
+
+      appendToFunctionsFile({
+        themeFolder: directory,
+        functionName: enqueueAssetsFile.functionName,
+      });
+
+      addTailwindNpmScripts();
     } catch (error) {
       console.error(
         formatMessage({ message: `An error occurred: ${error}`, color: "red" })

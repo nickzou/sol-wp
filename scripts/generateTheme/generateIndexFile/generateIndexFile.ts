@@ -1,11 +1,7 @@
-interface PhpFile {
-  name: string;
-  content: string;
-}
+import { File } from "../../utils/types/File";
 
-const generatePhpFile = (): PhpFile => {
-  const content = `
-<!DOCTYPE html>
+const generateIndexFile = (): File => {
+  const content = `<!DOCTYPE html>
 <html <?php language_attributes(); ?>>
 <head>
     <meta charset=\"<?php bloginfo( 'charset' ); ?>\">
@@ -45,4 +41,4 @@ const generatePhpFile = (): PhpFile => {
   };
 };
 
-export default generatePhpFile;
+export default generateIndexFile;
