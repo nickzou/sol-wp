@@ -2,16 +2,16 @@ import fs from "fs";
 import { red } from "colorette";
 
 interface appendToFunctionsFile {
-  directory: string;
+  themeFolder: string;
   functionName: string;
 }
 const appendToFunctionsFile = ({
-  directory,
+  themeFolder,
   functionName,
 }: appendToFunctionsFile) => {
   try {
     const functionsFileContent = fs.readFileSync(
-      `./wp/themes/${directory}/functions.php`,
+      `./wp/themes/${themeFolder}/functions.php`,
       "utf-8"
     );
 
@@ -25,12 +25,12 @@ const appendToFunctionsFile = ({
 
     const updatedFunctionsFileContent = [
       functionsFileContent.slice(0, insertPosition),
-      `require_once get_template_directory() . 'functions/${functionName}.php'\n`,
+      `require_once get_template_directory() . 'functions/${functionName}'\n`,
       functionsFileContent.slice(insertPosition),
     ].join("");
 
     fs.writeFileSync(
-      `./wp/themes/${directory}/functions.php`,
+      `./wp/themes/${themeFolder}/functions.php`,
       updatedFunctionsFileContent,
       "utf-8"
     );

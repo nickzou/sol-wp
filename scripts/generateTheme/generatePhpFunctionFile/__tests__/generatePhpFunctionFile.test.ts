@@ -1,32 +1,52 @@
-import generatePhpFunctionFile from "../generatePhpFunctionFile"; // Replace with the actual path to your function file
+import generatePhpFunctionFile from "../generatePhpFunctionFile";
 
 describe("generatePhpFunctionFile", () => {
-  it("should generate a PHP file with the specified function name and body", () => {
-    const params = {
+  it("should generate a PHP function file with the given name and body", () => {
+    const result = generatePhpFunctionFile({
       name: "myFunction",
-      functionBody: 'echo "Hello, world!";',
-    };
+      functionBody: 'echo "Hello, World!";',
+    });
 
-    const result = generatePhpFunctionFile(params);
-
-    const expectedContent = `<?php
+    expect(result).toEqual({
+      name: "myFunction.php",
+      functionName: "myFunction",
+      content: `<?php
 function myFunction() {
-  echo "Hello, world!";
-}`;
-
-    expect(result.name).toBe("myFunction.php");
-    expect(result.content).toBe(expectedContent);
+  echo "Hello, World!";
+}`,
+    });
   });
 
-  it("should generate a PHP file with a custom file name if provided", () => {
-    const params = {
+  it("should use fileName if provided", () => {
+    const result = generatePhpFunctionFile({
       name: "myFunction",
       fileName: "customFileName",
-      functionBody: 'echo "Hello, world!";',
-    };
+      functionBody: 'echo "Hello, World!";',
+    });
 
-    const result = generatePhpFunctionFile(params);
+    expect(result).toEqual({
+      name: "customFileName.php",
+      functionName: "myFunction",
+      content: `<?php
+function myFunction() {
+  echo "Hello, World!";
+}`,
+    });
+  });
 
-    expect(result.name).toBe("customFileName.php");
+  it("should handle empty function body", () => {
+    const result = generatePhpFunctionFile({
+      name: "emptyFunction",
+      functionBody: "",
+    });
+
+    expect(result).toEqual({
+      name: "emptyFunction.php",
+      functionName: "emptyFunction",
+      content: `<?php
+function emptyFunction() {
+  
+}`,
+    });
   });
 });

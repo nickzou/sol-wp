@@ -17,7 +17,7 @@ describe("appendToFunctionsFile", () => {
 
     // Define parameters to be used in the test
     const params = {
-      directory: "my-theme",
+      themeFolder: "my-theme",
       functionName: "myFunction",
     };
 
@@ -43,7 +43,7 @@ describe("appendToFunctionsFile", () => {
     mockReadFileSync.mockReturnValueOnce("<?php\n// some code\n");
 
     const params = {
-      directory: "my-theme",
+      themeFolder: "my-theme",
       functionName: "myFunction",
     };
 

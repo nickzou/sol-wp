@@ -1,4 +1,4 @@
-import { File } from "../../utils/types/File";
+import { FunctionFile } from "../../utils/types/FunctionFile";
 
 interface generatePhpFunctionFile {
   name: string;
@@ -10,7 +10,7 @@ const generatePhpFunctionFile = ({
   name,
   fileName,
   functionBody,
-}: generatePhpFunctionFile): File => {
+}: generatePhpFunctionFile): FunctionFile => {
   const content = `<?php
 function ${name}() {
   ${functionBody}
@@ -18,6 +18,7 @@ function ${name}() {
 
   return {
     name: `${fileName ? fileName : name}.php`,
+    functionName: name,
     content,
   };
 };

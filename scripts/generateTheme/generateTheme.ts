@@ -133,7 +133,7 @@ async function finalizeSetup() {
       });
 
       appendToFunctionsFile({
-        directory: directory,
+        themeFolder: directory,
         functionName: enqueueAssetsFile.name,
       });
 
