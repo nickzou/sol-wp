@@ -13,9 +13,8 @@ const generatePhpFunctionFile = ({
 }: generatePhpFunctionFile): File => {
   const content = `<?php
 function ${name}() {
-    ${functionBody}
-  }
-  `;
+  ${functionBody}
+}`;
 
   return {
     name: `${fileName ? fileName : name}.php`,

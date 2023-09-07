@@ -11,9 +11,8 @@ describe("generatePhpFunctionFile", () => {
 
     const expectedContent = `<?php
 function myFunction() {
-    echo "Hello, world!";
-  }
-  `;
+  echo "Hello, world!";
+}`;
 
     expect(result.name).toBe("myFunction.php");
     expect(result.content).toBe(expectedContent);
