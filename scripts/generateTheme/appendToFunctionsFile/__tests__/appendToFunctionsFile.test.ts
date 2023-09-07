@@ -26,7 +26,7 @@ describe("appendToFunctionsFile", () => {
 
     // Verify the write operation
     const expectedNewContent =
-      "<?php\n// some code\nrequire_once get_template_directory() . 'functions/myFunction.php'\n?>";
+      "<?php\n// some code\nrequire_once get_template_directory() . '/functions/myFunction.php'\n?>";
     expect(mockWriteFileSync).toHaveBeenCalledWith(
       "./wp/themes/my-theme/functions.php",
       expectedNewContent,
