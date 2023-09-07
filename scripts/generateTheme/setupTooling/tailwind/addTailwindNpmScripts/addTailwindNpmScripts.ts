@@ -2,7 +2,7 @@ import fs from "fs";
 import { red } from "colorette";
 import formatMessage from "../../../formatMessage/formatMessage";
 
-const addTailwindNpmScripts = () => {
+const addTailwindNpmScripts = (themeFolder: string) => {
   try {
     // Read the package.json file
     const packageJsonString = fs.readFileSync("./package.json", {
@@ -26,12 +26,15 @@ const addTailwindNpmScripts = () => {
     }
 
     // Add the new scripts
-    packageJson.scripts["tailwind"] =
-      "tailwindcss -i ./src/css/tailwind.css -o ./wp/themes/sol-wp/tailwind.css";
-    packageJson.scripts["tailwind:prod"] =
-      "tailwindcss -i ./src/css/tailwind.css -o ./wp/themes/sol-wp/tailwind.css --minify";
-    packageJson.scripts["tailwind:watch"] =
-      "tailwindcss -i ./src/css/tailwind.css -o ./wp/themes/sol-wp/tailwind.css --watch";
+    packageJson.scripts[
+      "tailwind"
+    ] = `tailwindcss -i ./src/css/tailwind.css -o ./wp/themes/${themeFolder}/css/tailwind.css`;
+    packageJson.scripts[
+      "tailwind:prod"
+    ] = `tailwindcss -i ./src/css/tailwind.css -o ./wp/themes/${themeFolder}/css/tailwind.css --minify`;
+    packageJson.scripts[
+      "tailwind:watch"
+    ] = `tailwindcss -i ./src/css/tailwind.css -o ./wp/themes/${themeFolder}/css/tailwind.css --watch`;
 
     // Write the updated package.json back to the file
     fs.writeFileSync("./package.json", JSON.stringify(packageJson, null, 2));

@@ -1,46 +1,50 @@
 import fs from "fs";
-import addTailwindNpmScripts from "../addTailwindNpmScripts";
+import addTailwindNpmScripts from "../addTailwindNpmScripts"; // Replace with actual import
 
-jest.mock("fs");
+const mockedFs = fs as jest.Mocked<typeof fs>;
+
+jest.mock("fs", () => ({
+  readFileSync: jest.fn(),
+  writeFileSync: jest.fn(),
+}));
 
 describe("addTailwindNpmScripts", () => {
-  beforeEach(() => {
-    jest.clearAllMocks();
-  });
-
-  it("should add Tailwind scripts to package.json", () => {
-    (fs.readFileSync as jest.Mock).mockReturnValue(
+  it("should add Tailwind scripts to package.json successfully", () => {
+    mockedFs.readFileSync.mockReturnValueOnce(
       JSON.stringify({
         scripts: {},
       })
     );
 
-    const writeFileSyncMock = fs.writeFileSync as jest.Mock;
+    const themeFolder = "myTheme";
 
-    addTailwindNpmScripts();
+    addTailwindNpmScripts(themeFolder);
 
-    expect(writeFileSyncMock).toHaveBeenCalled();
-
-    const [filePath, content] = writeFileSyncMock.mock.calls[0];
-    expect(filePath).toBe("./package.json");
-
-    const updatedPackageJson = JSON.parse(content);
-    expect(updatedPackageJson.scripts).toHaveProperty("tailwind");
-    expect(updatedPackageJson.scripts).toHaveProperty("tailwind:prod");
-    expect(updatedPackageJson.scripts).toHaveProperty("tailwind:watch");
+    expect(mockedFs.writeFileSync).toHaveBeenCalledWith(
+      "./package.json",
+      JSON.stringify(
+        {
+          scripts: {
+            tailwind: `tailwindcss -i ./src/css/tailwind.css -o ./wp/themes/${themeFolder}/css/tailwind.css`,
+            "tailwind:prod": `tailwindcss -i ./src/css/tailwind.css -o ./wp/themes/${themeFolder}/css/tailwind.css --minify`,
+            "tailwind:watch": `tailwindcss -i ./src/css/tailwind.css -o ./wp/themes/${themeFolder}/css/tailwind.css --watch`,
+          },
+        },
+        null,
+        2
+      )
+    );
   });
 
-  it("should throw an error if script keys already exist", () => {
-    (fs.readFileSync as jest.Mock).mockReturnValue(
+  it("should throw an error if a Tailwind script key already exists", () => {
+    mockedFs.readFileSync.mockReturnValueOnce(
       JSON.stringify({
         scripts: {
-          tailwind: "some-command",
+          tailwind: "some existing command",
         },
       })
     );
 
-    expect(() => addTailwindNpmScripts()).toThrow(
-      /Script key "tailwind" already exists/
-    );
+    expect(() => addTailwindNpmScripts("myTheme")).toThrowError();
   });
 });

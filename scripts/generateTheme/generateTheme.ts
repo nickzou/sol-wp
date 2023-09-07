@@ -148,7 +148,7 @@ async function finalizeSetup() {
         functionName: enqueueAssetsFile.functionName,
       });
 
-      addTailwindNpmScripts();
+      addTailwindNpmScripts(directory);
     } catch (error) {
       console.error(
         formatMessage({ message: `An error occurred: ${error}`, color: "red" })
