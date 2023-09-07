@@ -12,6 +12,8 @@ import generateTailwindCssFile from "./setupTooling/tailwind/generateTailwindCss
 import addTailwindNpmScripts from "./setupTooling/tailwind/addTailwindNpmScripts/addTailwindNpmScripts";
 import generateFunctionsFile from "./generateFunctionsFile/generateFunctionsFile";
 import generatePhpFunctionFile from "./generatePhpFunctionFile/generatePhpFunctionFile";
+import { appendFile } from "fs";
+import appendToFunctionsFile from "./appendToFunctionsFile/appendToFunctionsFile";
 
 const htmlRegex = /<\/?[a-z][\s\S]*>/i;
 const spacesRegex = /\s+/;
@@ -127,7 +129,12 @@ async function finalizeSetup() {
       createFile({
         directoryPath: `wp/themes/${directory}/functions`,
         fileName: enqueueAssetsFile.name,
-        fileContent: enqueueAssetsFile.content,
+        fileContent: `${enqueueAssetsFile.content} \nadd_action( 'wp_enqueue_scripts', 'enqueue_assets' );`,
+      });
+
+      appendToFunctionsFile({
+        directory: directory,
+        functionName: enqueueAssetsFile.name,
       });
 
       addTailwindNpmScripts();
