@@ -100,8 +100,7 @@ async function finalizeSetup() {
 
       const enqueueAssetsFile = generatePhpFunctionFile({
         name: "enqueue_assets",
-        functionBody: `    wp_enqueue_style( 'tailwind', get_template_directory_uri() . '/css/tailwind.css', [], '1.0.0', 'all' );
-      `,
+        functionBody: `wp_enqueue_style( 'tailwind', get_template_directory_uri() . '/css/tailwind.css', [], '1.0.0', 'all' );`,
       });
 
       createFolder(`${directory}/functions`);
