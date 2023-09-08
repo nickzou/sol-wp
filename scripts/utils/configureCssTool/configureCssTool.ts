@@ -27,7 +27,7 @@ const configureCssTool = async ({
 }: configureCssTool) => {
   const registerAssetsFile = generatePhpFunctionFile({
     name: "register_assets",
-    functionBody: `wp_register_style( '${option.name}'), get_template_directory_uri() . '/css/${option.name}.css, [], '1.0.0', 'all' );`,
+    functionBody: `wp_register_style( '${option.name}', get_template_directory_uri() . '/css/${option.name}.css', [], '1.0.0', 'all' );`,
   });
 
   const enqueueAssetsFile = generatePhpFunctionFile({
