@@ -1,18 +1,12 @@
 import { intro, outro, text, select } from "@clack/prompts";
-import executeCommand from "../utils/executeCommand/executeCommand";
 import formatMessage from "./formatMessage/formatMessage";
 import createFolder from "../utils/createFolder/createFolder";
 import generateCssFile from "./generateCssFile/generateCssFile";
 import generatePhpFile from "./generateIndexFile/generateIndexFile";
 import createFile from "../utils/createFile/createFile";
 import editWpEnv from "./editWpEnv/editWpEnv";
-import createTailwindConfig from "./setupTooling/tailwind/createTailwindConfig/createTailwindConfig";
 import { bold, green } from "colorette";
-import generateTailwindCssFile from "./setupTooling/tailwind/generateTailwindCssFile/generateTailwindCssFile";
-import addTailwindNpmScripts from "./setupTooling/tailwind/addTailwindNpmScripts/addTailwindNpmScripts";
 import generateFunctionsFile from "./generateFunctionsFile/generateFunctionsFile";
-import generatePhpFunctionFile from "./generatePhpFunctionFile/generatePhpFunctionFile";
-import appendToFunctionsFile from "./appendToFunctionsFile/appendToFunctionsFile";
 import { Recipe } from "../utils/types/Recipe";
 import configureCssTool from "../utils/configureCssTool/configureCssTool";
 import cssOptions from "../utils/vars/cssOptions";
@@ -130,22 +124,19 @@ editWpEnv({ wpEnvFile: `.wp-env.json`, directory: answers.theme.folder });
 
 // Finalize setup and display outro
 async function finalizeSetup() {
-  if (answers.setUpTooling && cssOption === "tailwind") {
+  if (answers.setUpTooling) {
+    const functionFile = generateFunctionsFile();
     try {
-      const functionFile = generateFunctionsFile();
-      await configureCssTool({
-        functionFile,
-        theme: answers.theme,
-        option: answers.tooling.css,
-      });
-    } catch (error) {
-      console.error(
-        formatMessage({ message: `An error occurred: ${error}`, color: "red" })
-      );
-    }
-  } else if (answers.setUpTooling && cssOption === "uno") {
-    try {
-      console.log("unocss coming soon!");
+      switch (cssOption) {
+        case "tailwind":
+          await configureCssTool({
+            functionFile,
+            theme: answers.theme,
+            option: answers.tooling.css,
+          });
+          break;
+        case "uno":
+      }
     } catch (error) {
       console.error(
         formatMessage({ message: `An error occurred: ${error}`, color: "red" })
