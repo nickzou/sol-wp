@@ -1,6 +1,7 @@
 import { Theme } from "../types/Theme";
 import { File } from "../types/File";
 import { CssOption } from "../types/CssOption";
+import { PackageJsonScript } from "../types/PackageJsonScript";
 import generatePhpFunctionFile from "../../generateTheme/generatePhpFunctionFile/generatePhpFunctionFile.js";
 import createFolder from "../createFolder/createFolder.js";
 import createFile from "../createFile/createFile.js";
@@ -14,12 +15,14 @@ interface configureCssTool {
   functionFile: File;
   theme: Theme;
   option: CssOption;
+  scripts: PackageJsonScript[];
 }
 
 const configureCssTool = async ({
   functionFile,
   theme,
   option,
+  scripts,
 }: configureCssTool) => {
   const enqueueAssetsFile = generatePhpFunctionFile({
     name: "enqueue_assets",
@@ -42,21 +45,23 @@ const configureCssTool = async ({
     "--save-dev",
   ]);
 
-  createTailwindConfig({
-    content: [
-      `wp/themes/${theme.folder}/**/*.php`,
-      `src/ts/**/*.{js, jsx, ts, tsx}`,
-    ],
-  });
+  switch (option.name) {
+    case "tailwind":
+      createTailwindConfig({
+        content: [
+          `wp/themes/${theme.folder}/**/*.php`,
+          `src/ts/**/*.{js, jsx, ts, tsx}`,
+        ],
+      });
 
-  if (option.name === "tailwind") {
-    const tailwindCssFile = generateTailwindCssFile();
+      const tailwindCssFile = generateTailwindCssFile();
 
-    createFile({
-      directoryPath: `src/css`,
-      fileName: tailwindCssFile.name,
-      fileContent: tailwindCssFile.content,
-    });
+      createFile({
+        directoryPath: `src/css`,
+        fileName: tailwindCssFile.name,
+        fileContent: tailwindCssFile.content,
+      });
+      break;
   }
 
   createFile({
@@ -70,20 +75,7 @@ const configureCssTool = async ({
     functionName: enqueueAssetsFile.functionName,
   });
 
-  addScriptsToPackageJson([
-    {
-      key: "tailwind",
-      value: `tailwindcss -i ./src/css/tailwind.css -o ./wp/themes/${theme.folder}/css/tailwind.css`,
-    },
-    {
-      key: "tailwind:prod",
-      value: `tailwindcss -i ./src/css/tailwind.css -o ./wp/themes/${theme.folder}/css/tailwind.css`,
-    },
-    {
-      key: "tailwind:watch",
-      value: `tailwindcss -i ./src/css/tailwind.css -o ./wp/themes/${theme.folder}/css/tailwind.css --watch`,
-    },
-  ]);
+  addScriptsToPackageJson(scripts);
 };
 
 export default configureCssTool;

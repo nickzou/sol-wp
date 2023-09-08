@@ -133,14 +133,28 @@ async function finalizeSetup() {
             functionFile,
             theme: answers.theme,
             option: answers.tooling.css,
+            scripts: [
+              {
+                key: "tailwind",
+                value: `tailwindcss -i ./src/css/tailwind.css -o ./wp/themes/${answers.theme.folder}/css/tailwind.css`,
+              },
+              {
+                key: "tailwind:prod",
+                value: `tailwindcss -i ./src/css/tailwind.css -o ./wp/themes/${answers.theme.folder}/css/tailwind.css`,
+              },
+              {
+                key: "tailwind:watch",
+                value: `tailwindcss -i ./src/css/tailwind.css -o ./wp/themes/${answers.theme.folder}/css/tailwind.css --watch`,
+              },
+            ],
           });
           break;
         case "uno":
-          await configureCssTool({
-            functionFile,
-            theme: answers.theme,
-            option: answers.tooling.css,
-          });
+        // await configureCssTool({
+        //   functionFile,
+        //   theme: answers.theme,
+        //   option: answers.tooling.css,
+        // });
       }
     } catch (error) {
       console.error(
