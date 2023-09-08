@@ -1,6 +1,6 @@
 import fs from "fs";
 import path from "path";
-import formatMessage from "../../generateTheme/formatMessage/formatMessage";
+import formatMessage from "../formatMessage/formatMessage";
 
 const createFolder = (folderName: string) => {
   const folderPath = path.join("wp/themes", folderName);

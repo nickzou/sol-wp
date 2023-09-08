@@ -1,5 +1,5 @@
 import { intro, outro, text, select } from "@clack/prompts";
-import formatMessage from "./formatMessage/formatMessage";
+import formatMessage from "../utils/formatMessage/formatMessage";
 import createFolder from "../utils/createFolder/createFolder";
 import generateCssFile from "./generateCssFile/generateCssFile";
 import generatePhpFile from "./generateIndexFile/generateIndexFile";

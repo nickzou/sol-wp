@@ -1,6 +1,6 @@
 import path from "path";
 import fs from "fs";
-import formatMessage from "../../generateTheme/formatMessage/formatMessage";
+import formatMessage from "../formatMessage/formatMessage";
 
 interface createFile {
   directoryPath: string;

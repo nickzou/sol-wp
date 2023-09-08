@@ -1,5 +1,5 @@
 import fs from "fs";
-import formatMessage from "../formatMessage/formatMessage";
+import formatMessage from "../../utils/formatMessage/formatMessage";
 
 interface editWpEnv {
   wpEnvFile: string;
