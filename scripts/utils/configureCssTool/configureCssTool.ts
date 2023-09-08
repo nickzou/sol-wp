@@ -25,9 +25,14 @@ const configureCssTool = async ({
   option,
   scripts,
 }: configureCssTool) => {
+  const registerAssetsFile = generatePhpFunctionFile({
+    name: "register_assets",
+    functionBody: `wp_register_style( '${option.name}'), get_template_directory_uri() . '/css/${option.name}.css, [], '1.0.0', 'all' );`,
+  });
+
   const enqueueAssetsFile = generatePhpFunctionFile({
     name: "enqueue_assets",
-    functionBody: `wp_enqueue_style( '${option.name}', get_template_directory_uri() . '/css/${option.name}.css', [], '1.0.0', 'all' );`,
+    functionBody: `wp_enqueue_style( '${option.name}' );`,
   });
 
   createFolder(`${theme.folder}/functions`);
@@ -73,11 +78,21 @@ const configureCssTool = async ({
       });
       break;
   }
+  createFile({
+    directoryPath: `wp/themes/${theme.folder}/functions`,
+    fileName: registerAssetsFile.name,
+    fileContent: `${registerAssetsFile.content} \nadd_action( 'wp_enqueue_scripts', '${registerAssetsFile.functionName}');`,
+  });
 
   createFile({
     directoryPath: `wp/themes/${theme.folder}/functions`,
     fileName: enqueueAssetsFile.name,
-    fileContent: `${enqueueAssetsFile.content} \nadd_action( 'wp_enqueue_scripts', 'enqueue_assets');`,
+    fileContent: `${enqueueAssetsFile.content} \nadd_action( 'wp_enqueue_scripts', '${enqueueAssetsFile.functionName}');`,
+  });
+
+  appendToFunctionsFile({
+    themeFolder: theme.folder,
+    functionName: registerAssetsFile.functionName,
   });
 
   appendToFunctionsFile({
