@@ -150,11 +150,12 @@ async function finalizeSetup() {
           });
           break;
         case "uno":
-        // await configureCssTool({
-        //   functionFile,
-        //   theme: answers.theme,
-        //   option: answers.tooling.css,
-        // });
+          await configureCssTool({
+            functionFile,
+            theme: answers.theme,
+            option: answers.tooling.css,
+            scripts: [{ key: "uno", value: "unocss" }],
+          });
       }
     } catch (error) {
       console.error(
