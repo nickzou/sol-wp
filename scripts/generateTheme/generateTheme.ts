@@ -13,6 +13,9 @@ import addTailwindNpmScripts from "./setupTooling/tailwind/addTailwindNpmScripts
 import generateFunctionsFile from "./generateFunctionsFile/generateFunctionsFile";
 import generatePhpFunctionFile from "./generatePhpFunctionFile/generatePhpFunctionFile";
 import appendToFunctionsFile from "./appendToFunctionsFile/appendToFunctionsFile";
+import { Recipe } from "../utils/types/Recipe";
+import configureCssTool from "../utils/configureCssTool/configureCssTool";
+import cssOptions from "../utils/vars/cssOptions";
 
 const htmlRegex = /<\/?[a-z][\s\S]*>/i;
 const spacesRegex = /\s+/;
@@ -53,7 +56,7 @@ const getVersion = await text({
   placeholder: `1.0.0`,
 });
 
-const setupTooling = await select({
+const setUpTooling = await select({
   message: `Do you want us to configure the tooling for theme development?`,
   options: [
     { value: true, label: `Yes, please!` },
@@ -61,7 +64,7 @@ const setupTooling = await select({
   ],
 });
 
-const cssOptions = await select({
+const cssOption = await select({
   message: `What CSS tools would you like?`,
   options: [
     { value: "tailwind", label: "Tailwind" },
@@ -85,76 +88,62 @@ const description = getDescription
 
 const version = getVersion ? (getVersion as string) : "1.0.0";
 
-const cssFile = generateCssFile({ name, author, description, version });
+const answers: Recipe = {
+  theme: {
+    name,
+    folder: directory,
+    author,
+    description,
+    version,
+  },
+  setUpTooling: setUpTooling as boolean, //fix this later
+  tooling: {
+    css: cssOptions.filter((o) => o.name === cssOption)[0], //fix this later
+    ts: true,
+  },
+};
+
+const cssFile = generateCssFile({
+  name: answers.theme.name,
+  author: answers.theme.author,
+  description: answers.theme.description,
+  version: answers.theme.version,
+});
 
 const phpFile = generatePhpFile();
 
-createFolder(directory);
+createFolder(answers.theme.folder);
 
 createFile({
-  directoryPath: `wp/themes/${directory}`,
+  directoryPath: `wp/themes/${answers.theme.folder}`,
   fileName: cssFile.name,
   fileContent: cssFile.content,
 });
 
 createFile({
-  directoryPath: `wp/themes/${directory}`,
+  directoryPath: `wp/themes/${answers.theme.folder}`,
   fileName: phpFile.name,
   fileContent: phpFile.content,
 });
 
-editWpEnv({ wpEnvFile: `.wp-env.json`, directory: directory });
+editWpEnv({ wpEnvFile: `.wp-env.json`, directory: answers.theme.folder });
 
 // Finalize setup and display outro
 async function finalizeSetup() {
-  if (setupTooling && cssOptions === "tailwind") {
+  if (answers.setUpTooling && cssOption === "tailwind") {
     try {
       const functionFile = generateFunctionsFile();
-
-      const enqueueAssetsFile = generatePhpFunctionFile({
-        name: "enqueue_assets",
-        functionBody: `wp_enqueue_style( 'tailwind', get_template_directory_uri() . '/css/tailwind.css', [], '1.0.0', 'all' );`,
+      await configureCssTool({
+        functionFile,
+        theme: answers.theme,
+        option: answers.tooling.css,
       });
-
-      createFolder(`${directory}/functions`);
-      createFolder(`${directory}/css`);
-
-      createFile({
-        directoryPath: `wp/themes/${directory}`,
-        fileName: functionFile.name,
-        fileContent: functionFile.content,
-      });
-
-      await executeCommand("npm", ["install", "tailwindcss", "--save-dev"]);
-
-      createTailwindConfig({ content: [`wp/themes/${directory}/**/*.php`] });
-
-      const tailwindCssFile = generateTailwindCssFile();
-
-      createFile({
-        directoryPath: `src/css/`,
-        fileName: tailwindCssFile.name,
-        fileContent: tailwindCssFile.content,
-      });
-
-      createFile({
-        directoryPath: `wp/themes/${directory}/functions`,
-        fileName: enqueueAssetsFile.name,
-        fileContent: `${enqueueAssetsFile.content} \nadd_action( 'wp_enqueue_scripts', 'enqueue_assets' );`,
-      });
-
-      appendToFunctionsFile({
-        themeFolder: directory,
-        functionName: enqueueAssetsFile.functionName,
-      });
-
-      addTailwindNpmScripts(directory);
     } catch (error) {
       console.error(
         formatMessage({ message: `An error occurred: ${error}`, color: "red" })
       );
     }
-  } else if (setupTooling && cssOptions === "uno") {
+  } else if (answers.setUpTooling && cssOption === "uno") {
     try {
       console.log("unocss coming soon!");
     } catch (error) {

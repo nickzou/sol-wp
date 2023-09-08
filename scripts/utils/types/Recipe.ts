@@ -1,14 +1,11 @@
+import { Theme } from "./Theme";
+import { CssOption } from "./CssOption";
+
 export type Recipe = {
-  theme: {
-    name: string;
-    folder: string;
-    author: string;
-    description: string;
-    version: string;
-  };
+  theme: Theme;
   setUpTooling: boolean;
   tooling: {
-    css: "tailwind" | "uno" | "postcss" | "sass" | "css" | "none";
+    css: CssOption;
     ts: boolean;
   };
 };
