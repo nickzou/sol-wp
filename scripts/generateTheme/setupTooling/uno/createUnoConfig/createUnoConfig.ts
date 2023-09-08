@@ -6,7 +6,7 @@ interface createUnoConfig {
 }
 
 const createUnoConfig = ({ content, outFile }: createUnoConfig) => {
-  const fileContent = `import { defineConfig } from 'unocss';\nimport presetUno from 'unocss-preset-uno';
+  const fileContent = `import { defineConfig } from 'unocss';\nimport presetUno from '@unocss/preset-uno';
   
   export default defineConfig({
     cli: {
