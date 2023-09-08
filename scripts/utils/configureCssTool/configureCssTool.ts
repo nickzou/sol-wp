@@ -10,6 +10,7 @@ import createTailwindConfig from "../../generateTheme/setupTooling/tailwind/crea
 import generateTailwindCssFile from "../../generateTheme/setupTooling/tailwind/generateTailwindCssFile/generateTailwindCssFile.js";
 import appendToFunctionsFile from "../../generateTheme/appendToFunctionsFile/appendToFunctionsFile.js";
 import addScriptsToPackageJson from "../addScriptsToPackageJson/addScriptsToPackageJson";
+import createUnoConfig from "../../generateTheme/setupTooling/uno/createUnoConfig/createUnoConfig";
 
 interface configureCssTool {
   functionFile: File;
@@ -60,6 +61,15 @@ const configureCssTool = async ({
         directoryPath: `src/css`,
         fileName: tailwindCssFile.name,
         fileContent: tailwindCssFile.content,
+      });
+      break;
+    case "uno":
+      createUnoConfig({
+        content: [
+          `wp/themes/${theme.folder}/**/*.php`,
+          `src/ts/**/*.{js, jsx, ts, tsx}`,
+        ],
+        outFile: `wp/themes/${theme.folder}/css/uno.css`,
       });
       break;
   }
