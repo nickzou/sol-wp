@@ -1,6 +1,7 @@
 import { Theme } from "../types/Theme";
 import { File } from "../types/File";
 import { CssOption } from "../types/CssOption";
+import { PackageJsonScript } from "../types/PackageJsonScript";
 import generatePhpFunctionFile from "../../generateTheme/generatePhpFunctionFile/generatePhpFunctionFile.js";
 import createFolder from "../createFolder/createFolder.js";
 import createFile from "../createFile/createFile.js";
@@ -9,21 +10,29 @@ import createTailwindConfig from "../../generateTheme/setupTooling/tailwind/crea
 import generateTailwindCssFile from "../../generateTheme/setupTooling/tailwind/generateTailwindCssFile/generateTailwindCssFile.js";
 import appendToFunctionsFile from "../../generateTheme/appendToFunctionsFile/appendToFunctionsFile.js";
 import addScriptsToPackageJson from "../addScriptsToPackageJson/addScriptsToPackageJson";
+import createUnoConfig from "../../generateTheme/setupTooling/uno/createUnoConfig/createUnoConfig";
 
 interface configureCssTool {
   functionFile: File;
   theme: Theme;
   option: CssOption;
+  scripts: PackageJsonScript[];
 }
 
 const configureCssTool = async ({
   functionFile,
   theme,
   option,
+  scripts,
 }: configureCssTool) => {
+  const registerAssetsFile = generatePhpFunctionFile({
+    name: "register_assets",
+    functionBody: `wp_register_style( '${option.name}', get_template_directory_uri() . '/css/${option.name}.css', [], '1.0.0', 'all' );`,
+  });
+
   const enqueueAssetsFile = generatePhpFunctionFile({
     name: "enqueue_assets",
-    functionBody: `wp_enqueue_style( '${option.name}', get_template_directory_uri() . '/css/${option.name}.css', [], '1.0.0', 'all' );`,
+    functionBody: `wp_enqueue_style( '${option.name}' );`,
   });
 
   createFolder(`${theme.folder}/functions`);
@@ -42,27 +51,48 @@ const configureCssTool = async ({
     "--save-dev",
   ]);
 
-  createTailwindConfig({
-    content: [
-      `wp/themes/${theme.folder}/**/*.php`,
-      `src/ts/**/*.{js, jsx, ts, tsx}`,
-    ],
-  });
+  switch (option.name) {
+    case "tailwind":
+      createTailwindConfig({
+        content: [
+          `wp/themes/${theme.folder}/**/*.php`,
+          `src/ts/**/*.{js, jsx, ts, tsx}`,
+        ],
+      });
 
-  if (option.name === "tailwind") {
-    const tailwindCssFile = generateTailwindCssFile();
+      const tailwindCssFile = generateTailwindCssFile();
 
-    createFile({
-      directoryPath: `src/css`,
-      fileName: tailwindCssFile.name,
-      fileContent: tailwindCssFile.content,
-    });
+      createFile({
+        directoryPath: `src/css`,
+        fileName: tailwindCssFile.name,
+        fileContent: tailwindCssFile.content,
+      });
+      break;
+    case "uno":
+      createUnoConfig({
+        content: [
+          `wp/themes/${theme.folder}/**/*.php`,
+          `src/ts/**/*.{js, jsx, ts, tsx}`,
+        ],
+        outFile: `wp/themes/${theme.folder}/css/uno.css`,
+      });
+      break;
   }
+  createFile({
+    directoryPath: `wp/themes/${theme.folder}/functions`,
+    fileName: registerAssetsFile.name,
+    fileContent: `${registerAssetsFile.content} \nadd_action( 'wp_enqueue_scripts', '${registerAssetsFile.functionName}');`,
+  });
 
   createFile({
     directoryPath: `wp/themes/${theme.folder}/functions`,
     fileName: enqueueAssetsFile.name,
-    fileContent: `${enqueueAssetsFile.content} \nadd_action( 'wp_enqueue_scripts', 'enqueue_assets');`,
+    fileContent: `${enqueueAssetsFile.content} \nadd_action( 'wp_enqueue_scripts', '${enqueueAssetsFile.functionName}');`,
+  });
+
+  appendToFunctionsFile({
+    themeFolder: theme.folder,
+    functionName: registerAssetsFile.functionName,
   });
 
   appendToFunctionsFile({
@@ -70,20 +100,7 @@ const configureCssTool = async ({
     functionName: enqueueAssetsFile.functionName,
   });
 
-  addScriptsToPackageJson([
-    {
-      key: "tailwind",
-      value: `tailwindcss -i ./src/css/tailwind.css -o ./wp/themes/${theme.folder}/css/tailwind.css`,
-    },
-    {
-      key: "tailwind:prod",
-      value: `tailwindcss -i ./src/css/tailwind.css -o ./wp/themes/${theme.folder}/css/tailwind.css`,
-    },
-    {
-      key: "tailwind:watch",
-      value: `tailwindcss -i ./src/css/tailwind.css -o ./wp/themes/${theme.folder}/css/tailwind.css --watch`,
-    },
-  ]);
+  addScriptsToPackageJson(scripts);
 };
 
 export default configureCssTool;

@@ -25,7 +25,7 @@ const appendToFunctionsFile = ({
 
     const updatedFunctionsFileContent = [
       functionsFileContent.slice(0, insertPosition),
-      `require_once get_template_directory() . '/functions/${functionName}.php'\n`,
+      `require_once get_template_directory() . '/functions/${functionName}.php';\n`,
       functionsFileContent.slice(insertPosition),
     ].join("");
 
