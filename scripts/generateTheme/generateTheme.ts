@@ -157,7 +157,7 @@ async function finalizeSetup() {
             scripts: [
               { key: "uno", value: "unocss" },
               { key: "uno:prod", value: "unocss --minify" },
-              { key: "uno", value: "unocss --watch" },
+              { key: "uno:watch", value: "unocss --watch" },
             ],
           });
       }
