@@ -13,7 +13,7 @@ const createUnoConfig = ({ content, outFile }: createUnoConfig) => {
       entry: [
         {
           patterns: ${JSON.stringify(content)},
-          outFile: ${outFile}
+          outFile: '${outFile}'
         }
       ]
     },

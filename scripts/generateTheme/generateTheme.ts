@@ -154,7 +154,11 @@ async function finalizeSetup() {
             functionFile,
             theme: answers.theme,
             option: answers.tooling.css,
-            scripts: [{ key: "uno", value: "unocss" }],
+            scripts: [
+              { key: "uno", value: "unocss" },
+              { key: "uno:prod", value: "unocss --minify" },
+              { key: "uno", value: "unocss --watch" },
+            ],
           });
       }
     } catch (error) {
