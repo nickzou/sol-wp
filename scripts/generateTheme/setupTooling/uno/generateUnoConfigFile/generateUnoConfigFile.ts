@@ -1,11 +1,14 @@
-import fs from "fs";
+import { File } from "@utils/types/File";
 
-interface createUnoConfig {
+interface geenrateUnoConfigFile {
   content: string[];
   outFile: string;
 }
 
-const createUnoConfig = ({ content, outFile }: createUnoConfig) => {
+const generateUnoConfigFile = ({
+  content,
+  outFile,
+}: geenrateUnoConfigFile): File => {
   const fileContent = `import { defineConfig } from 'unocss';\nimport presetUno from '@unocss/preset-uno';
   
   export default defineConfig({
@@ -22,8 +25,10 @@ const createUnoConfig = ({ content, outFile }: createUnoConfig) => {
     ]
   });
   `;
-
-  fs.writeFileSync("uno.config.ts", fileContent);
+  return {
+    name: "uno.config.ts",
+    content: fileContent,
+  };
 };
 
-export default createUnoConfig;
+export default generateUnoConfigFile;
