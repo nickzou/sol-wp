@@ -1,7 +1,7 @@
 import fs from "fs";
 import path from "path";
-import createFolder from "../createFolder"; // Adjust the path to match your actual file structure
-import formatMessage from "../../formatMessage/formatMessage"; // Adjust the path to match your actual file structure
+import createFolder from "@utils/createFolder/createFolder";
+import formatMessage from "@utils/formatMessage/formatMessage";
 
 // Mocking fs module
 jest.mock("fs", () => ({

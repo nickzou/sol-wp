@@ -1,6 +1,6 @@
 import fs from "fs";
 import { red } from "colorette";
-import { PackageJsonScript } from "../types/PackageJsonScript";
+import { PackageJsonScript } from "@utils/types/PackageJsonScript";
 
 const addScriptsToPackageJson = (scripts: PackageJsonScript[]) => {
   try {

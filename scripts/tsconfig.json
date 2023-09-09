@@ -4,6 +4,11 @@
     "moduleResolution": "Node",
     "target": "ES2022",
     "esModuleInterop": true,
-    "noEmit": true
+    "noEmit": true,
+    "baseUrl": "./",
+    "paths": {
+      "@utils/*": ["utils/*"],
+      "@generateTheme/*": ["generateTheme/*"]
+    }
   }
 }

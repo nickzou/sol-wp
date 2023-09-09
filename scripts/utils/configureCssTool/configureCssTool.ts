@@ -1,16 +1,16 @@
-import { Theme } from "../types/Theme";
-import { File } from "../types/File";
-import { CssOption } from "../types/CssOption";
-import { PackageJsonScript } from "../types/PackageJsonScript";
-import generatePhpFunctionFile from "../../generateTheme/generatePhpFunctionFile/generatePhpFunctionFile.js";
-import createFolder from "../createFolder/createFolder.js";
-import createFile from "../createFile/createFile.js";
-import executeCommand from "../executeCommand/executeCommand.js";
-import createTailwindConfig from "../../generateTheme/setupTooling/tailwind/createTailwindConfig/createTailwindConfig.js";
-import generateTailwindCssFile from "../../generateTheme/setupTooling/tailwind/generateTailwindCssFile/generateTailwindCssFile.js";
-import appendToFunctionsFile from "../../generateTheme/appendToFunctionsFile/appendToFunctionsFile.js";
-import addScriptsToPackageJson from "../addScriptsToPackageJson/addScriptsToPackageJson";
-import createUnoConfig from "../../generateTheme/setupTooling/uno/createUnoConfig/createUnoConfig";
+import { Theme } from "@utils/types/Theme";
+import { File } from "@utils/types/File";
+import { CssOption } from "@utils/types/CssOption";
+import { PackageJsonScript } from "@utils/types/PackageJsonScript";
+import generatePhpFunctionFile from "@generateTheme/generatePhpFunctionFile/generatePhpFunctionFile";
+import createFolder from "@utils/createFolder/createFolder";
+import createFile from "@utils/createFile/createFile";
+import executeCommand from "@utils/executeCommand/executeCommand";
+import createTailwindConfig from "@generateTheme/setupTooling/tailwind/createTailwindConfig/createTailwindConfig";
+import generateTailwindCssFile from "@generateTheme/setupTooling/tailwind/generateTailwindCssFile/generateTailwindCssFile";
+import appendToFunctionsFile from "@generateTheme/appendToFunctionsFile/appendToFunctionsFile";
+import addScriptsToPackageJson from "@utils/addScriptsToPackageJson/addScriptsToPackageJson";
+import createUnoConfig from "@generateTheme/setupTooling/uno/createUnoConfig/createUnoConfig";
 
 interface configureCssTool {
   functionFile: File;
