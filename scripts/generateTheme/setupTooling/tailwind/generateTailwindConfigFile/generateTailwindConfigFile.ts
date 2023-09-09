@@ -1,12 +1,12 @@
 import { File } from "@utils/types/File";
 
-interface createTailwindConfig {
+interface generateTailwindConfigFile {
   content: string[];
 }
 
 const generateTailwindConfigFile = ({
   content,
-}: createTailwindConfig): File => {
+}: generateTailwindConfigFile): File => {
   const fileContent = `import { Config } from 'tailwindcss';
 
   const config: Config = {
