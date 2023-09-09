@@ -225,6 +225,11 @@ async function setupTooling() {
             },
           ],
         });
+        await executeCommand("npm", [
+          "install",
+          `${answers.tooling.css.packageName}`,
+          "--save-dev",
+        ]);
         break;
     }
   } catch (error) {
