@@ -37,7 +37,7 @@ const configureCssTool = async ({
   const enqueueAssetsFile = generatePhpFunctionFile({
     name: "enqueue_assets",
     functionBody: `wp_enqueue_style( '${
-      cssFileName ? cssFileName : option.name
+      cssRegisterName ? cssRegisterName : option.name
     }' );`,
   });
 
