@@ -211,6 +211,21 @@ async function setupTooling() {
           "--save-dev",
         ]);
         break;
+      case "sass":
+        await configureCssTool({
+          functionFile,
+          theme: answers.theme,
+          option: answers.tooling.css,
+          cssRegisterName: "styles",
+          cssFileName: "styles",
+          scripts: [
+            {
+              key: "sass",
+              value: `src/css/styles.scss wp/themes/${answers.theme}/css/styles.scss`,
+            },
+          ],
+        });
+        break;
     }
   } catch (error) {
     console.error(
