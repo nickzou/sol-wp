@@ -221,7 +221,7 @@ async function setupTooling() {
           scripts: [
             {
               key: "sass",
-              value: `src/css/styles.scss wp/themes/${answers.theme.folder}/css/styles.scss`,
+              value: `sass src/css/styles.scss wp/themes/${answers.theme.folder}/css/styles.css`,
             },
           ],
         });
