@@ -92,7 +92,7 @@ const answers: Recipe = {
   },
   setUpTooling: setUpTooling as boolean, //fix this later
   tooling: {
-    css: cssOptions.filter((o) => o.name === cssOption)[0], //fix this later
+    css: cssOptions.filter((o) => o.name === cssOption)[0],
     ts: true,
   },
 };

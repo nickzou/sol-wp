@@ -19,6 +19,12 @@ const createFile = ({ directoryPath, fileName, fileContent }: createFile) => {
   }
 
   const filePath = path.join(directoryPath, fileName);
+  console.log(
+    formatMessage({
+      message: `File "${fileName}" has been created.`,
+      color: "green",
+    })
+  );
 
   if (fs.existsSync(filePath)) {
     throw new Error(
