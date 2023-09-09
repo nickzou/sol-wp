@@ -124,50 +124,50 @@ editWpEnv({ wpEnvFile: `.wp-env.json`, directory: answers.theme.folder });
 
 // Finalize setup and display outro
 async function finalizeSetup() {
-  if (answers.setUpTooling) {
-    const functionFile = generateFunctionsFile();
-    try {
-      switch (cssOption) {
-        case "tailwind":
-          await configureCssTool({
-            functionFile,
-            theme: answers.theme,
-            option: answers.tooling.css,
-            scripts: [
-              {
-                key: "tailwind",
-                value: `tailwindcss -i ./src/css/tailwind.css -o ./wp/themes/${answers.theme.folder}/css/tailwind.css`,
-              },
-              {
-                key: "tailwind:prod",
-                value: `tailwindcss -i ./src/css/tailwind.css -o ./wp/themes/${answers.theme.folder}/css/tailwind.css`,
-              },
-              {
-                key: "tailwind:watch",
-                value: `tailwindcss -i ./src/css/tailwind.css -o ./wp/themes/${answers.theme.folder}/css/tailwind.css --watch`,
-              },
-            ],
-          });
-          break;
-        case "uno":
-          await configureCssTool({
-            functionFile,
-            theme: answers.theme,
-            option: answers.tooling.css,
-            scripts: [
-              { key: "uno", value: "unocss" },
-              { key: "uno:prod", value: "unocss --minify" },
-              { key: "uno:watch", value: "unocss --watch" },
-            ],
-          });
-      }
-    } catch (error) {
-      console.error(
-        formatMessage({ message: `An error occurred: ${error}`, color: "red" })
-      );
+  const functionFile = generateFunctionsFile();
+  try {
+    switch (cssOption) {
+      case "tailwind":
+        await configureCssTool({
+          functionFile,
+          theme: answers.theme,
+          option: answers.tooling.css,
+          scripts: [
+            {
+              key: "tailwind",
+              value: `tailwindcss -i ./src/css/tailwind.css -o ./wp/themes/${answers.theme.folder}/css/tailwind.css`,
+            },
+            {
+              key: "tailwind:prod",
+              value: `tailwindcss -i ./src/css/tailwind.css -o ./wp/themes/${answers.theme.folder}/css/tailwind.css`,
+            },
+            {
+              key: "tailwind:watch",
+              value: `tailwindcss -i ./src/css/tailwind.css -o ./wp/themes/${answers.theme.folder}/css/tailwind.css --watch`,
+            },
+          ],
+        });
+        break;
+      case "uno":
+        await configureCssTool({
+          functionFile,
+          theme: answers.theme,
+          option: answers.tooling.css,
+          scripts: [
+            { key: "uno", value: "unocss" },
+            { key: "uno:prod", value: "unocss --minify" },
+            { key: "uno:watch", value: "unocss --watch" },
+          ],
+        });
     }
+  } catch (error) {
+    console.error(
+      formatMessage({ message: `An error occurred: ${error}`, color: "red" })
+    );
   }
   outro(green(bold("Your theme has been generated!")));
 }
 
-finalizeSetup();
+if (answers.setUpTooling) {
+  finalizeSetup();
+}
