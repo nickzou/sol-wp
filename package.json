@@ -6,6 +6,7 @@
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "test:scripts": "jest --config=scripts/jest.config.ts",
     "wp-env": "wp-env start --update",
     "wp-env:stop": "wp-env stop",
     "wp-env:reset": "wp-env clean all",
