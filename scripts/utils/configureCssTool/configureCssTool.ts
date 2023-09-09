@@ -6,7 +6,7 @@ import generatePhpFunctionFile from "@generateTheme/generatePhpFunctionFile/gene
 import createFolder from "@utils/createFolder/createFolder";
 import createFile from "@utils/createFile/createFile";
 import executeCommand from "@utils/executeCommand/executeCommand";
-import createTailwindConfig from "@generateTheme/setupTooling/tailwind/createTailwindConfig/createTailwindConfig";
+import generateTailwindConfigFile from "@generateTheme/setupTooling/tailwind/generateTailwindConfigFile/generateTailwindConfigFile";
 import generateTailwindCssFile from "@generateTheme/setupTooling/tailwind/generateTailwindCssFile/generateTailwindCssFile";
 import appendToFunctionsFile from "@generateTheme/appendToFunctionsFile/appendToFunctionsFile";
 import addScriptsToPackageJson from "@utils/addScriptsToPackageJson/addScriptsToPackageJson";
@@ -53,11 +53,17 @@ const configureCssTool = async ({
 
   switch (option.name) {
     case "tailwind":
-      createTailwindConfig({
+      const tailwindConfigFile = generateTailwindConfigFile({
         content: [
           `wp/themes/${theme.folder}/**/*.php`,
           `src/ts/**/*.{js, jsx, ts, tsx}`,
         ],
+      });
+
+      createFile({
+        directoryPath: `.`,
+        fileName: tailwindConfigFile.name,
+        fileContent: tailwindConfigFile.content,
       });
 
       const tailwindCssFile = generateTailwindCssFile();
