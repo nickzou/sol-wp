@@ -6,11 +6,8 @@ import generatePhpFunctionFile from "@generateTheme/generatePhpFunctionFile/gene
 import createFolder from "@utils/createFolder/createFolder";
 import createFile from "@utils/createFile/createFile";
 import executeCommand from "@utils/executeCommand/executeCommand";
-import generateTailwindConfigFile from "@generateTheme/setupTooling/tailwind/generateTailwindConfigFile/generateTailwindConfigFile";
-import generateTailwindCssFile from "@generateTheme/setupTooling/tailwind/generateTailwindCssFile/generateTailwindCssFile";
 import appendToFunctionsFile from "@generateTheme/appendToFunctionsFile/appendToFunctionsFile";
 import addScriptsToPackageJson from "@utils/addScriptsToPackageJson/addScriptsToPackageJson";
-import generateUnoConfigFile from "@generateTheme/setupTooling/uno/generateUnoConfigFile/generateUnoConfigFile";
 
 interface configureCssTool {
   functionFile: File;
@@ -51,45 +48,6 @@ const configureCssTool = async ({
     "--save-dev",
   ]);
 
-  switch (option.name) {
-    case "tailwind":
-      const tailwindConfigFile = generateTailwindConfigFile({
-        content: [
-          `wp/themes/${theme.folder}/**/*.php`,
-          `src/ts/**/*.{js, jsx, ts, tsx}`,
-        ],
-      });
-
-      createFile({
-        directoryPath: `.`,
-        fileName: tailwindConfigFile.name,
-        fileContent: tailwindConfigFile.content,
-      });
-
-      const tailwindCssFile = generateTailwindCssFile();
-
-      createFile({
-        directoryPath: `src/css`,
-        fileName: tailwindCssFile.name,
-        fileContent: tailwindCssFile.content,
-      });
-      break;
-    case "uno":
-      const unoConfigFile = generateUnoConfigFile({
-        content: [
-          `wp/themes/${theme.folder}/**/*.php`,
-          `src/ts/**/*.{js, jsx, ts, tsx}`,
-        ],
-        outFile: `wp/themes/${theme.folder}/css/uno.css`,
-      });
-
-      createFile({
-        directoryPath: ".",
-        fileName: unoConfigFile.name,
-        fileContent: unoConfigFile.content,
-      });
-      break;
-  }
   createFile({
     directoryPath: `wp/themes/${theme.folder}/functions`,
     fileName: registerAssetsFile.name,

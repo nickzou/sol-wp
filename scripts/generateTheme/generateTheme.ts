@@ -10,6 +10,10 @@ import generateFunctionsFile from "./generateFunctionsFile/generateFunctionsFile
 import { Recipe } from "../utils/types/Recipe";
 import configureCssTool from "../utils/configureCssTool/configureCssTool";
 import cssOptions from "../utils/vars/cssOptions";
+import executeCommand from "@utils/executeCommand/executeCommand";
+import generateTailwindConfigFile from "@generateTheme/setupTooling/tailwind/generateTailwindConfigFile/generateTailwindConfigFile";
+import generateTailwindCssFile from "@generateTheme/setupTooling/tailwind/generateTailwindCssFile/generateTailwindCssFile";
+import generateUnoConfigFile from "./setupTooling/uno/generateUnoConfigFile/generateUnoConfigFile";
 
 const htmlRegex = /<\/?[a-z][\s\S]*>/i;
 const spacesRegex = /\s+/;
@@ -147,6 +151,33 @@ async function setupTooling() {
             },
           ],
         });
+
+        const tailwindConfigFile = generateTailwindConfigFile({
+          content: [
+            `wp/themes/${answers.theme.folder}/**/*.php`,
+            `src/ts/**/*.{js, jsx, ts, tsx}`,
+          ],
+        });
+
+        const tailwindCssFile = generateTailwindCssFile();
+
+        createFile({
+          directoryPath: `.`,
+          fileName: tailwindConfigFile.name,
+          fileContent: tailwindConfigFile.content,
+        });
+
+        createFile({
+          directoryPath: `src/css`,
+          fileName: tailwindCssFile.name,
+          fileContent: tailwindCssFile.content,
+        });
+
+        await executeCommand("npm", [
+          "install",
+          `${answers.tooling.css}`,
+          "--save-dev",
+        ]);
         break;
       case "uno":
         await configureCssTool({
@@ -159,6 +190,21 @@ async function setupTooling() {
             { key: "uno:watch", value: "unocss --watch" },
           ],
         });
+
+        const unoConfigFile = generateUnoConfigFile({
+          content: [
+            `wp/themes/${answers.theme.folder}/**/*.php`,
+            `src/ts/**/*.{js, jsx, ts, tsx}`,
+          ],
+          outFile: `wp/themes/${answers.theme.folder}/css/uno.css`,
+        });
+
+        createFile({
+          directoryPath: ".",
+          fileName: unoConfigFile.name,
+          fileContent: unoConfigFile.content,
+        });
+        break;
     }
   } catch (error) {
     console.error(
