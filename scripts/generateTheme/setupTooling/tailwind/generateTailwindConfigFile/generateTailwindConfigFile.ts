@@ -1,10 +1,12 @@
-import fs from "fs";
+import { File } from "@utils/types/File";
 
 interface createTailwindConfig {
   content: string[];
 }
 
-const createTailwindConfig = ({ content }: createTailwindConfig) => {
+const generateTailwindConfigFile = ({
+  content,
+}: createTailwindConfig): File => {
   const fileContent = `import { Config } from 'tailwindcss';
 
   const config: Config = {
@@ -18,7 +20,10 @@ const createTailwindConfig = ({ content }: createTailwindConfig) => {
   export default config;
   `;
 
-  fs.writeFileSync("tailwind.config.ts", fileContent);
+  return {
+    name: "tailwind.config.ts",
+    content: fileContent,
+  };
 };
 
-export default createTailwindConfig;
+export default generateTailwindConfigFile;
