@@ -204,6 +204,12 @@ async function setupTooling() {
           fileName: unoConfigFile.name,
           fileContent: unoConfigFile.content,
         });
+
+        await executeCommand("npm", [
+          "install",
+          `${answers.tooling.css}`,
+          "--save-dev",
+        ]);
         break;
     }
   } catch (error) {

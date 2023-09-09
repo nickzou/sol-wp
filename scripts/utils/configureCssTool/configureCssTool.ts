@@ -5,7 +5,6 @@ import { PackageJsonScript } from "@utils/types/PackageJsonScript";
 import generatePhpFunctionFile from "@generateTheme/generatePhpFunctionFile/generatePhpFunctionFile";
 import createFolder from "@utils/createFolder/createFolder";
 import createFile from "@utils/createFile/createFile";
-import executeCommand from "@utils/executeCommand/executeCommand";
 import appendToFunctionsFile from "@generateTheme/appendToFunctionsFile/appendToFunctionsFile";
 import addScriptsToPackageJson from "@utils/addScriptsToPackageJson/addScriptsToPackageJson";
 
@@ -41,12 +40,6 @@ const configureCssTool = async ({
     fileName: functionFile.name,
     fileContent: functionFile.content,
   });
-
-  await executeCommand("npm", [
-    "install",
-    `${option.packageName}`,
-    "--save-dev",
-  ]);
 
   createFile({
     directoryPath: `wp/themes/${theme.folder}/functions`,
