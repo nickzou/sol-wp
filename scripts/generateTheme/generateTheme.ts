@@ -175,7 +175,7 @@ async function setupTooling() {
 
         await executeCommand("npm", [
           "install",
-          `${answers.tooling.css}`,
+          `${answers.tooling.css.packageName}`,
           "--save-dev",
         ]);
         break;
@@ -207,7 +207,7 @@ async function setupTooling() {
 
         await executeCommand("npm", [
           "install",
-          `${answers.tooling.css}`,
+          `${answers.tooling.css.packageName}`,
           "--save-dev",
         ]);
         break;
