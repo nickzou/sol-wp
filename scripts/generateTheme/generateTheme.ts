@@ -123,7 +123,7 @@ createFile({
 editWpEnv({ wpEnvFile: `.wp-env.json`, directory: answers.theme.folder });
 
 // Finalize setup and display outro
-async function finalizeSetup() {
+async function setupTooling() {
   const functionFile = generateFunctionsFile();
   try {
     switch (cssOption) {
@@ -169,5 +169,5 @@ async function finalizeSetup() {
 }
 
 if (answers.setUpTooling) {
-  finalizeSetup();
+  setupTooling();
 }
