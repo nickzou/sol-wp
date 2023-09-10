@@ -26,14 +26,14 @@ const createFile = ({ directoryPath, fileName, fileContent }: createFile) => {
     })
   );
 
-  if (fs.existsSync(filePath)) {
-    throw new Error(
-      formatMessage({
-        message: `File "${fileName}" already exists in "${directoryPath}"`,
-        color: "red",
-      })
-    );
-  }
+  // if (fs.existsSync(filePath)) {
+  //   throw new Error(
+  //     formatMessage({
+  //       message: `File "${fileName}" already exists in "${directoryPath}"`,
+  //       color: "red",
+  //     })
+  //   );
+  // }
 
   fs.writeFileSync(filePath, fileContent);
 };
