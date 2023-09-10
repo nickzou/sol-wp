@@ -8,7 +8,7 @@ type Object = {
 
 type Edits = {
   key: string;
-  value: Object[];
+  value: Object[] | string[];
 };
 
 interface editJson {
@@ -28,12 +28,24 @@ const editJson = ({ filePath, fileName, edits }: editJson) => {
     if (!Array.isArray(edits.value)) {
       jsonContent[edits.key] = edits.value;
     } else {
-      const newArray = edits.value.map((e) => ({ [e.key]: e.value }));
+
+      let newArray;
+      if (typeof edits.value[0] === 'object') {
+        newArray = edits.value.map((e) => ({ [e.key]: e.value }));
+      } else if (typeof edits.value[0] === 'string') {
+        newArray = edits.value.reduce((acc, item) => {
+          if (!acc.includes(item)) {
+            acc.push(item);
+          }
+          return acc;
+        }, []);
+      }
+
       if (
         Array.isArray(jsonContent[edits.key]) &&
         jsonContent[edits.key].length > 0
       ) {
-        jsonContent[edits.key] = [...jsonContent[edits.key], ...newArray];
+        jsonContent[edits.key] = [...new Set([...jsonContent[edits.key], ...newArray])];
       } else {
         jsonContent[edits.key] = newArray;
       }

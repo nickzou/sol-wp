@@ -46,7 +46,7 @@ describe("readAndStringifyJSONFile", () => {
     expect(result).toBe(mockNewJSONStringify);
   });
 
-  it("shold add property with array to JSON", () => {
+  it("should add property with array to JSON", () => {
     const mockJSONData = { key: "value" };
     const mockJSONString = JSON.stringify(mockJSONData);
 
@@ -61,6 +61,54 @@ describe("readAndStringifyJSONFile", () => {
     const result = editJson(functionProps);
 
     const mockNewJSONData = { key: "value", key2: [{ subkey: "something" }] };
+    const mockNewJSONStringify = JSON.stringify(mockNewJSONData);
+
+    expect(result).toBe(mockNewJSONStringify);
+  });
+
+  it("should add string to array in JSON", () => {
+    const mockJSONData = { key: "value", key2: [] };
+    const mockJSONString = JSON.stringify(mockJSONData);
+
+    mockedFs.readFileSync.mockReturnValue(mockJSONString as any);
+
+    const functionProps = {
+      filePath: ".",
+      fileName: "example.json",
+      edits: { key: "key2", value: ['some_text'] },
+    };
+
+    const result = editJson(functionProps);
+
+    const mockNewJSONData = {
+      key: "value",
+      key2: ['some_text'],
+    };
+
+    const mockNewJSONStringify = JSON.stringify(mockNewJSONData);
+
+    expect(result).toBe(mockNewJSONStringify);
+  });
+
+  it("should remove strings from array in JSON", () => {
+    const mockJSONData = { key: "value", key2: [] };
+    const mockJSONString = JSON.stringify(mockJSONData);
+
+    mockedFs.readFileSync.mockReturnValue(mockJSONString as any);
+
+    const functionProps = {
+      filePath: ".",
+      fileName: "example.json",
+      edits: { key: "key2", value: ['some_text', 'some_text'] },
+    };
+
+    const result = editJson(functionProps);
+
+    const mockNewJSONData = {
+      key: "value",
+      key2: ['some_text'],
+    };
+
     const mockNewJSONStringify = JSON.stringify(mockNewJSONData);
 
     expect(result).toBe(mockNewJSONStringify);
@@ -89,35 +137,6 @@ describe("readAndStringifyJSONFile", () => {
     const mockNewJSONData = {
       key: "value",
       key2: [{ subkey: "something" }, { subkey2: "something_else" }],
-    };
-    const mockNewJSONStringify = JSON.stringify(mockNewJSONData);
-
-    expect(result).toBe(mockNewJSONStringify);
-  });
-
-  it("should remove or replace from array if object key already exists", () => {
-    const mockJSONData = {
-      key: "value",
-      key2: [{ subkey: "something" }],
-    };
-    const mockJSONString = JSON.stringify(mockJSONData);
-
-    mockedFs.readFileSync.mockReturnValue(mockJSONString as any);
-
-    const functionProps = {
-      filePath: ".",
-      fileName: "example.json",
-      edits: {
-        key: "key2",
-        value: [{ key: "subkey", value: "something_else" }],
-      },
-    };
-
-    const result = editJson(functionProps);
-
-    const mockNewJSONData = {
-      key: "value",
-      key2: [{ subkey: "something_else" }],
     };
     const mockNewJSONStringify = JSON.stringify(mockNewJSONData);
 
