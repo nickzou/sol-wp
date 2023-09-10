@@ -1,20 +1,20 @@
-import { intro, outro, text, select } from "@clack/prompts";
-import formatMessage from "../utils/formatMessage/formatMessage";
-import createFolder from "../utils/createFolder/createFolder";
-import generateCssFile from "./generateCssFile/generateCssFile";
-import generatePhpFile from "./generateIndexFile/generateIndexFile";
-import createFile from "../utils/createFile/createFile";
-import editWpEnv from "./editWpEnv/editWpEnv";
+import { intro, outro, text, select, isCancel } from "@clack/prompts";
+import formatMessage from "@utils/formatMessage/formatMessage";
+import createFolder from "@utils/createFolder/createFolder";
+import generateCssFile from "@generateTheme/generateCssFile/generateCssFile";
+import generatePhpFile from "@generateTheme/generateIndexFile/generateIndexFile";
+import createFile from "@utils/createFile/createFile";
+import editWpEnv from "@generateTheme/editWpEnv/editWpEnv";
 import { bold, green } from "colorette";
-import generateFunctionsFile from "./generateFunctionsFile/generateFunctionsFile";
-import { Recipe } from "../utils/types/Recipe";
-import configureCssTool from "../utils/configureCssTool/configureCssTool";
-import cssOptions from "../utils/vars/cssOptions";
+import generateFunctionsFile from "@generateTheme/generateFunctionsFile/generateFunctionsFile";
+import { Recipe } from "@utils/types/Recipe";
+import configureCssTool from "@utils/configureCssTool/configureCssTool";
+import cssOptions from "@utils/vars/cssOptions";
 import executeCommand from "@utils/executeCommand/executeCommand";
 import generateTailwindConfigFile from "@generateTheme/setupTooling/tailwind/generateTailwindConfigFile/generateTailwindConfigFile";
 import generateTailwindCssFile from "@generateTheme/setupTooling/tailwind/generateTailwindCssFile/generateTailwindCssFile";
-import generateUnoConfigFile from "./setupTooling/uno/generateUnoConfigFile/generateUnoConfigFile";
-import generateSassConfigFile from "./setupTooling/sass/generateSassConfigFile";
+import generateUnoConfigFile from "@generateTheme/setupTooling/uno/generateUnoConfigFile/generateUnoConfigFile";
+import generateSassConfigFile from "@generateTheme/setupTooling/sass/generateSassConfigFile";
 
 const htmlRegex = /<\/?[a-z][\s\S]*>/i;
 const spacesRegex = /\s+/;
@@ -30,6 +30,10 @@ const getName = await text({
   },
 });
 
+if (isCancel(getName)) {
+  process.exit(0);
+}
+
 const getDirectory = await text({
   message: `Enter theme folder name.`,
   placeholder: `leave blank and we'll generate one based off your theme name`,
@@ -40,20 +44,36 @@ const getDirectory = await text({
   },
 });
 
+if (isCancel(getDirectory)) {
+  process.exit(0);
+}
+
 const getAuthor = await text({
   message: `Provide an author (optional)`,
   placeholder: `Your name here`,
 });
+
+if (isCancel(getAuthor)) {
+  process.exit(0);
+}
 
 const getDescription = await text({
   message: `Provide a description (optional)`,
   placeholder: `Your theme description here`,
 });
 
+if (isCancel(getDescription)) {
+  process.exit(0);
+}
+
 const getVersion = await text({
   message: `Provide a version (optional):`,
   placeholder: `1.0.0`,
 });
+
+if (isCancel(getVersion)) {
+  process.exit(0);
+}
 
 const setUpTooling = await select({
   message: `Do you want us to configure the tooling for theme development?`,
@@ -62,6 +82,10 @@ const setUpTooling = await select({
     { value: false, label: `No, thank you. I'll take it from here.` },
   ],
 });
+
+if (isCancel(setUpTooling)) {
+  process.exit(0);
+}
 
 const cssOption = await select({
   message: `What CSS tools would you like?`,
@@ -74,6 +98,10 @@ const cssOption = await select({
     { value: "none", label: "None, I'll figure it out my own damn self." },
   ],
 });
+
+if (isCancel(cssOption)) {
+  process.exit(0);
+}
 
 const name = getName ? (getName as string) : "Sol WP";
 
