@@ -15,7 +15,7 @@ import generateTailwindConfigFile from '@generateTheme/setupTooling/tailwind/gen
 import generateTailwindCssFile from '@generateTheme/setupTooling/tailwind/generateTailwindCssFile/generateTailwindCssFile';
 import generateUnoConfigFile from '@generateTheme/setupTooling/uno/generateUnoConfigFile/generateUnoConfigFile';
 import generateSassConfigFile from '@generateTheme/setupTooling/sass/generateSassConfigFile/generateSassConfigFile';
-import generatePrettierRcFile from './generatePrettierRcFile/generatePrettierRcFile';
+import generatePrettierRcFile from './setupTooling/prettier/generatePrettierRcFile/generatePrettierRcFile';
 
 const htmlRegex = /<\/?[a-z][\s\S]*>/i;
 const spacesRegex = /\s+/;
