@@ -95,6 +95,35 @@ describe("readAndStringifyJSONFile", () => {
     expect(result).toBe(mockNewJSONStringify);
   });
 
+  it("should remove or replace from array if object key already exists", () => {
+    const mockJSONData = {
+      key: "value",
+      key2: [{ subkey: "something" }],
+    };
+    const mockJSONString = JSON.stringify(mockJSONData);
+
+    mockedFs.readFileSync.mockReturnValue(mockJSONString as any);
+
+    const functionProps = {
+      filePath: ".",
+      fileName: "example.json",
+      edits: {
+        key: "key2",
+        value: [{ key: "subkey", value: "something_else" }],
+      },
+    };
+
+    const result = editJson(functionProps);
+
+    const mockNewJSONData = {
+      key: "value",
+      key2: [{ subkey: "something_else" }],
+    };
+    const mockNewJSONStringify = JSON.stringify(mockNewJSONData);
+
+    expect(result).toBe(mockNewJSONStringify);
+  });
+
   it("should throw an error if the file cannot be read", () => {
     const functionProps = {
       filePath: ".",
