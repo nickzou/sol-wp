@@ -234,7 +234,8 @@ async function setupTooling() {
 
         await executeCommand("npm", [
           "install",
-          `${answers.tooling.css.packageName} scss-reset`,
+          `${answers.tooling.css.packageName}`,
+          `scss-reset`,
           "--save-dev",
         ]);
         break;
