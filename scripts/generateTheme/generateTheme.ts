@@ -221,7 +221,11 @@ async function setupTooling() {
           scripts: [
             {
               key: "sass",
-              value: `sass src/css/styles.scss wp/themes/${answers.theme.folder}/css/styles.css`,
+              value: `esrun sass.config.ts`,
+            },
+            {
+              key: "sass:watch",
+              value: `source .env && sass src/css:wp/themes/${answers.theme.folder}/css --load-path=node_modules --style=expanded --embed-source-map --watch`,
             },
           ],
         });
