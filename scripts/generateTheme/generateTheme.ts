@@ -194,6 +194,12 @@ async function setupTooling() {
 
         const prettierRcFile = generatePrettierRcFile();
 
+        createFile({
+          directoryPath: `.`,
+          fileName: prettierRcFile.name,
+          fileContent: prettierRcFile.content,
+        });
+
         const editedPrettierRcFile = editJson({
           filePath: '.',
           fileName: '.prettierrc',
@@ -214,8 +220,8 @@ async function setupTooling() {
 
         createFile({
           directoryPath: `.`,
-          fileName: prettierRcFile.name,
-          fileContent: prettierRcFile.content,
+          fileName: editedPrettierRcFile.name,
+          fileContent: editedPrettierRcFile.content,
         });
 
         await executeCommand('npm', [
