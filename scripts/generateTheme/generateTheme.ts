@@ -1,20 +1,22 @@
-import { intro, outro, text, select, isCancel } from "@clack/prompts";
-import formatMessage from "@utils/formatMessage/formatMessage";
-import createFolder from "@utils/createFolder/createFolder";
-import generateCssFile from "@generateTheme/generateCssFile/generateCssFile";
-import generateIndexFile from "@generateTheme/generateIndexFile/generateIndexFile";
-import createFile from "@utils/createFile/createFile";
-import editWpEnv from "@generateTheme/editWpEnv/editWpEnv";
-import { bold, green } from "colorette";
-import generateFunctionsFile from "@generateTheme/generateFunctionsFile/generateFunctionsFile";
-import { Recipe } from "@utils/types/Recipe";
-import configureCssTool from "@utils/configureCssTool/configureCssTool";
-import cssOptions from "@utils/vars/cssOptions";
-import executeCommand from "@utils/executeCommand/executeCommand";
-import generateTailwindConfigFile from "@generateTheme/setupTooling/tailwind/generateTailwindConfigFile/generateTailwindConfigFile";
-import generateTailwindCssFile from "@generateTheme/setupTooling/tailwind/generateTailwindCssFile/generateTailwindCssFile";
-import generateUnoConfigFile from "@generateTheme/setupTooling/uno/generateUnoConfigFile/generateUnoConfigFile";
-import generateSassConfigFile from "@generateTheme/setupTooling/sass/generateSassConfigFile";
+import { intro, outro, text, select, isCancel } from '@clack/prompts';
+import formatMessage from '@utils/formatMessage/formatMessage';
+import createFolder from '@utils/createFolder/createFolder';
+import generateCssFile from '@generateTheme/generateCssFile/generateCssFile';
+import generateIndexFile from '@generateTheme/generateIndexFile/generateIndexFile';
+import createFile from '@utils/createFile/createFile';
+import editWpEnv from '@generateTheme/editWpEnv/editWpEnv';
+import { bold, green } from 'colorette';
+import generateFunctionsFile from '@generateTheme/generateFunctionsFile/generateFunctionsFile';
+import { Recipe } from '@utils/types/Recipe';
+import configureCssTool from '@generateTheme/configureCssTool/configureCssTool';
+import cssOptions from '@utils/vars/cssOptions';
+import executeCommand from '@utils/executeCommand/executeCommand';
+import generateTailwindConfigFile from '@generateTheme/setupTooling/tailwind/generateTailwindConfigFile/generateTailwindConfigFile';
+import generateTailwindCssFile from '@generateTheme/setupTooling/tailwind/generateTailwindCssFile/generateTailwindCssFile';
+import generateUnoConfigFile from '@generateTheme/setupTooling/uno/generateUnoConfigFile/generateUnoConfigFile';
+import generateSassConfigFile from '@generateTheme/setupTooling/sass/generateSassConfigFile/generateSassConfigFile';
+import generatePrettierRcFile from './setupTooling/prettier/generatePrettierRcFile/generatePrettierRcFile';
+import editJson from '@utils/editJson/editJson';
 
 const htmlRegex = /<\/?[a-z][\s\S]*>/i;
 const spacesRegex = /\s+/;
@@ -90,12 +92,12 @@ if (isCancel(setUpTooling)) {
 const cssOption = await select({
   message: `What CSS tools would you like?`,
   options: [
-    { value: "tailwind", label: "Tailwind" },
-    { value: "uno", label: "UnoCSS" },
-    { value: "sass", label: "Sass" },
-    { value: "postcss", label: "PostCSS" },
-    { value: "css", label: "CSS" },
-    { value: "none", label: "None, I'll figure it out my own damn self." },
+    { value: 'tailwind', label: 'Tailwind' },
+    { value: 'uno', label: 'UnoCSS' },
+    { value: 'sass', label: 'Sass' },
+    { value: 'postcss', label: 'PostCSS' },
+    { value: 'css', label: 'CSS' },
+    { value: 'none', label: "None, I'll figure it out my own damn self." },
   ],
 });
 
@@ -103,17 +105,17 @@ if (isCancel(cssOption)) {
   process.exit(0);
 }
 
-const name = getName ? (getName as string) : "Sol WP";
+const name = getName ? (getName as string) : 'Sol WP';
 
-const directory = getDirectory ? (getDirectory as string) : "sol-wp";
+const directory = getDirectory ? (getDirectory as string) : 'sol-wp';
 
-const author = getAuthor ? (getAuthor as string) : "Sol WPer";
+const author = getAuthor ? (getAuthor as string) : 'Sol WPer';
 
 const description = getDescription
   ? (getDescription as string)
-  : "Theme description";
+  : 'Theme description';
 
-const version = getVersion ? (getVersion as string) : "1.0.0";
+const version = getVersion ? (getVersion as string) : '1.0.0';
 
 const answers: Recipe = {
   theme: {
@@ -160,22 +162,22 @@ async function setupTooling() {
   const functionFile = generateFunctionsFile();
   try {
     switch (cssOption) {
-      case "tailwind":
+      case 'tailwind':
         await configureCssTool({
           functionFile,
           theme: answers.theme,
           option: answers.tooling.css,
           scripts: [
             {
-              key: "tailwind",
+              key: 'tailwind',
               value: `tailwindcss -i ./src/css/tailwind.css -o ./wp/themes/${answers.theme.folder}/css/tailwind.css`,
             },
             {
-              key: "tailwind:prod",
+              key: 'tailwind:prod',
               value: `tailwindcss -i ./src/css/tailwind.css -o ./wp/themes/${answers.theme.folder}/css/tailwind.css`,
             },
             {
-              key: "tailwind:watch",
+              key: 'tailwind:watch',
               value: `tailwindcss -i ./src/css/tailwind.css -o ./wp/themes/${answers.theme.folder}/css/tailwind.css --watch`,
             },
           ],
@@ -190,6 +192,20 @@ async function setupTooling() {
 
         const tailwindCssFile = generateTailwindCssFile();
 
+        const prettierRcFile = generatePrettierRcFile();
+
+        createFile({
+          directoryPath: `.`,
+          fileName: prettierRcFile.name,
+          fileContent: prettierRcFile.content,
+        });
+
+        const editedPrettierRcFile = editJson({
+          filePath: '.',
+          fileName: '.prettierrc',
+          edits: {key: 'plugins', value: ['prettier-plugin-tailwindcss']}
+        });
+
         createFile({
           directoryPath: `.`,
           fileName: tailwindConfigFile.name,
@@ -202,21 +218,29 @@ async function setupTooling() {
           fileContent: tailwindCssFile.content,
         });
 
-        await executeCommand("npm", [
-          "install",
+        createFile({
+          directoryPath: `.`,
+          fileName: editedPrettierRcFile.name,
+          fileContent: editedPrettierRcFile.content,
+        });
+
+        await executeCommand('npm', [
+          'install',
           `${answers.tooling.css.packageName}`,
-          "--save-dev",
+          'prettier',
+          'prettier-plugin-tailwindcss',
+          '--save-dev',
         ]);
         break;
-      case "uno":
+      case 'uno':
         await configureCssTool({
           functionFile,
           theme: answers.theme,
           option: answers.tooling.css,
           scripts: [
-            { key: "uno", value: "unocss" },
-            { key: "uno:prod", value: "unocss --minify" },
-            { key: "uno:watch", value: "unocss --watch" },
+            { key: 'uno', value: 'unocss' },
+            { key: 'uno:prod', value: 'unocss --minify' },
+            { key: 'uno:watch', value: 'unocss --watch' },
           ],
         });
 
@@ -229,35 +253,35 @@ async function setupTooling() {
         });
 
         createFile({
-          directoryPath: ".",
+          directoryPath: '.',
           fileName: unoConfigFile.name,
           fileContent: unoConfigFile.content,
         });
 
-        await executeCommand("npm", [
-          "install",
+        await executeCommand('npm', [
+          'install',
           `${answers.tooling.css.packageName}`,
-          "--save-dev",
+          '--save-dev',
         ]);
         break;
-      case "sass":
+      case 'sass':
         await configureCssTool({
           functionFile,
           theme: answers.theme,
           option: answers.tooling.css,
-          cssRegisterName: "styles",
-          cssFileName: "styles",
+          cssRegisterName: 'styles',
+          cssFileName: 'styles',
           scripts: [
             {
-              key: "sass",
+              key: 'sass',
               value: `esrun sass.config.ts --minify=false --sourcemap=true`,
             },
             {
-              key: "sass:prod",
+              key: 'sass:prod',
               value: `esrun sass.config.ts --minify=true --sourcemap=false`,
             },
             {
-              key: "sass:watch",
+              key: 'sass:watch',
               value: `source .env && sass src/css:wp/themes/${answers.theme.folder}/css --load-path=node_modules --style=expanded --embed-source-map --watch`,
             },
           ],
@@ -266,31 +290,31 @@ async function setupTooling() {
         const sassConfigFile = generateSassConfigFile();
 
         createFile({
-          directoryPath: ".",
+          directoryPath: '.',
           fileName: sassConfigFile.name,
           fileContent: sassConfigFile.content,
         });
 
         createFile({
-          directoryPath: "src/css",
-          fileName: "styles.scss",
+          directoryPath: 'src/css',
+          fileName: 'styles.scss',
           fileContent: "@use 'scss-reset/reset';",
         });
 
-        await executeCommand("npm", [
-          "install",
+        await executeCommand('npm', [
+          'install',
           `${answers.tooling.css.packageName}`,
           `scss-reset`,
-          "--save-dev",
+          '--save-dev',
         ]);
         break;
     }
   } catch (error) {
     console.error(
-      formatMessage({ message: `An error occurred: ${error}`, color: "red" })
+      formatMessage({ message: `An error occurred: ${error}`, color: 'red' }),
     );
   }
-  outro(green(bold("Your theme has been generated!")));
+  outro(green(bold('Your theme has been generated!')));
 }
 
 if (answers.setUpTooling) {

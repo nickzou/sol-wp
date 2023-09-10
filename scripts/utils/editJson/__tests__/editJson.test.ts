@@ -23,7 +23,7 @@ describe("readAndStringifyJSONFile", () => {
     const mockNewJSONData = { key: "value", key2: "value" };
     const mockNewJSONStringify = JSON.stringify(mockNewJSONData);
 
-    expect(result).toBe(mockNewJSONStringify);
+    expect(result.content).toBe(mockNewJSONStringify);
   });
 
   it("should replace property in JSON", () => {
@@ -43,7 +43,7 @@ describe("readAndStringifyJSONFile", () => {
     const mockNewJSONData = { key: "new_value" };
     const mockNewJSONStringify = JSON.stringify(mockNewJSONData);
 
-    expect(result).toBe(mockNewJSONStringify);
+    expect(result.content).toBe(mockNewJSONStringify);
   });
 
   it("should add property with array to JSON", () => {
@@ -63,7 +63,7 @@ describe("readAndStringifyJSONFile", () => {
     const mockNewJSONData = { key: "value", key2: [{ subkey: "something" }] };
     const mockNewJSONStringify = JSON.stringify(mockNewJSONData);
 
-    expect(result).toBe(mockNewJSONStringify);
+    expect(result.content).toBe(mockNewJSONStringify);
   });
 
   it("should add string to array in JSON", () => {
@@ -87,7 +87,7 @@ describe("readAndStringifyJSONFile", () => {
 
     const mockNewJSONStringify = JSON.stringify(mockNewJSONData);
 
-    expect(result).toBe(mockNewJSONStringify);
+    expect(result.content).toBe(mockNewJSONStringify);
   });
 
   it("should remove strings from array in JSON", () => {
@@ -111,7 +111,7 @@ describe("readAndStringifyJSONFile", () => {
 
     const mockNewJSONStringify = JSON.stringify(mockNewJSONData);
 
-    expect(result).toBe(mockNewJSONStringify);
+    expect(result.content).toBe(mockNewJSONStringify);
   });
 
   it("should append to array if array already exists", () => {
@@ -140,7 +140,7 @@ describe("readAndStringifyJSONFile", () => {
     };
     const mockNewJSONStringify = JSON.stringify(mockNewJSONData);
 
-    expect(result).toBe(mockNewJSONStringify);
+    expect(result.content).toBe(mockNewJSONStringify);
   });
 
   it("should throw an error if the file cannot be read", () => {
