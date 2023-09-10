@@ -26,6 +26,26 @@ describe("readAndStringifyJSONFile", () => {
     expect(result).toBe(mockNewJSONStringify);
   });
 
+  it("should replace property in JSON", () => {
+    const mockJSONData = { key: "value" };
+    const mockJSONString = JSON.stringify(mockJSONData);
+
+    mockedFs.readFileSync.mockReturnValue(mockJSONString as any);
+
+    const functionProps = {
+      filePath: ".",
+      fileName: "example.json",
+      edits: { key: "key", value: "new_value" },
+    };
+
+    const result = editJson(functionProps);
+
+    const mockNewJSONData = { key: "new_value" };
+    const mockNewJSONStringify = JSON.stringify(mockNewJSONData);
+
+    expect(result).toBe(mockNewJSONStringify);
+  });
+
   it("shold add property with array to JSON", () => {
     const mockJSONData = { key: "value" };
     const mockJSONString = JSON.stringify(mockJSONData);
@@ -46,7 +66,7 @@ describe("readAndStringifyJSONFile", () => {
     expect(result).toBe(mockNewJSONStringify);
   });
 
-  it("shold append to array if array already exists", () => {
+  it("should append to array if array already exists", () => {
     const mockJSONData = {
       key: "value",
       key2: [{ subkey: "something" }],
