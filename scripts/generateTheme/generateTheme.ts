@@ -225,9 +225,16 @@ async function setupTooling() {
             },
           ],
         });
+
+        createFile({
+          directoryPath: "src/css",
+          fileName: "styles.scss",
+          fileContent: "@use 'scss-reset/reset';",
+        });
+
         await executeCommand("npm", [
           "install",
-          `${answers.tooling.css.packageName}`,
+          `${answers.tooling.css.packageName} scss-reset`,
           "--save-dev",
         ]);
         break;
