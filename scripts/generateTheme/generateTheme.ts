@@ -2,7 +2,7 @@ import { intro, outro, text, select, isCancel } from "@clack/prompts";
 import formatMessage from "@utils/formatMessage/formatMessage";
 import createFolder from "@utils/createFolder/createFolder";
 import generateCssFile from "@generateTheme/generateCssFile/generateCssFile";
-import generatePhpFile from "@generateTheme/generateIndexFile/generateIndexFile";
+import generateIndexFile from "@generateTheme/generateIndexFile/generateIndexFile";
 import createFile from "@utils/createFile/createFile";
 import editWpEnv from "@generateTheme/editWpEnv/editWpEnv";
 import { bold, green } from "colorette";
@@ -137,7 +137,7 @@ const cssFile = generateCssFile({
   version: answers.theme.version,
 });
 
-const phpFile = generatePhpFile();
+const phpFile = generateIndexFile();
 
 createFolder(answers.theme.folder);
 
