@@ -205,6 +205,8 @@ async function setupTooling() {
         await executeCommand("npm", [
           "install",
           `${answers.tooling.css.packageName}`,
+          "prettier",
+          "prettier-plugin-tailwindcss",
           "--save-dev",
         ]);
         break;
