@@ -12,6 +12,8 @@ interface configureCssTool {
   functionFile: File;
   theme: Theme;
   option: CssOption;
+  cssRegisterName?: string;
+  cssFileName?: string;
   scripts: PackageJsonScript[];
 }
 
@@ -19,16 +21,24 @@ const configureCssTool = async ({
   functionFile,
   theme,
   option,
+  cssRegisterName,
+  cssFileName,
   scripts,
 }: configureCssTool) => {
   const registerAssetsFile = generatePhpFunctionFile({
     name: "register_assets",
-    functionBody: `wp_register_style( '${option.name}', get_template_directory_uri() . '/css/${option.name}.css', [], '1.0.0', 'all' );`,
+    functionBody: `wp_register_style( '${
+      cssRegisterName ? cssRegisterName : option.name
+    }', get_template_directory_uri() . '/css/${
+      cssFileName ? cssFileName : option.name
+    }.css', [], '1.0.0', 'all' );`,
   });
 
   const enqueueAssetsFile = generatePhpFunctionFile({
     name: "enqueue_assets",
-    functionBody: `wp_enqueue_style( '${option.name}' );`,
+    functionBody: `wp_enqueue_style( '${
+      cssRegisterName ? cssRegisterName : option.name
+    }' );`,
   });
 
   createFolder(`${theme.folder}/functions`);

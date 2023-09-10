@@ -14,6 +14,7 @@ import executeCommand from "@utils/executeCommand/executeCommand";
 import generateTailwindConfigFile from "@generateTheme/setupTooling/tailwind/generateTailwindConfigFile/generateTailwindConfigFile";
 import generateTailwindCssFile from "@generateTheme/setupTooling/tailwind/generateTailwindCssFile/generateTailwindCssFile";
 import generateUnoConfigFile from "./setupTooling/uno/generateUnoConfigFile/generateUnoConfigFile";
+import generateSassConfigFile from "./setupTooling/sass/generateSassConfigFile";
 
 const htmlRegex = /<\/?[a-z][\s\S]*>/i;
 const spacesRegex = /\s+/;
@@ -208,6 +209,50 @@ async function setupTooling() {
         await executeCommand("npm", [
           "install",
           `${answers.tooling.css.packageName}`,
+          "--save-dev",
+        ]);
+        break;
+      case "sass":
+        await configureCssTool({
+          functionFile,
+          theme: answers.theme,
+          option: answers.tooling.css,
+          cssRegisterName: "styles",
+          cssFileName: "styles",
+          scripts: [
+            {
+              key: "sass",
+              value: `esrun sass.config.ts --minify=false --sourcemap=true`,
+            },
+            {
+              key: "sass:prod",
+              value: `esrun sass.config.ts --minify=true --sourcemap=false`,
+            },
+            {
+              key: "sass:watch",
+              value: `source .env && sass src/css:wp/themes/${answers.theme.folder}/css --load-path=node_modules --style=expanded --embed-source-map --watch`,
+            },
+          ],
+        });
+
+        const sassConfigFile = generateSassConfigFile();
+
+        createFile({
+          directoryPath: ".",
+          fileName: sassConfigFile.name,
+          fileContent: sassConfigFile.content,
+        });
+
+        createFile({
+          directoryPath: "src/css",
+          fileName: "styles.scss",
+          fileContent: "@use 'scss-reset/reset';",
+        });
+
+        await executeCommand("npm", [
+          "install",
+          `${answers.tooling.css.packageName}`,
+          `scss-reset`,
           "--save-dev",
         ]);
         break;
