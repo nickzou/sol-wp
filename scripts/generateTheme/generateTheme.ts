@@ -16,6 +16,7 @@ import generateTailwindCssFile from '@generateTheme/setupTooling/tailwind/genera
 import generateUnoConfigFile from '@generateTheme/setupTooling/uno/generateUnoConfigFile/generateUnoConfigFile';
 import generateSassConfigFile from '@generateTheme/setupTooling/sass/generateSassConfigFile/generateSassConfigFile';
 import generatePrettierRcFile from './setupTooling/prettier/generatePrettierRcFile/generatePrettierRcFile';
+import editJson from '@utils/editJson/editJson';
 
 const htmlRegex = /<\/?[a-z][\s\S]*>/i;
 const spacesRegex = /\s+/;
@@ -192,6 +193,12 @@ async function setupTooling() {
         const tailwindCssFile = generateTailwindCssFile();
 
         const prettierRcFile = generatePrettierRcFile();
+
+        const editedPrettierRcFile = editJson({
+          filePath: '.',
+          fileName: '.prettierrc',
+          edits: {key: 'plugins', value: ['prettier-plugin-tailwindcss']}
+        });
 
         createFile({
           directoryPath: `.`,

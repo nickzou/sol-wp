@@ -1,5 +1,6 @@
 import fs from "fs";
 import path from "path";
+import { File } from "@utils/types/File";
 
 type Object = {
   key: string;
@@ -17,7 +18,7 @@ interface editJson {
   edits: Object | Edits;
 }
 
-const editJson = ({ filePath, fileName, edits }: editJson) => {
+const editJson = ({ filePath, fileName, edits }: editJson):File => {
   try {
     const resolvedPath = path.resolve(filePath, fileName);
 
@@ -53,7 +54,10 @@ const editJson = ({ filePath, fileName, edits }: editJson) => {
 
     const updatedContent = JSON.stringify(jsonContent);
 
-    return updatedContent;
+    return {
+      name: fileName,
+      content: updatedContent
+    };
   } catch (error) {
     throw new Error(`An error occurred while reading the file. ${error}`);
   }
