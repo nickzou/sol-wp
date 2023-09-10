@@ -1,8 +1,8 @@
-import generatePrettierRcFile from '@generateTheme/generatePrettierRcFile/generatePrettierRcFile';
-import { File } from '@utils/types/File';
+import generatePrettierRcFile from "@generateTheme/generatePrettierRcFile/generatePrettierRcFile";
+import { File } from "@utils/types/File";
 
-describe('generatePrettierRcFile', () => {
-  it('should generate a valid .prettierrc file', () => {
+describe("generatePrettierRcFile", () => {
+  it("should generate a valid .prettierrc file", () => {
     // Arrange
     const expectedContent = `{
     "semi": true,
@@ -11,14 +11,14 @@ describe('generatePrettierRcFile', () => {
     "printWidth": 80,
     "plugins": [
     ]
-  };
+  }
   `;
 
     // Act
     const result: File = generatePrettierRcFile();
 
     // Assert
-    expect(result.name).toBe('.prettierrc');
+    expect(result.name).toBe(".prettierrc");
     expect(result.content).toBe(expectedContent);
   });
 });

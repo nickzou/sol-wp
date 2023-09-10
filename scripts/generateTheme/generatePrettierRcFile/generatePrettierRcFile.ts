@@ -1,4 +1,4 @@
-import { File } from '@utils/types/File';
+import { File } from "@utils/types/File";
 
 const generatePrettierRcFile = (): File => {
   const content = `{
@@ -8,11 +8,11 @@ const generatePrettierRcFile = (): File => {
     "printWidth": 80,
     "plugins": [
     ]
-  };
+  }
   `;
 
   return {
-    name: '.prettierrc',
+    name: ".prettierrc",
     content,
   };
 };
