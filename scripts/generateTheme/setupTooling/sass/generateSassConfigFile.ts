@@ -1,6 +1,6 @@
 import { File } from "@utils/types/File";
 
-const generateTailwindConfigFile = (): File => {
+const generateSassConfigFile = (): File => {
   const fileContent = `import * as sass from "sass";
   import glob from "glob";
   import { parse } from "path";
@@ -61,4 +61,4 @@ const generateTailwindConfigFile = (): File => {
   };
 };
 
-export default generateTailwindConfigFile;
+export default generateSassConfigFile;
