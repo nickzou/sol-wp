@@ -18,6 +18,7 @@ import generateSassConfigFile from '@generateTheme/setupTooling/sass/generateSas
 import generatePrettierRcFile from './setupTooling/prettier/generatePrettierRcFile/generatePrettierRcFile';
 import editJson from '@utils/editJson/editJson';
 import generateSassStylelintFile from '@generateTheme/setupTooling/sass/generateSassStylelintFile/generateSassStylelintFile';
+import formatFolderName from '@utils/formatFolderName/formatFolderName';
 
 const htmlRegex = /<\/?[a-z][\s\S]*>/i;
 const spacesRegex = /\s+/;
@@ -108,7 +109,7 @@ if (isCancel(cssOption)) {
 
 const name = getName ? (getName as string) : 'Sol WP';
 
-const directory = getDirectory ? (getDirectory as string) : 'sol-wp';
+const directory = getDirectory ? formatFolderName(getDirectory) : formatFolderName(name);
 
 const author = getAuthor ? (getAuthor as string) : 'Sol WPer';
 
