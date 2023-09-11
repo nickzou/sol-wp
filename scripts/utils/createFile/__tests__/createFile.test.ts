@@ -1,45 +1,50 @@
-import fs from "fs";
-import path from "path";
-import createFile from "../createFile";
+import path from 'path';
+import fs from 'fs';
+import formatMessage from '@utils/formatMessage/formatMessage';
+import createFile from '@utils/createFile/createFile';
 
-describe("createFile", () => {
-  // Path for temporary directory and file for testing
-  const tempDir = "./tempDir";
-  const tempFile = "tempFile.txt";
-  const filePath = path.join(tempDir, tempFile);
+// Mock individual fs functions
+jest.mock('fs', () => ({
+  existsSync: jest.fn(),
+  writeFileSync: jest.fn(),
+}));
 
-  // Content to write
-  const fileContent = "Hello, World!";
+jest.mock('@utils/formatMessage/formatMessage');
 
-  // Clean up: remove temp file and directory if they exist
-  afterAll(() => {
-    if (fs.existsSync(filePath)) {
-      fs.unlinkSync(filePath);
-    }
-    if (fs.existsSync(tempDir)) {
-      fs.rmdirSync(tempDir);
-    }
+describe('createFile', () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
   });
 
-  it("throws an error if the directory does not exist", () => {
+  it('should throw an error if the directory does not exist', () => {
+    (fs.existsSync as jest.Mock).mockReturnValue(false);
+    (formatMessage as jest.Mock).mockReturnValue('Mock error message');
+
     expect(() =>
       createFile({
-        directoryPath: "./nonexistentDir",
-        fileName: tempFile,
-        fileContent,
+        directoryPath: '/fake/dir',
+        fileName: 'test.txt',
+        fileContent: 'Hello, World!'
       })
-    ).toThrowError(`Directory "./nonexistentDir" does not exist`);
+    ).toThrowError('Mock error message');
   });
 
-  it("writes a file successfully if the directory exists and the file does not", () => {
-    // Make sure file does not exist for this test
-    if (fs.existsSync(filePath)) {
-      fs.unlinkSync(filePath);
-    }
+  it('should create a file if the directory exists', () => {
+    (fs.existsSync as jest.Mock).mockReturnValue(true);
+    (formatMessage as jest.Mock).mockReturnValue('Mock success message');
 
-    createFile({ directoryPath: tempDir, fileName: tempFile, fileContent });
+    console.log = jest.fn();
 
-    expect(fs.existsSync(filePath)).toBeTruthy();
-    expect(fs.readFileSync(filePath, "utf-8")).toBe(fileContent);
+    createFile({
+      directoryPath: '/fake/dir',
+      fileName: 'test.txt',
+      fileContent: 'Hello, World!'
+    });
+
+    expect(fs.writeFileSync).toHaveBeenCalledWith(
+      path.join('/fake/dir', 'test.txt'),
+      'Hello, World!'
+    );
+    expect(console.log).toHaveBeenCalledWith('Mock success message');
   });
 });
