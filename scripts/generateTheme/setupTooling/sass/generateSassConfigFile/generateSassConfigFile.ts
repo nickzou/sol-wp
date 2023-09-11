@@ -1,6 +1,12 @@
 import { File } from "@utils/types/File";
 
-const generateSassConfigFile = (): File => {
+interface generateSassConfigFile {
+  themeFolder: string;
+}
+
+const generateSassConfigFile = ({
+  themeFolder,
+}: generateSassConfigFile): File => {
   const fileContent = `import * as sass from "sass";
   import glob from "glob";
   import { parse } from "path";
@@ -9,7 +15,7 @@ const generateSassConfigFile = (): File => {
   
   const files = glob.sync(\`./src/css/**/*.scss\`);
   
-  const outputDir = \`wp/themes/sol-wp/css\`;
+  const outputDir = \`wp/themes/${themeFolder}/css\`;
   
   const minifyFlag = process.argv.filter((a) => a.includes("--minify"));
   const sourcemapFlag = process.argv.filter((a) => a.includes("--sourcemap"));

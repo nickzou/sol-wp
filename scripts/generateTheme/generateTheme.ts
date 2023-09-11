@@ -305,7 +305,7 @@ async function setupTooling() {
           ],
         });
 
-        const sassConfigFile = generateSassConfigFile();
+        const sassConfigFile = generateSassConfigFile({themeFolder: answers.theme.folder});
 
         const sassStylelintFile = generateSassStylelintFile();
 
