@@ -17,6 +17,7 @@ import generateUnoConfigFile from '@generateTheme/setupTooling/uno/generateUnoCo
 import generateSassConfigFile from '@generateTheme/setupTooling/sass/generateSassConfigFile/generateSassConfigFile';
 import generatePrettierRcFile from './setupTooling/prettier/generatePrettierRcFile/generatePrettierRcFile';
 import editJson from '@utils/editJson/editJson';
+import generateSassStylelintFile from '@generateTheme/setupTooling/sass/generateSassStylelintFile/generateSassStylelintFile';
 
 const htmlRegex = /<\/?[a-z][\s\S]*>/i;
 const spacesRegex = /\s+/;
@@ -289,10 +290,18 @@ async function setupTooling() {
 
         const sassConfigFile = generateSassConfigFile();
 
+        const sassStylelintFile = generateSassStylelintFile();
+
         createFile({
           directoryPath: '.',
           fileName: sassConfigFile.name,
           fileContent: sassConfigFile.content,
+        });
+
+        createFile({
+          directoryPath: '.',
+          fileName: sassStylelintFile.name,
+          fileContent: sassStylelintFile.content,
         });
 
         createFile({
@@ -305,6 +314,8 @@ async function setupTooling() {
           'install',
           `${answers.tooling.css.packageName}`,
           `scss-reset`,
+          `stylelint`,
+          `stylelint-config-standard-scss`,
           '--save-dev',
         ]);
         break;
