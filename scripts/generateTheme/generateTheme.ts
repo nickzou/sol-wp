@@ -301,6 +301,10 @@ async function setupTooling() {
             {
               key: 'stylelint:watch',
               value: `onchange src/css/**/*.scss -- npm run stylelint`
+            },
+            {
+              key: 'style:watch',
+              value: 'concurrently "npm run sass:watch" "npm run sass:prettier:watch" "npm run stylelint:watch"'
             }
           ],
         });
@@ -343,6 +347,7 @@ async function setupTooling() {
           `stylelint`,
           `stylelint-config-standard-scss`,
           `onchange`,
+          `concurrently`,
           '--save-dev',
         ]);
         break;
