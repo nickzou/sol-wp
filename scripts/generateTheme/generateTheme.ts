@@ -284,7 +284,7 @@ async function setupTooling() {
             },
             {
               key: 'sass:watch',
-              value: `source .env && sass src/css:wp/themes/${answers.theme.folder}/css --load-path=node_modules --style=expanded --embed-source-map --watch`,
+              value: `sass src/css:wp/themes/${answers.theme.folder}/css --load-path=node_modules --style=expanded --embed-source-map --watch`,
             },
             {
               key: 'sass:prettier',
