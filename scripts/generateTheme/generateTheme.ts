@@ -287,6 +287,14 @@ async function setupTooling() {
               value: `source .env && sass src/css:wp/themes/${answers.theme.folder}/css --load-path=node_modules --style=expanded --embed-source-map --watch`,
             },
             {
+              key: 'sass:prettier',
+              value: 'prettier "src/css/**/*.scss" --write'
+            },
+            {
+              key: 'sass:prettier:watch',
+              value: 'onchange "src/css/**/*.scss" -- prettier --write --ignore-unknown {{changed}}'
+            },
+            {
               key: 'stylelint',
               value: `stylelint src/css/**/*.scss`
             },
