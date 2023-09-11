@@ -339,6 +339,7 @@ async function setupTooling() {
           'install',
           `${answers.tooling.css.packageName}`,
           `scss-reset`,
+          `prettier`,
           `stylelint`,
           `stylelint-config-standard-scss`,
           `onchange`,
