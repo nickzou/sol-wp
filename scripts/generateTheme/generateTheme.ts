@@ -194,15 +194,15 @@ async function setupTooling() {
 
         const tailwindCssFile = generateTailwindCssFile();
 
-        const prettierRcFile = generatePrettierRcFile();
+        const tailwindPrettierRcFile = generatePrettierRcFile();
 
         createFile({
           directoryPath: `.`,
-          fileName: prettierRcFile.name,
-          fileContent: prettierRcFile.content,
+          fileName: tailwindPrettierRcFile.name,
+          fileContent: tailwindPrettierRcFile.content,
         });
 
-        const editedPrettierRcFile = editJson({
+        const editedTailwindPrettierRcFile = editJson({
           filePath: '.',
           fileName: '.prettierrc',
           edits: {key: 'plugins', value: ['prettier-plugin-tailwindcss']}
@@ -222,8 +222,8 @@ async function setupTooling() {
 
         createFile({
           directoryPath: `.`,
-          fileName: editedPrettierRcFile.name,
-          fileContent: editedPrettierRcFile.content,
+          fileName: editedTailwindPrettierRcFile.name,
+          fileContent: editedTailwindPrettierRcFile.content,
         });
 
         await executeCommand('npm', [
@@ -300,6 +300,14 @@ async function setupTooling() {
         const sassConfigFile = generateSassConfigFile();
 
         const sassStylelintFile = generateSassStylelintFile();
+
+        const sassPrettierRcFile = generatePrettierRcFile();
+
+        createFile({
+          directoryPath: `.`,
+          fileName: sassPrettierRcFile.name,
+          fileContent: sassPrettierRcFile.content,
+        });
 
         createFile({
           directoryPath: '.',
