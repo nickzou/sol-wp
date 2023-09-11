@@ -285,6 +285,14 @@ async function setupTooling() {
               key: 'sass:watch',
               value: `source .env && sass src/css:wp/themes/${answers.theme.folder}/css --load-path=node_modules --style=expanded --embed-source-map --watch`,
             },
+            {
+              key: 'stylelint',
+              value: `stylelint src/css/**/*.scss`
+            },
+            {
+              key: 'stylelint:watch',
+              value: `onchange src/css/**/*.scss -- npm run stylelint`
+            }
           ],
         });
 
@@ -316,6 +324,7 @@ async function setupTooling() {
           `scss-reset`,
           `stylelint`,
           `stylelint-config-standard-scss`,
+          `onchange`,
           '--save-dev',
         ]);
         break;
