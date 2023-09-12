@@ -19,6 +19,7 @@ import generatePrettierRcFile from './setupTooling/prettier/generatePrettierRcFi
 import editJson from '@utils/editJson/editJson';
 import generateSassStylelintFile from '@generateTheme/setupTooling/sass/generateSassStylelintFile/generateSassStylelintFile';
 import formatFolderName from '@utils/formatFolderName/formatFolderName';
+import generatePostCssConfigFile from './setupTooling/postcss/generatePostCssConfigFile/generatePostCssConfigFile';
 
 const htmlRegex = /<\/?[a-z][\s\S]*>/i;
 const spacesRegex = /\s+/;
@@ -361,7 +362,25 @@ async function setupTooling() {
           scripts: [],
         });
 
-        
+        await executeCommand('npm', [
+          'install',
+          `${answers.tooling.css.packageName}`,
+          `postcss-autoreset`,
+          `prettier`,
+          `stylelint`,
+          `stylelint-config-standard-scss`,
+          `onchange`,
+          `concurrently`,
+          '--save-dev',
+        ]);
+
+        const postCssConfigFile = generatePostCssConfigFile();
+
+        createFile({
+          directoryPath: '.',
+          fileName: postCssConfigFile.name,
+          fileContent: postCssConfigFile.content
+        });
       break;
     }
   } catch (error) {

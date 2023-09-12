@@ -8,10 +8,10 @@ describe('generatePostCssConfigFile', () => {
     expect(result.name).toEqual('postcss.config.ts');
     
     expect(result.content).toContain("import autoprefixer from 'autoprefixer'");
-    expect(result.content).toContain("import postCssNested from 'postcss-nested'");
+    expect(result.content).toContain("import nested from 'postcss-nested'");
     expect(result.content).toContain("import cssnano from 'cssnano'");
     expect(result.content).toContain("autoprefixer,");
-    expect(result.content).toContain("postCssNested,");
+    expect(result.content).toContain("nested,");
     expect(result.content).toContain("cssnano");
   });
 });

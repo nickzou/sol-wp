@@ -2,13 +2,15 @@ import { File } from "@utils/types/File";
 
 const generatePostCssConfigFile = ():File => {
   const content =`import autoprefixer from 'autoprefixer';
-  import postCssNested from 'postcss-nested';
+  import autoReset  from 'postcss-autoreset';
+  import nested from 'postcss-nested';
   import cssnano from 'cssnano';
   
   const config = {
     plugins: [
       autoprefixer,
-      postCssNested,
+      autoReset,
+      nested,
       cssnano({
         preset: 'default',
       }),
