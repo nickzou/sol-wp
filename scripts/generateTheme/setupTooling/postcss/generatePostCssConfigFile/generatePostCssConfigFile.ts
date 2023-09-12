@@ -1,7 +1,7 @@
 import { File } from "@utils/types/File";
 
 const generatePostCssConfigFile = ():File => {
-  const content =`import * as autoprefixer from 'autoprefixer';
+  const content =`import autoprefixer from 'autoprefixer';
 import autoReset  from 'postcss-autoreset';
 import nested from 'postcss-nested';
 import cssnano from 'cssnano';

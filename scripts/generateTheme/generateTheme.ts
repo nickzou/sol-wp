@@ -373,6 +373,7 @@ async function setupTooling() {
         await executeCommand('npm', [
           'install',
           `${answers.tooling.css.packageName}`,
+          `autoprefixer`,
           `postcss-autoreset`,
           `postcss-nested`,
           `cssnano`,
