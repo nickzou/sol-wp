@@ -362,18 +362,6 @@ async function setupTooling() {
           scripts: [],
         });
 
-        await executeCommand('npm', [
-          'install',
-          `${answers.tooling.css.packageName}`,
-          `postcss-autoreset`,
-          `prettier`,
-          `stylelint`,
-          `stylelint-config-standard-scss`,
-          `onchange`,
-          `concurrently`,
-          '--save-dev',
-        ]);
-
         const postCssConfigFile = generatePostCssConfigFile();
 
         createFile({
@@ -381,6 +369,19 @@ async function setupTooling() {
           fileName: postCssConfigFile.name,
           fileContent: postCssConfigFile.content
         });
+
+        await executeCommand('npm', [
+          'install',
+          `${answers.tooling.css.packageName}`,
+          `postcss-autoreset`,
+          `postcss-nested`,
+          `cssnano`,
+          `prettier`,
+          `stylelint`,
+          `onchange`,
+          `concurrently`,
+          '--save-dev',
+        ]);
       break;
     }
   } catch (error) {
