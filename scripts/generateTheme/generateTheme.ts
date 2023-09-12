@@ -370,6 +370,12 @@ async function setupTooling() {
         const postCssConfigFile = generatePostCssConfigFile();
 
         createFile({
+          directoryPath: 'src/css',
+          fileName: 'styles.css',
+          fileContent: "//styles here",
+        });
+
+        createFile({
           directoryPath: '.',
           fileName: postCssConfigFile.name,
           fileContent: postCssConfigFile.content
