@@ -359,7 +359,12 @@ async function setupTooling() {
           option: answers.tooling.css,
           cssRegisterName: 'styles',
           cssFileName: 'styles',
-          scripts: [],
+          scripts: [
+            {
+              key: `css`,
+              value: `postcss src/css/**/*.css --dir wp/themes/${answers.theme.folder}`
+            }
+          ],
         });
 
         const postCssConfigFile = generatePostCssConfigFile();
