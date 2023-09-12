@@ -351,6 +351,18 @@ async function setupTooling() {
           '--save-dev',
         ]);
         break;
+      case 'postcss':
+        await configureCssTool({
+          functionFile,
+          theme: answers.theme,
+          option: answers.tooling.css,
+          cssRegisterName: 'styles',
+          cssFileName: 'styles',
+          scripts: [],
+        });
+
+        
+      break;
     }
   } catch (error) {
     console.error(
