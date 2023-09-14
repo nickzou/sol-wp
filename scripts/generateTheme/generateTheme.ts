@@ -99,7 +99,6 @@ const cssOption = await select({
     { value: "uno", label: "UnoCSS" },
     { value: "sass", label: "Sass" },
     { value: "postcss", label: "PostCSS" },
-    { value: "css", label: "CSS" },
     { value: "none", label: "None, I'll figure it out my own damn self." },
   ],
 });
