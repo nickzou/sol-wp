@@ -377,6 +377,26 @@ async function setupTooling() {
           fileContent: postCssConfigFile.content,
         });
 
+        const postCssPrettierRcFile = generatePrettierRcFile();
+
+        createFile({
+          directoryPath: `.`,
+          fileName: postCssPrettierRcFile.name,
+          fileContent: postCssPrettierRcFile.content,
+        });
+
+        const editedPostCssPrettierConfigRcFile = editJson({
+          filePath: ".",
+          fileName: ".prettierrc",
+          edits: { key: "plugins", value: ["prettier-plugin-standard"] },
+        });
+
+        createFile({
+          directoryPath: `.`,
+          fileName: editedPostCssPrettierConfigRcFile.name,
+          fileContent: editedPostCssPrettierConfigRcFile.content,
+        });
+
         await executeCommand("npm", [
           "install",
           `${answers.tooling.css.packageName}`,
@@ -386,6 +406,7 @@ async function setupTooling() {
           `cssnano`,
           `prettier`,
           `stylelint`,
+          `stylelint-config-standard`,
           `onchange`,
           `concurrently`,
           "--save-dev",
