@@ -370,6 +370,10 @@ async function setupTooling() {
               key: `css`,
               value: `postcss src/css/**/*.css --dir wp/themes/${answers.theme.folder}/css --config postcss.config.json`,
             },
+            {
+              key: `css:watch`,
+              value: `postcss src/css/**/*.css --dir wp/themes/${answers.theme.folder}/css --config postcss.config.json --watch`,
+            },
           ],
         });
 
