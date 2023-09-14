@@ -80,18 +80,6 @@ if (isCancel(getVersion)) {
   process.exit(0);
 }
 
-const setUpTooling = await select({
-  message: `Do you want us to configure the tooling for theme development?`,
-  options: [
-    { value: true, label: `Yes, please!` },
-    { value: false, label: `No, thank you. I'll take it from here.` },
-  ],
-});
-
-if (isCancel(setUpTooling)) {
-  process.exit(0);
-}
-
 const cssOption = await select({
   message: `What CSS tools would you like?`,
   options: [
@@ -129,7 +117,6 @@ const answers: Recipe = {
     description,
     version,
   },
-  setUpTooling: setUpTooling as boolean, //fix this later
   tooling: {
     css: cssOptions.filter((o) => o.name === cssOption)[0],
     ts: true,
@@ -413,6 +400,4 @@ async function setupTooling() {
   outro(green(bold("Your theme has been generated!")));
 }
 
-if (answers.setUpTooling) {
-  setupTooling();
-}
+setupTooling();
