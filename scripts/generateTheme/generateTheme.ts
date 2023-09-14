@@ -396,7 +396,7 @@ async function setupTooling() {
           `${answers.tooling.css.packageName}`,
           `postcss-cli`,
           `autoprefixer`,
-          `postcss-autoreset`,
+          `postcss-normalize`,
           `postcss-nested`,
           `cssnano`,
           `prettier`,
