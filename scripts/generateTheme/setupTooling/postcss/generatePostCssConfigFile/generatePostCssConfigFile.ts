@@ -5,14 +5,7 @@ const generatePostCssConfigFile = (): File => {
   "plugins": {
     "autoprefixer": {},
     "postcss-nested": {},
-    "postcss-normalze": {
-      "reset": {
-        "*": {
-          "all": "initial",
-          "box-sizing": "border-box"
-        }
-      }
-    },
+    "postcss-normalze": {},
     "cssnano": {}
   }
 }`;
