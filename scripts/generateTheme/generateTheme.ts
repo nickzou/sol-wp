@@ -368,7 +368,7 @@ async function setupTooling() {
           scripts: [
             {
               key: `css`,
-              value: `postcss src/css/**/*.css --dir wp/themes/${answers.theme.folder} --config postcss.config.json`,
+              value: `postcss src/css/**/*.css --dir wp/themes/${answers.theme.folder}/css --config postcss.config.json`,
             },
           ],
         });
