@@ -382,7 +382,7 @@ async function setupTooling() {
         createFile({
           directoryPath: "src/css",
           fileName: "styles.css",
-          fileContent: "//styles here",
+          fileContent: "/*styles here*/",
         });
 
         createFile({
