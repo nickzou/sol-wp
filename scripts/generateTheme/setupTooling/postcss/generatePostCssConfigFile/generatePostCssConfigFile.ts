@@ -1,28 +1,26 @@
 import { File } from "@utils/types/File";
 
-const generatePostCssConfigFile = ():File => {
-  const content =`import autoprefixer from 'autoprefixer';
-import autoReset  from 'postcss-autoreset';
-import nested from 'postcss-nested';
-import cssnano from 'cssnano';
-  
-const config = {
-  plugins: [
-    autoprefixer,
-    autoReset,
-    nested,
-    cssnano({
-      preset: 'default',
-    }),
-  ],
-};
-  
-export default config;`;
-  
-  return {
-    name: 'postcss.config.ts',
-    content
+const generatePostCssConfigFile = (): File => {
+  const content = `{
+  "plugins": {
+    "autoprefixer": {},
+    "postcess-nested: {},
+    "postcss-autoreset": {
+      "reset": {
+        "*": {
+          "all": "initial",
+          "box-sizing": "border-box"
+        }
+      }
+    },
+    "cssnano": {}
   }
+}`;
+
+  return {
+    name: "postcss.config.json",
+    content,
+  };
 };
 
 export default generatePostCssConfigFile;
