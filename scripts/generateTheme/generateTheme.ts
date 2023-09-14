@@ -391,6 +391,11 @@ async function setupTooling() {
           "--save-dev",
         ]);
         break;
+      case "none":
+        console.log(
+          formatMessage({ message: `Alright, good luck!`, color: "yellow" })
+        );
+        break;
     }
   } catch (error) {
     console.error(
