@@ -368,11 +368,11 @@ async function setupTooling() {
           scripts: [
             {
               key: `css`,
-              value: `postcss src/css/**/*.css --dir wp/themes/${answers.theme.folder}/css --config postcss.config.json`,
+              value: `postcss src/css/**/*.css --dir wp/themes/${answers.theme.folder}/css`,
             },
             {
               key: `css:watch`,
-              value: `postcss src/css/**/*.css --dir wp/themes/${answers.theme.folder}/css --config postcss.config.json --watch`,
+              value: `postcss src/css/**/*.css --dir wp/themes/${answers.theme.folder}/css --watch`,
             },
           ],
         });
@@ -395,7 +395,6 @@ async function setupTooling() {
           "install",
           `${answers.tooling.css.packageName}`,
           `postcss-cli`,
-          `postcss-load-config`,
           `autoprefixer`,
           `postcss-autoreset`,
           `postcss-nested`,
