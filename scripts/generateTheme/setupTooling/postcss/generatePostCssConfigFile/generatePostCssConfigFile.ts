@@ -18,7 +18,7 @@ const generatePostCssConfigFile = (): File => {
 }`;
 
   return {
-    name: "postcss.config.json",
+    name: ".postcssrc.json",
     content,
   };
 };
