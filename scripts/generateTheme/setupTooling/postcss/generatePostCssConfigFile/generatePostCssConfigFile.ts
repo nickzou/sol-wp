@@ -5,7 +5,7 @@ const generatePostCssConfigFile = (): File => {
   "plugins": {
     "autoprefixer": {},
     "postcss-import": {},
-    "postcss-nested": {},
+    "postcss-nested": {}
   }
 }`;
 
