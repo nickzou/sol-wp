@@ -1,22 +1,23 @@
-import generatePostCssConfigFile from "@generateTheme/cssOptions/postcss/generatePostCssConfigFile/generatePostCssConfigFile";
+import generatePostCssProdConfigFile from "@generateTheme/cssOptions/postcss/generatePostCssProdConfigFile/generatePostCssProdConfigFile";
 import { File } from "@utils/types/File";
 
-describe("generatePostCssConfigFile", () => {
+describe("generatePostCssProdConfigFile", () => {
   it("should generate the correct PostCSS config file", () => {
     const expectedContent = `{
   "plugins": {
     "autoprefixer": {},
     "postcss-import": {},
-    "postcss-nested": {}
+    "postcss-nested": {},
+    "cssnano": {}
   }
 }`;
 
     const expected: File = {
-      name: ".postcssrc.json",
+      name: ".postcssrc.prod.json",
       content: expectedContent,
     };
 
-    const result = generatePostCssConfigFile();
+    const result = generatePostCssProdConfigFile();
     expect(result).toEqual(expected);
   });
 });
