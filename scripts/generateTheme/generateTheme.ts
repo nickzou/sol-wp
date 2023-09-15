@@ -1,4 +1,4 @@
-import { intro, outro, text, select, isCancel } from "@clack/prompts";
+import { intro, outro, text, select, confirm, isCancel } from "@clack/prompts";
 import formatMessage from "@utils/formatMessage/formatMessage";
 import createFolder from "@utils/createFolder/createFolder";
 import generateCssFile from "@generateTheme/generateCssFile/generateCssFile";
@@ -96,15 +96,11 @@ if (isCancel(cssOption)) {
   process.exit(0);
 }
 
-const jsOption = await select({
-  message: `How would you like to use JavaScript?`,
-  options: [
-    { value: "typescript", label: "TypeScript" },
-    { value: "javascript", label: "JavaScript" },
-  ],
+const ts = await confirm({
+  message: `Would you to use TypeScript?`,
 });
 
-if (isCancel(jsOption)) {
+if (isCancel(ts)) {
   process.exit(0);
 }
 
@@ -132,7 +128,7 @@ const answers: Recipe = {
   },
   tooling: {
     css: cssOptions.filter((o) => o.name === cssOption)[0],
-    ts: true,
+    ts: ts,
   },
 };
 
