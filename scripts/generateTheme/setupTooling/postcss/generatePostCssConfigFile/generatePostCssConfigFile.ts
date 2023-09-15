@@ -4,6 +4,7 @@ const generatePostCssConfigFile = (): File => {
   const content = `{
   "plugins": {
     "autoprefixer": {},
+    "postcss-import": {},
     "postcss-nested": {},
     "cssnano": {}
   }
