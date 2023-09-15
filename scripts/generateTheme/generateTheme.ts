@@ -443,7 +443,7 @@ async function setupTooling() {
       });
     }
 
-    installNpmPackages(npmPackages);
+    await installNpmPackages(npmPackages);
   } catch (error) {
     console.error(
       formatMessage({ message: `An error occurred: ${error}`, color: "red" })
