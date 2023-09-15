@@ -433,6 +433,12 @@ async function setupTooling() {
         );
         break;
     }
+
+    //JavaScript/TypeScript installs
+    npmPackages.concat["eslint"];
+    if (!npmPackages.includes("prettier")) {
+      npmPackages.push("prettier");
+    }
     if (answers.tooling.ts) {
       const tsConfigFile = generateTsConfigFile();
 
