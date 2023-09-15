@@ -22,6 +22,7 @@ import formatFolderName from "@utils/formatFolderName/formatFolderName";
 import generatePostCssConfigFile from "./cssOptions/postcss/generatePostCssConfigFile/generatePostCssConfigFile";
 import generatePostCssProdConfigFile from "./cssOptions/postcss/generatePostCssProdConfigFile/generatePostCssProdConfigFile";
 import generateTsConfigFile from "./tsOption/generateTsConfigFile/generateTsConfigFile";
+import installNpmPackages from "@utils/installNpmPackages/installNpmPackages";
 
 const htmlRegex = /<\/?[a-z][\s\S]*>/i;
 const spacesRegex = /\s+/;
@@ -161,6 +162,7 @@ editWpEnv({ wpEnvFile: `.wp-env.json`, directory: answers.theme.folder });
 // Finalize setup and display outro
 async function setupTooling() {
   const functionFile = generateFunctionsFile();
+  let npmPackages = [];
   try {
     switch (cssOption) {
       case "tailwind":
@@ -225,12 +227,10 @@ async function setupTooling() {
           fileContent: editedTailwindPrettierRcFile.content,
         });
 
-        await executeCommand("npm", [
-          "install",
+        npmPackages.concat([
           `${answers.tooling.css.packageName}`,
           "prettier",
           "prettier-plugin-tailwindcss",
-          "--save-dev",
         ]);
         break;
       case "uno":
@@ -259,11 +259,7 @@ async function setupTooling() {
           fileContent: unoConfigFile.content,
         });
 
-        await executeCommand("npm", [
-          "install",
-          `${answers.tooling.css.packageName}`,
-          "--save-dev",
-        ]);
+        npmPackages.concat([`${answers.tooling.css.packageName}`]);
         break;
       case "sass":
         await configureCssTool({
@@ -341,9 +337,7 @@ async function setupTooling() {
           fileName: "styles.scss",
           fileContent: "@use 'scss-reset/reset';",
         });
-
-        await executeCommand("npm", [
-          "install",
+        npmPackages.concat([
           `${answers.tooling.css.packageName}`,
           `scss-reset`,
           `prettier`,
@@ -351,7 +345,6 @@ async function setupTooling() {
           `stylelint-config-standard-scss`,
           `onchange`,
           `concurrently`,
-          "--save-dev",
         ]);
         break;
       case "postcss":
@@ -419,8 +412,7 @@ async function setupTooling() {
           fileContent: editedPostCssPrettierConfigRcFile.content,
         });
 
-        await executeCommand("npm", [
-          "install",
+        npmPackages.concat([
           `${answers.tooling.css.packageName}`,
           `postcss-cli`,
           `autoprefixer`,
@@ -433,7 +425,6 @@ async function setupTooling() {
           `stylelint-config-standard`,
           `onchange`,
           `concurrently`,
-          "--save-dev",
         ]);
         break;
       case "none":
@@ -451,6 +442,8 @@ async function setupTooling() {
         fileContent: tsConfigFile.content,
       });
     }
+
+    installNpmPackages(npmPackages);
   } catch (error) {
     console.error(
       formatMessage({ message: `An error occurred: ${error}`, color: "red" })
