@@ -21,6 +21,7 @@ import generateSassStylelintFile from "@generateTheme/cssOptions/sass/generateSa
 import formatFolderName from "@utils/formatFolderName/formatFolderName";
 import generatePostCssConfigFile from "./cssOptions/postcss/generatePostCssConfigFile/generatePostCssConfigFile";
 import generatePostCssProdConfigFile from "./cssOptions/postcss/generatePostCssProdConfigFile/generatePostCssProdConfigFile";
+import generateTsConfigFile from "./tsOption/generateTsConfigFile/generateTsConfigFile";
 
 const htmlRegex = /<\/?[a-z][\s\S]*>/i;
 const spacesRegex = /\s+/;
@@ -440,6 +441,15 @@ async function setupTooling() {
           formatMessage({ message: `Alright, good luck!`, color: "yellow" })
         );
         break;
+    }
+    if (answers.tooling.ts) {
+      const tsConfigFile = generateTsConfigFile();
+
+      createFile({
+        directoryPath: ".",
+        fileName: tsConfigFile.name,
+        fileContent: tsConfigFile.content,
+      });
     }
   } catch (error) {
     console.error(
