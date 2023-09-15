@@ -1,18 +1,19 @@
 import { File } from "@utils/types/File";
 
-const generatePostCssConfigFile = (): File => {
+const generatePostCssProdConfigFile = (): File => {
   const content = `{
   "plugins": {
     "autoprefixer": {},
     "postcss-import": {},
     "postcss-nested": {},
+    "cssnano": {}
   }
 }`;
 
   return {
-    name: ".postcssrc.json",
+    name: ".postcssrc.prod.json",
     content,
   };
 };
 
-export default generatePostCssConfigFile;
+export default generatePostCssProdConfigFile;

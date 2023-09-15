@@ -378,15 +378,15 @@ async function setupTooling() {
         const postCssConfigFile = generatePostCssConfigFile();
 
         createFile({
-          directoryPath: "src/css",
-          fileName: "styles.css",
-          fileContent: '@import "normalize.css";',
-        });
-
-        createFile({
           directoryPath: ".",
           fileName: postCssConfigFile.name,
           fileContent: postCssConfigFile.content,
+        });
+
+        createFile({
+          directoryPath: "src/css",
+          fileName: "styles.css",
+          fileContent: '@import "normalize.css";',
         });
 
         const postCssPrettierRcFile = generatePrettierRcFile();
