@@ -415,7 +415,7 @@ async function setupTooling() {
           `postcss-cli`,
           `autoprefixer`,
           `postcss-import`,
-          `postcss-normalize`,
+          `normalize.css`,
           `postcss-nested`,
           `cssnano`,
           `prettier`,
