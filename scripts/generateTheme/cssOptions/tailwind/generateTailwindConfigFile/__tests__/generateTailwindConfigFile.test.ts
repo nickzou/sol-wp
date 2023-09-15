@@ -1,4 +1,4 @@
-import generateTailwindConfig from "@generateTheme/setupTooling/tailwind/generateTailwindConfigFile/generateTailwindConfigFile";
+import generateTailwindConfig from "@generateTheme/cssOptions/tailwind/generateTailwindConfigFile/generateTailwindConfigFile";
 import { File } from "@utils/types/File"; // Import this based on your project structure
 
 describe("generateTailwindConfig", () => {

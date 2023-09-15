@@ -1,4 +1,4 @@
-import generatePrettierRcFile from "@generateTheme/setupTooling/prettier/generatePrettierRcFile/generatePrettierRcFile";
+import generatePrettierRcFile from "@generateTheme/cssOptions/prettier/generatePrettierRcFile/generatePrettierRcFile";
 import { File } from "@utils/types/File";
 
 describe("generatePrettierRcFile", () => {

@@ -1,4 +1,4 @@
-import generateUnoConfigFile from "@generateTheme/setupTooling/uno/generateUnoConfigFile/generateUnoConfigFile"; // Adjust the import path
+import generateUnoConfigFile from "@generateTheme/cssOptions/uno/generateUnoConfigFile/generateUnoConfigFile"; // Adjust the import path
 import { File } from "@utils/types/File"; // Adjust this import path based on your project structure
 
 describe("generateUnoConfigFile", () => {
