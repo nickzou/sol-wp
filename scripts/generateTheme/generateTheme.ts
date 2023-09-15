@@ -24,7 +24,7 @@ import generatePostCssConfigFile from "./setupTooling/postcss/generatePostCssCon
 const htmlRegex = /<\/?[a-z][\s\S]*>/i;
 const spacesRegex = /\s+/;
 
-intro(`Generate Theme`);
+intro(bold(`Generate Theme`));
 
 const getName = await text({
   message: `Enter a name for your theme.`,
