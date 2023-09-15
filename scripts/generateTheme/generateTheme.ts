@@ -20,6 +20,7 @@ import editJson from "@utils/editJson/editJson";
 import generateSassStylelintFile from "@generateTheme/setupTooling/sass/generateSassStylelintFile/generateSassStylelintFile";
 import formatFolderName from "@utils/formatFolderName/formatFolderName";
 import generatePostCssConfigFile from "./setupTooling/postcss/generatePostCssConfigFile/generatePostCssConfigFile";
+import generatePostCssProdConfigFile from "./setupTooling/postcss/generatePostCssProdConfigFile/generatePostCssProdConfigFile";
 
 const htmlRegex = /<\/?[a-z][\s\S]*>/i;
 const spacesRegex = /\s+/;
@@ -366,27 +367,39 @@ async function setupTooling() {
           scripts: [
             {
               key: `css`,
-              value: `postcss src/css/**/*.css --dir wp/themes/${answers.theme.folder}/css`,
+              value: `postcss src/css/**/*.css --dir wp/themes/${answers.theme.folder}/css --config .postcssrc.json`,
+            },
+            {
+              key: `css:prod`,
+              value: `postcss src/css/**/*.css --dir wp/themes/${answers.theme.folder}/css --config .postcssrc.prod.json`,
             },
             {
               key: `css:watch`,
-              value: `postcss src/css/**/*.css --dir wp/themes/${answers.theme.folder}/css --watch`,
+              value: `postcss src/css/**/*.css --dir wp/themes/${answers.theme.folder}/css --config .postcssrc.json --watch`,
             },
           ],
         });
 
         const postCssConfigFile = generatePostCssConfigFile();
 
-        createFile({
-          directoryPath: "src/css",
-          fileName: "styles.css",
-          fileContent: "/*styles here*/",
-        });
+        const postCssProdConfigFile = generatePostCssProdConfigFile();
 
         createFile({
           directoryPath: ".",
           fileName: postCssConfigFile.name,
           fileContent: postCssConfigFile.content,
+        });
+
+        createFile({
+          directoryPath: ".",
+          fileName: postCssProdConfigFile.name,
+          fileContent: postCssProdConfigFile.content,
+        });
+
+        createFile({
+          directoryPath: "src/css",
+          fileName: "styles.css",
+          fileContent: '@import "normalize.css";',
         });
 
         const postCssPrettierRcFile = generatePrettierRcFile();
@@ -414,6 +427,8 @@ async function setupTooling() {
           `${answers.tooling.css.packageName}`,
           `postcss-cli`,
           `autoprefixer`,
+          `postcss-import`,
+          `normalize.css`,
           `postcss-nested`,
           `cssnano`,
           `prettier`,
