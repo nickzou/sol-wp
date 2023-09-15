@@ -95,6 +95,18 @@ if (isCancel(cssOption)) {
   process.exit(0);
 }
 
+const jsOption = await select({
+  message: `How would you like to use JavaScript?`,
+  options: [
+    { value: "typescript", label: "TypeScript" },
+    { value: "javascript", label: "JavaScript" },
+  ],
+});
+
+if (isCancel(jsOption)) {
+  process.exit(0);
+}
+
 const name = getName ? (getName as string) : "Sol WP";
 
 const directory = getDirectory
