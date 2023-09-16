@@ -23,7 +23,6 @@ import generatePostCssProdConfigFile from "./cssOptions/postcss/generatePostCssP
 import generateTsConfigFile from "./tsOption/generateTsConfigFile/generateTsConfigFile";
 import installNpmPackages from "@utils/installNpmPackages/installNpmPackages";
 import generateEsLintConfigFile from "./generateEsLintConfigFile/generateEsLintConfigFile";
-import { create } from "domain";
 import addScriptsToPackageJson from "@utils/addScriptsToPackageJson/addScriptsToPackageJson";
 
 const htmlRegex = /<\/?[a-z][\s\S]*>/i;
@@ -161,10 +160,18 @@ createFile({
 
 editWpEnv({ wpEnvFile: `.wp-env.json`, directory: answers.theme.folder });
 
+const prettierRcFile = generatePrettierRcFile();
+
+createFile({
+  directoryPath: ".",
+  fileName: prettierRcFile.name,
+  fileContent: prettierRcFile.content,
+});
+
 // Finalize setup and display outro
 async function setupTooling() {
   const functionFile = generateFunctionsFile();
-  let npmPackages = [];
+  let npmPackages = ["prettier", "onchange"];
   try {
     switch (cssOption) {
       case "tailwind":
@@ -196,14 +203,6 @@ async function setupTooling() {
         });
 
         const tailwindCssFile = generateTailwindCssFile();
-
-        const tailwindPrettierRcFile = generatePrettierRcFile();
-
-        createFile({
-          directoryPath: `.`,
-          fileName: tailwindPrettierRcFile.name,
-          fileContent: tailwindPrettierRcFile.content,
-        });
 
         const editedTailwindPrettierRcFile = editJson({
           filePath: ".",
@@ -316,14 +315,6 @@ async function setupTooling() {
 
         const sassStylelintFile = generateSassStylelintFile();
 
-        const sassPrettierRcFile = generatePrettierRcFile();
-
-        createFile({
-          directoryPath: `.`,
-          fileName: sassPrettierRcFile.name,
-          fileContent: sassPrettierRcFile.content,
-        });
-
         createFile({
           directoryPath: ".",
           fileName: sassConfigFile.name,
@@ -396,14 +387,6 @@ async function setupTooling() {
           fileContent: '@import "normalize.css";',
         });
 
-        const postCssPrettierRcFile = generatePrettierRcFile();
-
-        createFile({
-          directoryPath: `.`,
-          fileName: postCssPrettierRcFile.name,
-          fileContent: postCssPrettierRcFile.content,
-        });
-
         const editedPostCssPrettierConfigRcFile = editJson({
           filePath: ".",
           fileName: ".prettierrc",
@@ -453,16 +436,6 @@ async function setupTooling() {
       fileContent: esLintConfigFile.content,
     });
 
-    if (!npmPackages.includes("prettier")) {
-      Array.prototype.push.apply(npmPackages, ["prettier"]);
-      const prettierRcFile = generatePrettierRcFile();
-
-      createFile({
-        directoryPath: ".",
-        fileName: prettierRcFile.name,
-        fileContent: prettierRcFile.content,
-      });
-    }
     if (answers.tooling.ts) {
       const tsConfigFile = generateTsConfigFile();
 
