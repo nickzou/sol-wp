@@ -436,7 +436,10 @@ async function setupTooling() {
     }
 
     //JavaScript/TypeScript installs
-    Array.prototype.push.apply(npmPackages, ["eslint"]);
+    Array.prototype.push.apply(npmPackages, [
+      "eslint",
+      "eslint-plugin-prettier",
+    ]);
     if (!npmPackages.includes("prettier")) {
       Array.prototype.push.apply(npmPackages, ["prettier"]);
       const prettierRcFile = generatePrettierRcFile();
