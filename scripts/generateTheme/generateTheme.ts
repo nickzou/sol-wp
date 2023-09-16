@@ -455,11 +455,7 @@ async function setupTooling() {
     });
 
     if (!npmPackages.includes("prettier")) {
-      Array.prototype.push.apply(npmPackages, [
-        "prettier",
-        "@typescript-eslint/eslint-plugin",
-        "@typescript-eslint/parser",
-      ]);
+      Array.prototype.push.apply(npmPackages, ["prettier"]);
       const prettierRcFile = generatePrettierRcFile();
 
       createFile({
@@ -470,6 +466,11 @@ async function setupTooling() {
     }
     if (answers.tooling.ts) {
       const tsConfigFile = generateTsConfigFile();
+
+      Array.prototype.push.apply(npmPackages, [
+        "@typescript-eslint/eslint-plugin",
+        "@typescript-eslint/parser",
+      ]);
 
       createFile({
         directoryPath: ".",
