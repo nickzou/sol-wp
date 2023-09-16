@@ -454,7 +454,11 @@ async function setupTooling() {
     });
 
     if (!npmPackages.includes("prettier")) {
-      Array.prototype.push.apply(npmPackages, ["prettier", "@typescript-eslint/eslint-plugin", "@typescript-eslint/parser"]);
+      Array.prototype.push.apply(npmPackages, [
+        "prettier",
+        "@typescript-eslint/eslint-plugin",
+        "@typescript-eslint/parser",
+      ]);
       const prettierRcFile = generatePrettierRcFile();
 
       createFile({
@@ -472,7 +476,7 @@ async function setupTooling() {
         fileContent: tsConfigFile.content,
       });
 
-      const editedEsLintConfgFile = editJson({
+      let editedEsLintConfgFile = editJson({
         filePath: ".",
         fileName: ".eslintrc.json",
         edits: {
@@ -483,6 +487,22 @@ async function setupTooling() {
           ],
         },
       });
+
+      createFile({
+        directoryPath: ".",
+        fileName: editedEsLintConfgFile.name,
+        fileContent: editedEsLintConfgFile.content,
+      });
+
+      editedEsLintConfgFile = editJson({
+        filePath: ".",
+        fileName: ".eslintrc.json",
+        edits: {
+          key: "parser",
+          value: "@typescript-eslint/parser",
+        },
+      });
+
       createFile({
         directoryPath: ".",
         fileName: editedEsLintConfgFile.name,
