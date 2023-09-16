@@ -52,7 +52,7 @@ const editJson = ({ filePath, fileName, edits }: editJson):File => {
       }
     }
 
-    const updatedContent = JSON.stringify(jsonContent);
+    const updatedContent = JSON.stringify(jsonContent, null, '\t');
 
     return {
       name: fileName,
