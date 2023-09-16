@@ -24,6 +24,7 @@ import generateTsConfigFile from "./tsOption/generateTsConfigFile/generateTsConf
 import installNpmPackages from "@utils/installNpmPackages/installNpmPackages";
 import generateEsLintConfigFile from "./generateEsLintConfigFile/generateEsLintConfigFile";
 import { create } from "domain";
+import addScriptsToPackageJson from "@utils/addScriptsToPackageJson/addScriptsToPackageJson";
 
 const htmlRegex = /<\/?[a-z][\s\S]*>/i;
 const spacesRegex = /\s+/;
@@ -509,6 +510,11 @@ async function setupTooling() {
         fileContent: editedEsLintConfgFile.content,
       });
     }
+
+    addScriptsToPackageJson([
+      { key: `eslint`, value: `eslint src/ts --ext .js, .jsx, .ts,.tsx` },
+      { key: `eslint:watch`, value: `esw src/ts --ext .js, .jsx, .ts,.tsx` },
+    ]);
 
     await installNpmPackages(npmPackages);
   } catch (error) {
