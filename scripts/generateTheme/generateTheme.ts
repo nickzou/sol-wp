@@ -172,6 +172,7 @@ createFile({
 async function setupTooling() {
   const functionFile = generateFunctionsFile();
   let npmPackages = ["prettier", "onchange"];
+  let packageScripts = [];
   try {
     switch (cssOption) {
       case "tailwind":
@@ -179,21 +180,23 @@ async function setupTooling() {
           functionFile,
           theme: answers.theme,
           option: answers.tooling.css,
-          scripts: [
-            {
-              key: "tailwind",
-              value: `tailwindcss -i ./src/css/tailwind.css -o ./wp/themes/${answers.theme.folder}/css/tailwind.css`,
-            },
-            {
-              key: "tailwind:prod",
-              value: `tailwindcss -i ./src/css/tailwind.css -o ./wp/themes/${answers.theme.folder}/css/tailwind.css`,
-            },
-            {
-              key: "tailwind:watch",
-              value: `tailwindcss -i ./src/css/tailwind.css -o ./wp/themes/${answers.theme.folder}/css/tailwind.css --watch`,
-            },
-          ],
+          scripts: [],
         });
+
+        Array.prototype.push.apply(packageScripts, [
+          {
+            key: "tailwind",
+            value: `tailwindcss -i ./src/css/tailwind.css -o ./wp/themes/${answers.theme.folder}/css/tailwind.css`,
+          },
+          {
+            key: "tailwind:prod",
+            value: `tailwindcss -i ./src/css/tailwind.css -o ./wp/themes/${answers.theme.folder}/css/tailwind.css`,
+          },
+          {
+            key: "tailwind:watch",
+            value: `tailwindcss -i ./src/css/tailwind.css -o ./wp/themes/${answers.theme.folder}/css/tailwind.css --watch`,
+          },
+        ]);
 
         const tailwindConfigFile = generateTailwindConfigFile({
           content: [
@@ -423,6 +426,8 @@ async function setupTooling() {
 
     //JavaScript/TypeScript installs
     Array.prototype.push.apply(npmPackages, [
+      "esbuild",
+      "esbuild-plugin-browserslist",
       "eslint",
       "eslint-plugin-prettier",
       "eslint-config-prettier",
