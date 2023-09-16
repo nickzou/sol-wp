@@ -441,6 +441,8 @@ async function setupTooling() {
     Array.prototype.push.apply(npmPackages, [
       "eslint",
       "eslint-plugin-prettier",
+      "eslint-config-prettier",
+      "eslint-watch",
     ]);
 
     const esLintConfigFile = generateEsLintConfigFile();
@@ -452,7 +454,7 @@ async function setupTooling() {
     });
 
     if (!npmPackages.includes("prettier")) {
-      Array.prototype.push.apply(npmPackages, ["prettier"]);
+      Array.prototype.push.apply(npmPackages, ["prettier", "@typescript-eslint/eslint-plugin", "@typescript-eslint/parser"]);
       const prettierRcFile = generatePrettierRcFile();
 
       createFile({
