@@ -34,7 +34,7 @@ describe("generateEsLintConfigFile", () => {
       }
     ],
     "semi": ["error", "always"],
-    "prefer-template": 2,
+    "prefer-template": 2
   }
 }
 `;
