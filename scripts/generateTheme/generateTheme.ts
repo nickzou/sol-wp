@@ -488,7 +488,7 @@ async function setupTooling() {
       { key: `eslint`, value: `eslint 'src/ts/**/*.{js,jsx,ts,tsx}'` },
       {
         key: `eslint:watch`,
-        value: `onchange 'src/ts/**/*.{js,jsx,ts,tsx}' -- npm run lint`,
+        value: `onchange 'src/ts/**/*.{js,jsx,ts,tsx}' -- npm run eslint`,
       },
     ]);
 
