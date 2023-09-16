@@ -227,7 +227,7 @@ async function setupTooling() {
           fileContent: editedTailwindPrettierRcFile.content,
         });
 
-        npmPackages = npmPackages.concat([
+        Array.prototype.push.apply(npmPackages, [
           `${answers.tooling.css.packageName}`,
           "prettier",
           "prettier-plugin-tailwindcss",
@@ -259,7 +259,7 @@ async function setupTooling() {
           fileContent: unoConfigFile.content,
         });
 
-        npmPackages = npmPackages.concat([
+        Array.prototype.push.apply(npmPackages, [
           `${answers.tooling.css.packageName}`,
         ]);
         break;
@@ -339,7 +339,7 @@ async function setupTooling() {
           fileName: "styles.scss",
           fileContent: "@use 'scss-reset/reset';",
         });
-        npmPackages = npmPackages.concat([
+        Array.prototype.push.apply(npmPackages, [
           `${answers.tooling.css.packageName}`,
           `scss-reset`,
           `prettier`,
@@ -414,7 +414,7 @@ async function setupTooling() {
           fileContent: editedPostCssPrettierConfigRcFile.content,
         });
 
-        npmPackages = npmPackages.concat([
+        Array.prototype.push.apply(npmPackages, [
           `${answers.tooling.css.packageName}`,
           `postcss-cli`,
           `autoprefixer`,
@@ -437,9 +437,9 @@ async function setupTooling() {
     }
 
     //JavaScript/TypeScript installs
-    npmPackages = npmPackages.concat["eslint"];
+    Array.prototype.push.apply(npmPackages, ["eslint"]);
     if (!npmPackages.includes("prettier")) {
-      npmPackages = npmPackages.concat(["prettier"]);
+      Array.prototype.push.apply(npmPackages, ["prettier"]);
     }
     if (answers.tooling.ts) {
       const tsConfigFile = generateTsConfigFile();
