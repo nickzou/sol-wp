@@ -10,7 +10,6 @@ import generateFunctionsFile from "@generateTheme/generateFunctionsFile/generate
 import { Recipe } from "@utils/types/Recipe";
 import configureCssTool from "@generateTheme/configureCssTool/configureCssTool";
 import cssOptions from "@utils/vars/cssOptions";
-import executeCommand from "@utils/executeCommand/executeCommand";
 import generateTailwindConfigFile from "@generateTheme/cssOptions/tailwind/generateTailwindConfigFile/generateTailwindConfigFile";
 import generateTailwindCssFile from "@generateTheme/cssOptions/tailwind/generateTailwindCssFile/generateTailwindCssFile";
 import generateUnoConfigFile from "@generateTheme/cssOptions/uno/generateUnoConfigFile/generateUnoConfigFile";
