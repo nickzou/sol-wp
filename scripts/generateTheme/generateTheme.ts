@@ -439,6 +439,13 @@ async function setupTooling() {
     Array.prototype.push.apply(npmPackages, ["eslint"]);
     if (!npmPackages.includes("prettier")) {
       Array.prototype.push.apply(npmPackages, ["prettier"]);
+      const prettierRcFile = generatePrettierRcFile();
+
+      createFile({
+        directoryPath: ".",
+        fileName: prettierRcFile.name,
+        fileContent: prettierRcFile.content,
+      });
     }
     if (answers.tooling.ts) {
       const tsConfigFile = generateTsConfigFile();
