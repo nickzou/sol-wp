@@ -469,6 +469,18 @@ async function setupTooling() {
         fileName: tsConfigFile.name,
         fileContent: tsConfigFile.content,
       });
+
+      const editedEsLintConfgFile = editJson({
+        filePath: ".",
+        fileName: ".eslintrc.json",
+        edits: {
+          key: "extends",
+          value: [
+            "plugin:@typescript-eslint/eslint-recommended",
+            "plugin:@typescript-eslint/recommended",
+          ],
+        },
+      });
     }
 
     await installNpmPackages(npmPackages);

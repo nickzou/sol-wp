@@ -2,7 +2,7 @@ import { File } from "@utils/types/File";
 
 const generateEsLintConfigFile = (): File => {
   const content = `{
-  "extends": "eslint:recommended",
+  "extends": ["eslint:recommended", "prettier"],
   "plugins": [
     "prettier"
   ],

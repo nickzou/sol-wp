@@ -4,7 +4,7 @@ import { File } from "@utils/types/File";
 describe("generateEsLintConfigFile", () => {
   it("should generate the correct tsconfig.json file", () => {
     const expectedContent = `{
-  "extends": "eslint:recommended",
+  "extends": ["eslint:recommended", "prettier"],
   "plugins": [
     "prettier"
   ],
