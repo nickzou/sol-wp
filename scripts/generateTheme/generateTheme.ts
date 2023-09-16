@@ -481,6 +481,11 @@ async function setupTooling() {
           ],
         },
       });
+      createFile({
+        directoryPath: ".",
+        fileName: editedEsLintConfgFile.name,
+        fileContent: editedEsLintConfgFile.content,
+      });
     }
 
     await installNpmPackages(npmPackages);
