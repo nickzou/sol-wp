@@ -443,7 +443,6 @@ async function setupTooling() {
       "eslint",
       "eslint-plugin-prettier",
       "eslint-config-prettier",
-      "eslint-watch",
     ]);
 
     const esLintConfigFile = generateEsLintConfigFile();
@@ -513,8 +512,11 @@ async function setupTooling() {
     }
 
     addScriptsToPackageJson([
-      { key: `eslint`, value: `eslint src/ts --ext .js, .jsx, .ts,.tsx` },
-      { key: `eslint:watch`, value: `esw src/ts --ext .js, .jsx, .ts,.tsx` },
+      { key: `eslint`, value: `eslint 'src/ts/**/*.{js,jsx,ts,tsx}'` },
+      {
+        key: `eslint:watch`,
+        value: `onchange 'src/ts/**/*.{js,jsx,ts,tsx}' -- npm run lint`,
+      },
     ]);
 
     await installNpmPackages(npmPackages);
