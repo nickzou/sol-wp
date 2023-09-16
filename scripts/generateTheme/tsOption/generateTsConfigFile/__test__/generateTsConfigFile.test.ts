@@ -11,14 +11,14 @@ describe("generateTsConfigFile", () => {
     "target": "ES6",
     "verbatimModuleSyntax":true,
     "allowJs":true,
-   "resolveJsonModule":true,
-   "moduleDetection":"force",
+    "resolveJsonModule":true,
+    "moduleDetection":"force",
     "strict":true,
     "noUncheckedIndexedAccess":true,
     "module": "ESNext",
-   "moduleResolution": "Bundler",
+    "moduleResolution": "Bundler",
     "noEmit": true,
-   "lib":["es2022","dom"],
+    "lib":["es2022","dom"],
   }
 }`;
 
