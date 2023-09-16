@@ -22,6 +22,8 @@ import generatePostCssConfigFile from "./cssOptions/postcss/generatePostCssConfi
 import generatePostCssProdConfigFile from "./cssOptions/postcss/generatePostCssProdConfigFile/generatePostCssProdConfigFile";
 import generateTsConfigFile from "./tsOption/generateTsConfigFile/generateTsConfigFile";
 import installNpmPackages from "@utils/installNpmPackages/installNpmPackages";
+import generateEsLintConfigFile from "./generateEsLintConfigFile/generateEsLintConfigFile";
+import { create } from "domain";
 
 const htmlRegex = /<\/?[a-z][\s\S]*>/i;
 const spacesRegex = /\s+/;
@@ -440,6 +442,15 @@ async function setupTooling() {
       "eslint",
       "eslint-plugin-prettier",
     ]);
+
+    const esLintConfigFile = generateEsLintConfigFile();
+
+    createFile({
+      directoryPath: ".",
+      fileName: esLintConfigFile.name,
+      fileContent: esLintConfigFile.content,
+    });
+
     if (!npmPackages.includes("prettier")) {
       Array.prototype.push.apply(npmPackages, ["prettier"]);
       const prettierRcFile = generatePrettierRcFile();
