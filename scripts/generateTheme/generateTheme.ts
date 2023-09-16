@@ -1,4 +1,4 @@
-import { intro, outro, text, select, isCancel } from "@clack/prompts";
+import { intro, outro, text, select, confirm, isCancel } from "@clack/prompts";
 import formatMessage from "@utils/formatMessage/formatMessage";
 import createFolder from "@utils/createFolder/createFolder";
 import generateCssFile from "@generateTheme/generateCssFile/generateCssFile";
@@ -10,22 +10,25 @@ import generateFunctionsFile from "@generateTheme/generateFunctionsFile/generate
 import { Recipe } from "@utils/types/Recipe";
 import configureCssTool from "@generateTheme/configureCssTool/configureCssTool";
 import cssOptions from "@utils/vars/cssOptions";
-import executeCommand from "@utils/executeCommand/executeCommand";
-import generateTailwindConfigFile from "@generateTheme/setupTooling/tailwind/generateTailwindConfigFile/generateTailwindConfigFile";
-import generateTailwindCssFile from "@generateTheme/setupTooling/tailwind/generateTailwindCssFile/generateTailwindCssFile";
-import generateUnoConfigFile from "@generateTheme/setupTooling/uno/generateUnoConfigFile/generateUnoConfigFile";
-import generateSassConfigFile from "@generateTheme/setupTooling/sass/generateSassConfigFile/generateSassConfigFile";
-import generatePrettierRcFile from "./setupTooling/prettier/generatePrettierRcFile/generatePrettierRcFile";
+import generateTailwindConfigFile from "@generateTheme/cssOptions/tailwind/generateTailwindConfigFile/generateTailwindConfigFile";
+import generateTailwindCssFile from "@generateTheme/cssOptions/tailwind/generateTailwindCssFile/generateTailwindCssFile";
+import generateUnoConfigFile from "@generateTheme/cssOptions/uno/generateUnoConfigFile/generateUnoConfigFile";
+import generateSassConfigFile from "@generateTheme/cssOptions/sass/generateSassConfigFile/generateSassConfigFile";
+import generatePrettierRcFile from "./cssOptions/prettier/generatePrettierRcFile/generatePrettierRcFile";
 import editJson from "@utils/editJson/editJson";
-import generateSassStylelintFile from "@generateTheme/setupTooling/sass/generateSassStylelintFile/generateSassStylelintFile";
+import generateSassStylelintFile from "@generateTheme/cssOptions/sass/generateSassStylelintFile/generateSassStylelintFile";
 import formatFolderName from "@utils/formatFolderName/formatFolderName";
-import generatePostCssConfigFile from "./setupTooling/postcss/generatePostCssConfigFile/generatePostCssConfigFile";
-import generatePostCssProdConfigFile from "./setupTooling/postcss/generatePostCssProdConfigFile/generatePostCssProdConfigFile";
+import generatePostCssConfigFile from "./cssOptions/postcss/generatePostCssConfigFile/generatePostCssConfigFile";
+import generatePostCssProdConfigFile from "./cssOptions/postcss/generatePostCssProdConfigFile/generatePostCssProdConfigFile";
+import generateTsConfigFile from "./tsOption/generateTsConfigFile/generateTsConfigFile";
+import installNpmPackages from "@utils/installNpmPackages/installNpmPackages";
+import generateEsLintConfigFile from "./generateEsLintConfigFile/generateEsLintConfigFile";
+import addScriptsToPackageJson from "@utils/addScriptsToPackageJson/addScriptsToPackageJson";
 
 const htmlRegex = /<\/?[a-z][\s\S]*>/i;
 const spacesRegex = /\s+/;
 
-intro(`Generate Theme`);
+intro(bold(`Generate Theme`));
 
 const getName = await text({
   message: `Enter a name for your theme.`,
@@ -96,15 +99,11 @@ if (isCancel(cssOption)) {
   process.exit(0);
 }
 
-const jsOption = await select({
-  message: `How would you like to use JavaScript?`,
-  options: [
-    { value: "typescript", label: "TypeScript" },
-    { value: "javascript", label: "JavaScript" },
-  ],
+const ts = await confirm({
+  message: `Would you to use TypeScript?`,
 });
 
-if (isCancel(jsOption)) {
+if (isCancel(ts)) {
   process.exit(0);
 }
 
@@ -132,7 +131,7 @@ const answers: Recipe = {
   },
   tooling: {
     css: cssOptions.filter((o) => o.name === cssOption)[0],
-    ts: true,
+    ts: ts,
   },
 };
 
@@ -161,9 +160,18 @@ createFile({
 
 editWpEnv({ wpEnvFile: `.wp-env.json`, directory: answers.theme.folder });
 
+const prettierRcFile = generatePrettierRcFile();
+
+createFile({
+  directoryPath: ".",
+  fileName: prettierRcFile.name,
+  fileContent: prettierRcFile.content,
+});
+
 // Finalize setup and display outro
 async function setupTooling() {
   const functionFile = generateFunctionsFile();
+  let npmPackages = ["prettier", "onchange"];
   try {
     switch (cssOption) {
       case "tailwind":
@@ -196,14 +204,6 @@ async function setupTooling() {
 
         const tailwindCssFile = generateTailwindCssFile();
 
-        const tailwindPrettierRcFile = generatePrettierRcFile();
-
-        createFile({
-          directoryPath: `.`,
-          fileName: tailwindPrettierRcFile.name,
-          fileContent: tailwindPrettierRcFile.content,
-        });
-
         const editedTailwindPrettierRcFile = editJson({
           filePath: ".",
           fileName: ".prettierrc",
@@ -228,12 +228,10 @@ async function setupTooling() {
           fileContent: editedTailwindPrettierRcFile.content,
         });
 
-        await executeCommand("npm", [
-          "install",
+        Array.prototype.push.apply(npmPackages, [
           `${answers.tooling.css.packageName}`,
           "prettier",
           "prettier-plugin-tailwindcss",
-          "--save-dev",
         ]);
         break;
       case "uno":
@@ -262,10 +260,8 @@ async function setupTooling() {
           fileContent: unoConfigFile.content,
         });
 
-        await executeCommand("npm", [
-          "install",
+        Array.prototype.push.apply(npmPackages, [
           `${answers.tooling.css.packageName}`,
-          "--save-dev",
         ]);
         break;
       case "sass":
@@ -319,14 +315,6 @@ async function setupTooling() {
 
         const sassStylelintFile = generateSassStylelintFile();
 
-        const sassPrettierRcFile = generatePrettierRcFile();
-
-        createFile({
-          directoryPath: `.`,
-          fileName: sassPrettierRcFile.name,
-          fileContent: sassPrettierRcFile.content,
-        });
-
         createFile({
           directoryPath: ".",
           fileName: sassConfigFile.name,
@@ -344,9 +332,7 @@ async function setupTooling() {
           fileName: "styles.scss",
           fileContent: "@use 'scss-reset/reset';",
         });
-
-        await executeCommand("npm", [
-          "install",
+        Array.prototype.push.apply(npmPackages, [
           `${answers.tooling.css.packageName}`,
           `scss-reset`,
           `prettier`,
@@ -354,7 +340,6 @@ async function setupTooling() {
           `stylelint-config-standard-scss`,
           `onchange`,
           `concurrently`,
-          "--save-dev",
         ]);
         break;
       case "postcss":
@@ -402,14 +387,6 @@ async function setupTooling() {
           fileContent: '@import "normalize.css";',
         });
 
-        const postCssPrettierRcFile = generatePrettierRcFile();
-
-        createFile({
-          directoryPath: `.`,
-          fileName: postCssPrettierRcFile.name,
-          fileContent: postCssPrettierRcFile.content,
-        });
-
         const editedPostCssPrettierConfigRcFile = editJson({
           filePath: ".",
           fileName: ".prettierrc",
@@ -422,8 +399,7 @@ async function setupTooling() {
           fileContent: editedPostCssPrettierConfigRcFile.content,
         });
 
-        await executeCommand("npm", [
-          "install",
+        Array.prototype.push.apply(npmPackages, [
           `${answers.tooling.css.packageName}`,
           `postcss-cli`,
           `autoprefixer`,
@@ -436,7 +412,6 @@ async function setupTooling() {
           `stylelint-config-standard`,
           `onchange`,
           `concurrently`,
-          "--save-dev",
         ]);
         break;
       case "none":
@@ -445,6 +420,79 @@ async function setupTooling() {
         );
         break;
     }
+
+    //JavaScript/TypeScript installs
+    Array.prototype.push.apply(npmPackages, [
+      "eslint",
+      "eslint-plugin-prettier",
+      "eslint-config-prettier",
+    ]);
+
+    const esLintConfigFile = generateEsLintConfigFile();
+
+    createFile({
+      directoryPath: ".",
+      fileName: esLintConfigFile.name,
+      fileContent: esLintConfigFile.content,
+    });
+
+    if (answers.tooling.ts) {
+      const tsConfigFile = generateTsConfigFile();
+
+      Array.prototype.push.apply(npmPackages, [
+        "@typescript-eslint/eslint-plugin",
+        "@typescript-eslint/parser",
+      ]);
+
+      createFile({
+        directoryPath: ".",
+        fileName: tsConfigFile.name,
+        fileContent: tsConfigFile.content,
+      });
+
+      let editedEsLintConfgFile = editJson({
+        filePath: ".",
+        fileName: ".eslintrc.json",
+        edits: {
+          key: "extends",
+          value: [
+            "plugin:@typescript-eslint/eslint-recommended",
+            "plugin:@typescript-eslint/recommended",
+          ],
+        },
+      });
+
+      createFile({
+        directoryPath: ".",
+        fileName: editedEsLintConfgFile.name,
+        fileContent: editedEsLintConfgFile.content,
+      });
+
+      editedEsLintConfgFile = editJson({
+        filePath: ".",
+        fileName: ".eslintrc.json",
+        edits: {
+          key: "parser",
+          value: "@typescript-eslint/parser",
+        },
+      });
+
+      createFile({
+        directoryPath: ".",
+        fileName: editedEsLintConfgFile.name,
+        fileContent: editedEsLintConfgFile.content,
+      });
+    }
+
+    addScriptsToPackageJson([
+      { key: `eslint`, value: `eslint 'src/ts/**/*.{js,jsx,ts,tsx}'` },
+      {
+        key: `eslint:watch`,
+        value: `onchange 'src/ts/**/*.{js,jsx,ts,tsx}' -- npm run eslint`,
+      },
+    ]);
+
+    await installNpmPackages(npmPackages);
   } catch (error) {
     console.error(
       formatMessage({ message: `An error occurred: ${error}`, color: "red" })
