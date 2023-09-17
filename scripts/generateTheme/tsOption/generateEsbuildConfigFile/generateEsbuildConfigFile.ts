@@ -16,15 +16,14 @@ import { green, red } from 'colorette';
 const filesFlag = process.argv.filter(a => a.includes("--files"));
 const minifyFlag = process.argv.filter(a => a.includes("--minify"));
 const sourcemapFlag = process.argv.filter(a => a.includes("--sourcemap"));
-const watchFlag = process.argv.filter(a => a.includes("--watch"));
 const formatFlag = process.argv.filter(a => a.includes("--format"));
   
-const fileDir = filesFlag.length >= 1 ? filesFlag[0].split("=")[1] : "./src/ts/*.{ts,tsx}";
+const fileDir = filesFlag.length >= 1 ? filesFlag[0]!.split("=")[1] : "./src/ts/*.{ts,tsx}";
   
-const minify = minifyFlag.length >= 1 || (minifyFlag.length >= 1 && minifyFlag[0].split("=")[1] === "true") ? true : false;
-const sourcemap = sourcemapFlag.length >= 1 || (sourcemapFlag.length >= 1 && sourcemapFlag[0].split("=")[1]) === "true" ? true : false; 
+const minify = minifyFlag.length >= 1 || (minifyFlag.length >= 1 && minifyFlag[0]!.split("=")[1] === "true") ? true : false;
+const sourcemap = sourcemapFlag.length >= 1 || (sourcemapFlag.length >= 1 && sourcemapFlag[0]!.split("=")[1]) === "true" ? true : false; 
   
-const format = formatFlag.length >=1 ? formatFlag[0].split("=")[1] : 'cjs';
+const format = formatFlag.length >=1 ? formatFlag[0]!.split("=")[1] : 'cjs';
   
 const files = glob.sync(fileDir);
   
