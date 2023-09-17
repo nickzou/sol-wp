@@ -436,7 +436,15 @@ async function setupTooling() {
     }
 
     //JavaScript/TypeScript installs
+    const esbuildConfigFile = generateEsLintConfigFile();
+
     const esLintConfigFile = generateEsLintConfigFile();
+
+    createFile({
+      directoryPath: ".",
+      fileName: esbuildConfigFile.name,
+      fileContent: esbuildConfigFile.content,
+    });
 
     createFile({
       directoryPath: ".",
