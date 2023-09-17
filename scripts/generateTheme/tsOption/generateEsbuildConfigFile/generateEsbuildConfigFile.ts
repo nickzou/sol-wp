@@ -11,6 +11,7 @@ import { resolve } from 'path';
 import glob from 'glob';
 import browserslist from 'browserslist';
 import { esbuildPluginBrowserslist } from 'esbuild-plugin-browserslist';
+import { green, red } from 'colorette';
   
 const filesFlag = process.argv.filter(a => a.includes("--files"));
 const minifyFlag = process.argv.filter(a => a.includes("--minify"));
@@ -41,11 +42,11 @@ esbuild.build({
   ]
 })
 .then(result => {
-  console.log(clc.green('JavaScript bundled successfully!'));
+  console.log(green('JavaScript bundled successfully!'));
   console.log(result);
 })
 .catch(error => {
-  console.log(clc.red('JavaScript bundle failed.'));
+  console.log(red('JavaScript bundle failed.'));
   console.log(error);
   process.exit(1);
 });`;
