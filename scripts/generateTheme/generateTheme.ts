@@ -24,6 +24,7 @@ import generateTsConfigFile from "./tsOption/generateTsConfigFile/generateTsConf
 import installNpmPackages from "@utils/installNpmPackages/installNpmPackages";
 import generateEsLintConfigFile from "./generateEsLintConfigFile/generateEsLintConfigFile";
 import addScriptsToPackageJson from "@utils/addScriptsToPackageJson/addScriptsToPackageJson";
+import generateEsbuildConfigFile from "./tsOption/generateEsbuildConfigFile/generateEsbuildConfigFile";
 
 const htmlRegex = /<\/?[a-z][\s\S]*>/i;
 const spacesRegex = /\s+/;
@@ -436,7 +437,9 @@ async function setupTooling() {
     }
 
     //JavaScript/TypeScript installs
-    const esbuildConfigFile = generateEsLintConfigFile();
+    const esbuildConfigFile = generateEsbuildConfigFile({
+      themeFolder: answers.theme.folder,
+    });
 
     const esLintConfigFile = generateEsLintConfigFile();
 

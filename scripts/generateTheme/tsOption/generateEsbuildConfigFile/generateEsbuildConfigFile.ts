@@ -54,3 +54,5 @@ esbuild.build({
     content,
   };
 };
+
+export default generateEsbuildConfigFile;
