@@ -181,7 +181,7 @@ async function setupTooling() {
     "eslint-config-prettier",
     "dotenv",
     "glob",
-    "browserslist"
+    "browserslist",
   ];
   let packageScripts = [];
   try {
@@ -436,10 +436,6 @@ async function setupTooling() {
     }
 
     //JavaScript/TypeScript installs
-    Array.prototype.push.apply(npmPackages, [
-      
-    ]);
-
     const esLintConfigFile = generateEsLintConfigFile();
 
     createFile({
