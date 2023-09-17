@@ -171,7 +171,18 @@ createFile({
 // Finalize setup and display outro
 async function setupTooling() {
   const functionFile = generateFunctionsFile();
-  let npmPackages = ["prettier", "onchange"];
+  let npmPackages = [
+    "prettier",
+    "onchange",
+    "esbuild",
+    "esbuild-plugin-browserslist",
+    "eslint",
+    "eslint-plugin-prettier",
+    "eslint-config-prettier",
+    "dotenv",
+    "glob",
+    "browserslist"
+  ];
   let packageScripts = [];
   try {
     switch (cssOption) {
@@ -426,11 +437,7 @@ async function setupTooling() {
 
     //JavaScript/TypeScript installs
     Array.prototype.push.apply(npmPackages, [
-      "esbuild",
-      "esbuild-plugin-browserslist",
-      "eslint",
-      "eslint-plugin-prettier",
-      "eslint-config-prettier",
+      
     ]);
 
     const esLintConfigFile = generateEsLintConfigFile();
