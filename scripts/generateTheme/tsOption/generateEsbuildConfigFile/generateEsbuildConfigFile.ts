@@ -9,8 +9,8 @@ const generateEsbuildConfigFile = ({
 import 'dotenv/config';
 import { resolve } from 'path';
 import glob from 'glob';
-import browserslist from’browserslist';
-import { esbuildPluginBrowserslist } = from ‘esbuild-plugin-browserslist';
+import browserslist from 'browserslist';
+import { esbuildPluginBrowserslist } from 'esbuild-plugin-browserslist';
   
 const filesFlag = process.argv.filter(a => a.includes("--files"));
 const minifyFlag = process.argv.filter(a => a.includes("--minify"));
