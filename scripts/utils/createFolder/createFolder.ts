@@ -2,8 +2,13 @@ import fs from "fs";
 import path from "path";
 import formatMessage from "@utils/formatMessage/formatMessage";
 
-const createFolder = (folderName: string) => {
-  const folderPath = path.join("wp/themes", folderName);
+interface createFolder {
+  directory: string;
+  folderName: string;
+}
+
+const createFolder = ({ directory, folderName }: createFolder) => {
+  const folderPath = path.join(directory, folderName);
 
   if (fs.existsSync(folderPath)) {
     throw new Error(

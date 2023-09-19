@@ -144,7 +144,8 @@ const cssFile = generateCssFile({
 
 const phpFile = generateIndexFile();
 
-createFolder(answers.theme.folder);
+//Creates Theme Folder in WP folder
+createFolder({ directory: "wp/themes", folderName: answers.theme.folder });
 
 createFile({
   directoryPath: `wp/themes/${answers.theme.folder}`,
