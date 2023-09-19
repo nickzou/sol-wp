@@ -477,6 +477,8 @@ async function setupTooling() {
       ],
       );
 
+      Array.prototype.push.apply(esLintConfigOptions.plugins, ["@typescript/parser"]);
+
       esLintConfigOptions.parser ="@typescript-eslint/parser"; 
     }
 
