@@ -1,13 +1,16 @@
 import { File } from "@utils/types/File";
 
-const generatePrettierRcFile = (): File => {
+interface generatePrettierRcFile {
+  plugins: string[];
+}
+
+const generatePrettierRcFile = ({ plugins }: generatePrettierRcFile): File => {
   const content = `{
     "semi": true,
     "trailingComma": "all",
     "singleQuote": true,
     "printWidth": 80,
-    "plugins": [
-    ]
+    "plugins": ${plugins ? JSON.stringify(plugins) : "[]"}
   }
   `;
 

@@ -15,7 +15,6 @@ import generateTailwindCssFile from "@generateTheme/cssOptions/tailwind/generate
 import generateUnoConfigFile from "@generateTheme/cssOptions/uno/generateUnoConfigFile/generateUnoConfigFile";
 import generateSassConfigFile from "@generateTheme/cssOptions/sass/generateSassConfigFile/generateSassConfigFile";
 import generatePrettierRcFile from "./cssOptions/prettier/generatePrettierRcFile/generatePrettierRcFile";
-import editJson from "@utils/editJson/editJson";
 import generateSassStylelintFile from "@generateTheme/cssOptions/sass/generateSassStylelintFile/generateSassStylelintFile";
 import formatFolderName from "@utils/formatFolderName/formatFolderName";
 import generatePostCssConfigFile from "./cssOptions/postcss/generatePostCssConfigFile/generatePostCssConfigFile";
@@ -161,14 +160,6 @@ createFile({
 
 editWpEnv({ wpEnvFile: `.wp-env.json`, directory: answers.theme.folder });
 
-const prettierRcFile = generatePrettierRcFile();
-
-createFile({
-  directoryPath: ".",
-  fileName: prettierRcFile.name,
-  fileContent: prettierRcFile.content,
-});
-
 // Finalize setup and display outro
 async function setupTooling() {
   const functionFile = generateFunctionsFile();
@@ -185,10 +176,13 @@ async function setupTooling() {
     "browserslist",
   ];
   let packageScripts = [];
+  const prettierConfigOptions = {
+    plugins: [],
+  };
   const esLintConfigOptions = {
     extendsArr: [],
     plugins: [],
-    parser: '',
+    parser: "",
   };
 
   try {
@@ -225,12 +219,6 @@ async function setupTooling() {
 
         const tailwindCssFile = generateTailwindCssFile();
 
-        const editedTailwindPrettierRcFile = editJson({
-          filePath: ".",
-          fileName: ".prettierrc",
-          edits: { key: "plugins", value: ["prettier-plugin-tailwindcss"] },
-        });
-
         createFile({
           directoryPath: `.`,
           fileName: tailwindConfigFile.name,
@@ -243,11 +231,9 @@ async function setupTooling() {
           fileContent: tailwindCssFile.content,
         });
 
-        createFile({
-          directoryPath: `.`,
-          fileName: editedTailwindPrettierRcFile.name,
-          fileContent: editedTailwindPrettierRcFile.content,
-        });
+        Array.prototype.push.apply(prettierConfigOptions.plugins, [
+          "prettier-plugin-tailwindcss",
+        ]);
 
         Array.prototype.push.apply(npmPackages, [
           `${answers.tooling.css.packageName}`,
@@ -357,6 +343,7 @@ async function setupTooling() {
           fileName: "styles.scss",
           fileContent: "@use 'scss-reset/reset';",
         });
+
         Array.prototype.push.apply(npmPackages, [
           `${answers.tooling.css.packageName}`,
           `scss-reset`,
@@ -374,21 +361,23 @@ async function setupTooling() {
           option: answers.tooling.css,
           cssRegisterName: "styles",
           cssFileName: "styles",
-          scripts: [
-            {
-              key: `css`,
-              value: `postcss src/css/**/*.css --dir wp/themes/${answers.theme.folder}/css --config .postcssrc.json`,
-            },
-            {
-              key: `css:prod`,
-              value: `postcss src/css/**/*.css --dir wp/themes/${answers.theme.folder}/css --config .postcssrc.prod.json`,
-            },
-            {
-              key: `css:watch`,
-              value: `postcss src/css/**/*.css --dir wp/themes/${answers.theme.folder}/css --config .postcssrc.json --watch`,
-            },
-          ],
+          scripts: [],
         });
+
+        Array.prototype.push.apply(packageScripts, [
+          {
+            key: `css`,
+            value: `postcss src/css/**/*.css --dir wp/themes/${answers.theme.folder}/css --config .postcssrc.json`,
+          },
+          {
+            key: `css:prod`,
+            value: `postcss src/css/**/*.css --dir wp/themes/${answers.theme.folder}/css --config .postcssrc.prod.json`,
+          },
+          {
+            key: `css:watch`,
+            value: `postcss src/css/**/*.css --dir wp/themes/${answers.theme.folder}/css --config .postcssrc.json --watch`,
+          },
+        ]);
 
         const postCssConfigFile = generatePostCssConfigFile();
 
@@ -412,17 +401,9 @@ async function setupTooling() {
           fileContent: '@import "normalize.css";',
         });
 
-        const editedPostCssPrettierConfigRcFile = editJson({
-          filePath: ".",
-          fileName: ".prettierrc",
-          edits: { key: "plugins", value: ["prettier-plugin-standard"] },
-        });
-
-        createFile({
-          directoryPath: `.`,
-          fileName: editedPostCssPrettierConfigRcFile.name,
-          fileContent: editedPostCssPrettierConfigRcFile.content,
-        });
+        Array.prototype.push.apply(prettierConfigOptions.plugins, [
+          "prettier-plugin-standard",
+        ]);
 
         Array.prototype.push.apply(npmPackages, [
           `${answers.tooling.css.packageName}`,
@@ -474,13 +455,24 @@ async function setupTooling() {
       Array.prototype.push.apply(esLintConfigOptions.extendsArr, [
         "plugin:@typescript-eslint/eslint-recommended",
         "plugin:@typescript-eslint/recommended",
-      ],
-      );
+      ]);
 
-      Array.prototype.push.apply(esLintConfigOptions.plugins, ["@typescript/parser"]);
+      Array.prototype.push.apply(esLintConfigOptions.plugins, [
+        "@typescript/parser",
+      ]);
 
-      esLintConfigOptions.parser ="@typescript-eslint/parser"; 
+      esLintConfigOptions.parser = "@typescript-eslint/parser";
     }
+
+    const prettierRcFile = generatePrettierRcFile({
+      plugins: prettierConfigOptions.plugins,
+    });
+
+    createFile({
+      directoryPath: ".",
+      fileName: prettierRcFile.name,
+      fileContent: prettierRcFile.content,
+    });
 
     const esLintConfigFile = generateEsLintConfigFile(esLintConfigOptions);
 
