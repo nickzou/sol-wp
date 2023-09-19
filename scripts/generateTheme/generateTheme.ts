@@ -254,12 +254,14 @@ async function setupTooling() {
           functionFile,
           theme: answers.theme,
           option: answers.tooling.css,
-          scripts: [
-            { key: "uno", value: "unocss" },
-            { key: "uno:prod", value: "unocss --minify" },
-            { key: "uno:watch", value: "unocss --watch" },
-          ],
+          scripts: [],
         });
+
+        Array.prototype.push.apply(packageScripts, [
+          { key: "uno", value: "unocss" },
+          { key: "uno:prod", value: "unocss --minify" },
+          { key: "uno:watch", value: "unocss --watch" },
+        ]);
 
         const unoConfigFile = generateUnoConfigFile({
           content: [
@@ -286,43 +288,45 @@ async function setupTooling() {
           option: answers.tooling.css,
           cssRegisterName: "styles",
           cssFileName: "styles",
-          scripts: [
-            {
-              key: "sass",
-              value: `esrun sass.config.ts --minify=false --sourcemap=true`,
-            },
-            {
-              key: "sass:prod",
-              value: `esrun sass.config.ts --minify=true --sourcemap=false`,
-            },
-            {
-              key: "sass:watch",
-              value: `sass src/css:wp/themes/${answers.theme.folder}/css --load-path=node_modules --style=expanded --embed-source-map --watch`,
-            },
-            {
-              key: "sass:prettier",
-              value: 'prettier "src/css/**/*.scss" --write',
-            },
-            {
-              key: "sass:prettier:watch",
-              value:
-                'onchange "src/css/**/*.scss" -- prettier --write --ignore-unknown {{changed}}',
-            },
-            {
-              key: "stylelint",
-              value: `stylelint src/css/**/*.scss`,
-            },
-            {
-              key: "stylelint:watch",
-              value: `onchange src/css/**/*.scss -- npm run stylelint`,
-            },
-            {
-              key: "style:watch",
-              value:
-                'concurrently "npm run sass:watch" "npm run sass:prettier:watch" "npm run stylelint:watch"',
-            },
-          ],
+          scripts: [],
         });
+
+        Array.prototype.push.apply(packageScripts, [
+          {
+            key: "sass",
+            value: `esrun sass.config.ts --minify=false --sourcemap=true`,
+          },
+          {
+            key: "sass:prod",
+            value: `esrun sass.config.ts --minify=true --sourcemap=false`,
+          },
+          {
+            key: "sass:watch",
+            value: `sass src/css:wp/themes/${answers.theme.folder}/css --load-path=node_modules --style=expanded --embed-source-map --watch`,
+          },
+          {
+            key: "sass:prettier",
+            value: 'prettier "src/css/**/*.scss" --write',
+          },
+          {
+            key: "sass:prettier:watch",
+            value:
+              'onchange "src/css/**/*.scss" -- prettier --write --ignore-unknown {{changed}}',
+          },
+          {
+            key: "stylelint",
+            value: `stylelint src/css/**/*.scss`,
+          },
+          {
+            key: "stylelint:watch",
+            value: `onchange src/css/**/*.scss -- npm run stylelint`,
+          },
+          {
+            key: "style:watch",
+            value:
+              'concurrently "npm run sass:watch" "npm run sass:prettier:watch" "npm run stylelint:watch"',
+          },
+        ]);
 
         const sassConfigFile = generateSassConfigFile({
           themeFolder: answers.theme.folder,
@@ -504,6 +508,7 @@ async function setupTooling() {
     }
 
     addScriptsToPackageJson([
+      ...packageScripts,
       { key: `eslint`, value: `eslint 'src/ts/**/*.{js,jsx,ts,tsx}'` },
       {
         key: `eslint:watch`,
