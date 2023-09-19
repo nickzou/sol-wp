@@ -192,7 +192,6 @@ try {
         functionFile,
         theme: answers.theme,
         option: answers.tooling.css,
-        scripts: [],
       });
 
       Array.prototype.push.apply(packageScripts, [
@@ -246,7 +245,6 @@ try {
         functionFile,
         theme: answers.theme,
         option: answers.tooling.css,
-        scripts: [],
       });
 
       Array.prototype.push.apply(packageScripts, [
@@ -280,7 +278,6 @@ try {
         option: answers.tooling.css,
         cssRegisterName: "styles",
         cssFileName: "styles",
-        scripts: [],
       });
 
       Array.prototype.push.apply(packageScripts, [
@@ -361,7 +358,6 @@ try {
         option: answers.tooling.css,
         cssRegisterName: "styles",
         cssFileName: "styles",
-        scripts: [],
       });
 
       Array.prototype.push.apply(packageScripts, [
