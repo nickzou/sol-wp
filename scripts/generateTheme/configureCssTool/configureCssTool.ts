@@ -6,7 +6,6 @@ import generatePhpFunctionFile from "@generateTheme/generatePhpFunctionFile/gene
 import createFolder from "@utils/createFolder/createFolder";
 import createFile from "@utils/createFile/createFile";
 import appendToFunctionsFile from "@generateTheme/appendToFunctionsFile/appendToFunctionsFile";
-import addScriptsToPackageJson from "@utils/addScriptsToPackageJson/addScriptsToPackageJson";
 
 interface configureCssTool {
   functionFile: File;
@@ -14,7 +13,6 @@ interface configureCssTool {
   option: CssOption;
   cssRegisterName?: string;
   cssFileName?: string;
-  scripts: PackageJsonScript[];
 }
 
 const configureCssTool = async ({
@@ -23,7 +21,6 @@ const configureCssTool = async ({
   option,
   cssRegisterName,
   cssFileName,
-  scripts,
 }: configureCssTool) => {
   const registerAssetsFile = generatePhpFunctionFile({
     name: "register_assets",
@@ -78,8 +75,6 @@ const configureCssTool = async ({
     themeFolder: theme.folder,
     functionName: enqueueAssetsFile.functionName,
   });
-
-  addScriptsToPackageJson(scripts);
 };
 
 export default configureCssTool;
