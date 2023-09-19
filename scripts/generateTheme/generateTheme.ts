@@ -185,6 +185,12 @@ async function setupTooling() {
     "browserslist",
   ];
   let packageScripts = [];
+  const esLintConfigOptions = {
+    extendsArr: [],
+    plugins: [],
+    parser: '',
+  };
+
   try {
     switch (cssOption) {
       case "tailwind":
@@ -445,27 +451,14 @@ async function setupTooling() {
       themeFolder: answers.theme.folder,
     });
 
-    const esLintConfigFile = generateEsLintConfigFile();
-
     createFile({
       directoryPath: ".",
       fileName: esbuildConfigFile.name,
       fileContent: esbuildConfigFile.content,
     });
 
-    createFile({
-      directoryPath: ".",
-      fileName: esLintConfigFile.name,
-      fileContent: esLintConfigFile.content,
-    });
-
     if (answers.tooling.ts) {
       const tsConfigFile = generateTsConfigFile();
-
-      Array.prototype.push.apply(npmPackages, [
-        "@typescript-eslint/eslint-plugin",
-        "@typescript-eslint/parser",
-      ]);
 
       createFile({
         directoryPath: ".",
@@ -473,39 +466,27 @@ async function setupTooling() {
         fileContent: tsConfigFile.content,
       });
 
-      let editedEsLintConfgFile = editJson({
-        filePath: ".",
-        fileName: ".eslintrc.json",
-        edits: {
-          key: "extends",
-          value: [
-            "plugin:@typescript-eslint/eslint-recommended",
-            "plugin:@typescript-eslint/recommended",
-          ],
-        },
-      });
+      Array.prototype.push.apply(npmPackages, [
+        "@typescript-eslint/eslint-plugin",
+        "@typescript-eslint/parser",
+      ]);
 
-      createFile({
-        directoryPath: ".",
-        fileName: editedEsLintConfgFile.name,
-        fileContent: editedEsLintConfgFile.content,
-      });
+      Array.prototype.push.apply(esLintConfigOptions.extendsArr, [
+        "plugin:@typescript-eslint/eslint-recommended",
+        "plugin:@typescript-eslint/recommended",
+      ],
+      );
 
-      editedEsLintConfgFile = editJson({
-        filePath: ".",
-        fileName: ".eslintrc.json",
-        edits: {
-          key: "parser",
-          value: "@typescript-eslint/parser",
-        },
-      });
-
-      createFile({
-        directoryPath: ".",
-        fileName: editedEsLintConfgFile.name,
-        fileContent: editedEsLintConfgFile.content,
-      });
+      esLintConfigOptions.parser ="@typescript-eslint/parser"; 
     }
+
+    const esLintConfigFile = generateEsLintConfigFile(esLintConfigOptions);
+
+    createFile({
+      directoryPath: ".",
+      fileName: esLintConfigFile.name,
+      fileContent: esLintConfigFile.content,
+    });
 
     addScriptsToPackageJson([
       ...packageScripts,
