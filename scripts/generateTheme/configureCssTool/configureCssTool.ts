@@ -41,9 +41,15 @@ const configureCssTool = async ({
     }' );`,
   });
 
-  createFolder(`${theme.folder}/functions`);
+  createFolder({
+    directory: `wp/themes/${theme.folder}`,
+    folderName: "functions",
+  });
 
-  createFolder(`${theme.folder}/css`);
+  createFolder({
+    directory: `wp/themes/${theme.folder}`,
+    folderName: "css",
+  });
 
   createFile({
     directoryPath: `wp/themes/${theme.folder}`,
