@@ -161,343 +161,339 @@ createFile({
 editWpEnv({ wpEnvFile: `.wp-env.json`, directory: answers.theme.folder });
 
 // Finalize setup and display outro
-async function setupTooling() {
-  const functionFile = generateFunctionsFile();
-  let npmPackages = [
-    "prettier",
-    "onchange",
-    "esbuild",
-    "esbuild-plugin-browserslist",
-    "eslint",
-    "eslint-plugin-prettier",
-    "eslint-config-prettier",
-    "dotenv",
-    "glob",
-    "browserslist",
-  ];
-  let packageScripts = [];
-  const prettierConfigOptions = {
-    plugins: [],
-  };
-  const esLintConfigOptions = {
-    extendsArr: [],
-    plugins: [],
-    parser: "",
-  };
+const functionFile = generateFunctionsFile();
+let npmPackages = [
+  "prettier",
+  "onchange",
+  "esbuild",
+  "esbuild-plugin-browserslist",
+  "eslint",
+  "eslint-plugin-prettier",
+  "eslint-config-prettier",
+  "dotenv",
+  "glob",
+  "browserslist",
+];
+let packageScripts = [];
+const prettierConfigOptions = {
+  plugins: [],
+};
+const esLintConfigOptions = {
+  extendsArr: [],
+  plugins: [],
+  parser: "",
+};
 
-  try {
-    switch (cssOption) {
-      case "tailwind":
-        await configureCssTool({
-          functionFile,
-          theme: answers.theme,
-          option: answers.tooling.css,
-          scripts: [],
-        });
+try {
+  switch (cssOption) {
+    case "tailwind":
+      await configureCssTool({
+        functionFile,
+        theme: answers.theme,
+        option: answers.tooling.css,
+        scripts: [],
+      });
 
-        Array.prototype.push.apply(packageScripts, [
-          {
-            key: "tailwind",
-            value: `tailwindcss -i ./src/css/tailwind.css -o ./wp/themes/${answers.theme.folder}/css/tailwind.css`,
-          },
-          {
-            key: "tailwind:prod",
-            value: `tailwindcss -i ./src/css/tailwind.css -o ./wp/themes/${answers.theme.folder}/css/tailwind.css`,
-          },
-          {
-            key: "tailwind:watch",
-            value: `tailwindcss -i ./src/css/tailwind.css -o ./wp/themes/${answers.theme.folder}/css/tailwind.css --watch`,
-          },
-        ]);
+      Array.prototype.push.apply(packageScripts, [
+        {
+          key: "tailwind",
+          value: `tailwindcss -i ./src/css/tailwind.css -o ./wp/themes/${answers.theme.folder}/css/tailwind.css`,
+        },
+        {
+          key: "tailwind:prod",
+          value: `tailwindcss -i ./src/css/tailwind.css -o ./wp/themes/${answers.theme.folder}/css/tailwind.css`,
+        },
+        {
+          key: "tailwind:watch",
+          value: `tailwindcss -i ./src/css/tailwind.css -o ./wp/themes/${answers.theme.folder}/css/tailwind.css --watch`,
+        },
+      ]);
 
-        const tailwindConfigFile = generateTailwindConfigFile({
-          content: [
-            `wp/themes/${answers.theme.folder}/**/*.php`,
-            `src/ts/**/*.{js, jsx, ts, tsx}`,
-          ],
-        });
+      const tailwindConfigFile = generateTailwindConfigFile({
+        content: [
+          `wp/themes/${answers.theme.folder}/**/*.php`,
+          `src/ts/**/*.{js, jsx, ts, tsx}`,
+        ],
+      });
 
-        const tailwindCssFile = generateTailwindCssFile();
+      const tailwindCssFile = generateTailwindCssFile();
 
-        createFile({
-          directoryPath: `.`,
-          fileName: tailwindConfigFile.name,
-          fileContent: tailwindConfigFile.content,
-        });
+      createFile({
+        directoryPath: `.`,
+        fileName: tailwindConfigFile.name,
+        fileContent: tailwindConfigFile.content,
+      });
 
-        createFile({
-          directoryPath: `src/css`,
-          fileName: tailwindCssFile.name,
-          fileContent: tailwindCssFile.content,
-        });
+      createFile({
+        directoryPath: `src/css`,
+        fileName: tailwindCssFile.name,
+        fileContent: tailwindCssFile.content,
+      });
 
-        Array.prototype.push.apply(prettierConfigOptions.plugins, [
-          "prettier-plugin-tailwindcss",
-        ]);
+      Array.prototype.push.apply(prettierConfigOptions.plugins, [
+        "prettier-plugin-tailwindcss",
+      ]);
 
-        Array.prototype.push.apply(npmPackages, [
-          `${answers.tooling.css.packageName}`,
-          "prettier",
-          "prettier-plugin-tailwindcss",
-        ]);
-        break;
-      case "uno":
-        await configureCssTool({
-          functionFile,
-          theme: answers.theme,
-          option: answers.tooling.css,
-          scripts: [],
-        });
+      Array.prototype.push.apply(npmPackages, [
+        `${answers.tooling.css.packageName}`,
+        "prettier",
+        "prettier-plugin-tailwindcss",
+      ]);
+      break;
+    case "uno":
+      await configureCssTool({
+        functionFile,
+        theme: answers.theme,
+        option: answers.tooling.css,
+        scripts: [],
+      });
 
-        Array.prototype.push.apply(packageScripts, [
-          { key: "uno", value: "unocss" },
-          { key: "uno:prod", value: "unocss --minify" },
-          { key: "uno:watch", value: "unocss --watch" },
-        ]);
+      Array.prototype.push.apply(packageScripts, [
+        { key: "uno", value: "unocss" },
+        { key: "uno:prod", value: "unocss --minify" },
+        { key: "uno:watch", value: "unocss --watch" },
+      ]);
 
-        const unoConfigFile = generateUnoConfigFile({
-          content: [
-            `wp/themes/${answers.theme.folder}/**/*.php`,
-            `src/ts/**/*.{js, jsx, ts, tsx}`,
-          ],
-          outFile: `wp/themes/${answers.theme.folder}/css/uno.css`,
-        });
-
-        createFile({
-          directoryPath: ".",
-          fileName: unoConfigFile.name,
-          fileContent: unoConfigFile.content,
-        });
-
-        Array.prototype.push.apply(npmPackages, [
-          `${answers.tooling.css.packageName}`,
-        ]);
-        break;
-      case "sass":
-        await configureCssTool({
-          functionFile,
-          theme: answers.theme,
-          option: answers.tooling.css,
-          cssRegisterName: "styles",
-          cssFileName: "styles",
-          scripts: [],
-        });
-
-        Array.prototype.push.apply(packageScripts, [
-          {
-            key: "sass",
-            value: `esrun sass.config.ts --minify=false --sourcemap=true`,
-          },
-          {
-            key: "sass:prod",
-            value: `esrun sass.config.ts --minify=true --sourcemap=false`,
-          },
-          {
-            key: "sass:watch",
-            value: `sass src/css:wp/themes/${answers.theme.folder}/css --load-path=node_modules --style=expanded --embed-source-map --watch`,
-          },
-          {
-            key: "sass:prettier",
-            value: 'prettier "src/css/**/*.scss" --write',
-          },
-          {
-            key: "sass:prettier:watch",
-            value:
-              'onchange "src/css/**/*.scss" -- prettier --write --ignore-unknown {{changed}}',
-          },
-          {
-            key: "stylelint",
-            value: `stylelint src/css/**/*.scss`,
-          },
-          {
-            key: "stylelint:watch",
-            value: `onchange src/css/**/*.scss -- npm run stylelint`,
-          },
-          {
-            key: "style:watch",
-            value:
-              'concurrently "npm run sass:watch" "npm run sass:prettier:watch" "npm run stylelint:watch"',
-          },
-        ]);
-
-        const sassConfigFile = generateSassConfigFile({
-          themeFolder: answers.theme.folder,
-        });
-
-        const sassStylelintFile = generateSassStylelintFile();
-
-        createFile({
-          directoryPath: ".",
-          fileName: sassConfigFile.name,
-          fileContent: sassConfigFile.content,
-        });
-
-        createFile({
-          directoryPath: ".",
-          fileName: sassStylelintFile.name,
-          fileContent: sassStylelintFile.content,
-        });
-
-        createFile({
-          directoryPath: "src/css",
-          fileName: "styles.scss",
-          fileContent: "@use 'scss-reset/reset';",
-        });
-
-        Array.prototype.push.apply(npmPackages, [
-          `${answers.tooling.css.packageName}`,
-          `scss-reset`,
-          `prettier`,
-          `stylelint`,
-          `stylelint-config-standard-scss`,
-          `onchange`,
-          `concurrently`,
-        ]);
-        break;
-      case "postcss":
-        await configureCssTool({
-          functionFile,
-          theme: answers.theme,
-          option: answers.tooling.css,
-          cssRegisterName: "styles",
-          cssFileName: "styles",
-          scripts: [],
-        });
-
-        Array.prototype.push.apply(packageScripts, [
-          {
-            key: `css`,
-            value: `postcss src/css/**/*.css --dir wp/themes/${answers.theme.folder}/css --config .postcssrc.json`,
-          },
-          {
-            key: `css:prod`,
-            value: `postcss src/css/**/*.css --dir wp/themes/${answers.theme.folder}/css --config .postcssrc.prod.json`,
-          },
-          {
-            key: `css:watch`,
-            value: `postcss src/css/**/*.css --dir wp/themes/${answers.theme.folder}/css --config .postcssrc.json --watch`,
-          },
-        ]);
-
-        const postCssConfigFile = generatePostCssConfigFile();
-
-        const postCssProdConfigFile = generatePostCssProdConfigFile();
-
-        createFile({
-          directoryPath: ".",
-          fileName: postCssConfigFile.name,
-          fileContent: postCssConfigFile.content,
-        });
-
-        createFile({
-          directoryPath: ".",
-          fileName: postCssProdConfigFile.name,
-          fileContent: postCssProdConfigFile.content,
-        });
-
-        createFile({
-          directoryPath: "src/css",
-          fileName: "styles.css",
-          fileContent: '@import "normalize.css";',
-        });
-
-        Array.prototype.push.apply(prettierConfigOptions.plugins, [
-          "prettier-plugin-standard",
-        ]);
-
-        Array.prototype.push.apply(npmPackages, [
-          `${answers.tooling.css.packageName}`,
-          `postcss-cli`,
-          `autoprefixer`,
-          `postcss-import`,
-          `normalize.css`,
-          `postcss-nested`,
-          `cssnano`,
-          `prettier`,
-          `stylelint`,
-          `stylelint-config-standard`,
-          `onchange`,
-          `concurrently`,
-        ]);
-        break;
-      case "none":
-        console.log(
-          formatMessage({ message: `Alright, good luck!`, color: "yellow" })
-        );
-        break;
-    }
-
-    //JavaScript/TypeScript installs
-    const esbuildConfigFile = generateEsbuildConfigFile({
-      themeFolder: answers.theme.folder,
-    });
-
-    createFile({
-      directoryPath: ".",
-      fileName: esbuildConfigFile.name,
-      fileContent: esbuildConfigFile.content,
-    });
-
-    if (answers.tooling.ts) {
-      const tsConfigFile = generateTsConfigFile();
+      const unoConfigFile = generateUnoConfigFile({
+        content: [
+          `wp/themes/${answers.theme.folder}/**/*.php`,
+          `src/ts/**/*.{js, jsx, ts, tsx}`,
+        ],
+        outFile: `wp/themes/${answers.theme.folder}/css/uno.css`,
+      });
 
       createFile({
         directoryPath: ".",
-        fileName: tsConfigFile.name,
-        fileContent: tsConfigFile.content,
+        fileName: unoConfigFile.name,
+        fileContent: unoConfigFile.content,
       });
 
       Array.prototype.push.apply(npmPackages, [
-        "@typescript-eslint/eslint-plugin",
-        "@typescript-eslint/parser",
+        `${answers.tooling.css.packageName}`,
+      ]);
+      break;
+    case "sass":
+      await configureCssTool({
+        functionFile,
+        theme: answers.theme,
+        option: answers.tooling.css,
+        cssRegisterName: "styles",
+        cssFileName: "styles",
+        scripts: [],
+      });
+
+      Array.prototype.push.apply(packageScripts, [
+        {
+          key: "sass",
+          value: `esrun sass.config.ts --minify=false --sourcemap=true`,
+        },
+        {
+          key: "sass:prod",
+          value: `esrun sass.config.ts --minify=true --sourcemap=false`,
+        },
+        {
+          key: "sass:watch",
+          value: `sass src/css:wp/themes/${answers.theme.folder}/css --load-path=node_modules --style=expanded --embed-source-map --watch`,
+        },
+        {
+          key: "sass:prettier",
+          value: 'prettier "src/css/**/*.scss" --write',
+        },
+        {
+          key: "sass:prettier:watch",
+          value:
+            'onchange "src/css/**/*.scss" -- prettier --write --ignore-unknown {{changed}}',
+        },
+        {
+          key: "stylelint",
+          value: `stylelint src/css/**/*.scss`,
+        },
+        {
+          key: "stylelint:watch",
+          value: `onchange src/css/**/*.scss -- npm run stylelint`,
+        },
+        {
+          key: "style:watch",
+          value:
+            'concurrently "npm run sass:watch" "npm run sass:prettier:watch" "npm run stylelint:watch"',
+        },
       ]);
 
-      Array.prototype.push.apply(esLintConfigOptions.extendsArr, [
-        "plugin:@typescript-eslint/eslint-recommended",
-        "plugin:@typescript-eslint/recommended",
+      const sassConfigFile = generateSassConfigFile({
+        themeFolder: answers.theme.folder,
+      });
+
+      const sassStylelintFile = generateSassStylelintFile();
+
+      createFile({
+        directoryPath: ".",
+        fileName: sassConfigFile.name,
+        fileContent: sassConfigFile.content,
+      });
+
+      createFile({
+        directoryPath: ".",
+        fileName: sassStylelintFile.name,
+        fileContent: sassStylelintFile.content,
+      });
+
+      createFile({
+        directoryPath: "src/css",
+        fileName: "styles.scss",
+        fileContent: "@use 'scss-reset/reset';",
+      });
+
+      Array.prototype.push.apply(npmPackages, [
+        `${answers.tooling.css.packageName}`,
+        `scss-reset`,
+        `prettier`,
+        `stylelint`,
+        `stylelint-config-standard-scss`,
+        `onchange`,
+        `concurrently`,
+      ]);
+      break;
+    case "postcss":
+      await configureCssTool({
+        functionFile,
+        theme: answers.theme,
+        option: answers.tooling.css,
+        cssRegisterName: "styles",
+        cssFileName: "styles",
+        scripts: [],
+      });
+
+      Array.prototype.push.apply(packageScripts, [
+        {
+          key: `css`,
+          value: `postcss src/css/**/*.css --dir wp/themes/${answers.theme.folder}/css --config .postcssrc.json`,
+        },
+        {
+          key: `css:prod`,
+          value: `postcss src/css/**/*.css --dir wp/themes/${answers.theme.folder}/css --config .postcssrc.prod.json`,
+        },
+        {
+          key: `css:watch`,
+          value: `postcss src/css/**/*.css --dir wp/themes/${answers.theme.folder}/css --config .postcssrc.json --watch`,
+        },
       ]);
 
-      Array.prototype.push.apply(esLintConfigOptions.plugins, [
-        "@typescript/parser",
+      const postCssConfigFile = generatePostCssConfigFile();
+
+      const postCssProdConfigFile = generatePostCssProdConfigFile();
+
+      createFile({
+        directoryPath: ".",
+        fileName: postCssConfigFile.name,
+        fileContent: postCssConfigFile.content,
+      });
+
+      createFile({
+        directoryPath: ".",
+        fileName: postCssProdConfigFile.name,
+        fileContent: postCssProdConfigFile.content,
+      });
+
+      createFile({
+        directoryPath: "src/css",
+        fileName: "styles.css",
+        fileContent: '@import "normalize.css";',
+      });
+
+      Array.prototype.push.apply(prettierConfigOptions.plugins, [
+        "prettier-plugin-standard",
       ]);
 
-      esLintConfigOptions.parser = "@typescript-eslint/parser";
-    }
+      Array.prototype.push.apply(npmPackages, [
+        `${answers.tooling.css.packageName}`,
+        `postcss-cli`,
+        `autoprefixer`,
+        `postcss-import`,
+        `normalize.css`,
+        `postcss-nested`,
+        `cssnano`,
+        `prettier`,
+        `stylelint`,
+        `stylelint-config-standard`,
+        `onchange`,
+        `concurrently`,
+      ]);
+      break;
+    case "none":
+      console.log(
+        formatMessage({ message: `Alright, good luck!`, color: "yellow" })
+      );
+      break;
+  }
 
-    const prettierRcFile = generatePrettierRcFile({
-      plugins: prettierConfigOptions.plugins,
-    });
+  //JavaScript/TypeScript installs
+  const esbuildConfigFile = generateEsbuildConfigFile({
+    themeFolder: answers.theme.folder,
+  });
+
+  createFile({
+    directoryPath: ".",
+    fileName: esbuildConfigFile.name,
+    fileContent: esbuildConfigFile.content,
+  });
+
+  if (answers.tooling.ts) {
+    const tsConfigFile = generateTsConfigFile();
 
     createFile({
       directoryPath: ".",
-      fileName: prettierRcFile.name,
-      fileContent: prettierRcFile.content,
+      fileName: tsConfigFile.name,
+      fileContent: tsConfigFile.content,
     });
 
-    const esLintConfigFile = generateEsLintConfigFile(esLintConfigOptions);
-
-    createFile({
-      directoryPath: ".",
-      fileName: esLintConfigFile.name,
-      fileContent: esLintConfigFile.content,
-    });
-
-    addScriptsToPackageJson([
-      ...packageScripts,
-      { key: `eslint`, value: `eslint 'src/ts/**/*.{js,jsx,ts,tsx}'` },
-      {
-        key: `eslint:watch`,
-        value: `onchange 'src/ts/**/*.{js,jsx,ts,tsx}' -- npm run eslint`,
-      },
+    Array.prototype.push.apply(npmPackages, [
+      "@typescript-eslint/eslint-plugin",
+      "@typescript-eslint/parser",
     ]);
 
-    await installNpmPackages(npmPackages);
-  } catch (error) {
-    console.error(
-      formatMessage({ message: `An error occurred: ${error}`, color: "red" })
-    );
-  }
-  outro(green(bold("Your theme has been generated!")));
-}
+    Array.prototype.push.apply(esLintConfigOptions.extendsArr, [
+      "plugin:@typescript-eslint/eslint-recommended",
+      "plugin:@typescript-eslint/recommended",
+    ]);
 
-setupTooling();
+    Array.prototype.push.apply(esLintConfigOptions.plugins, [
+      "@typescript/parser",
+    ]);
+
+    esLintConfigOptions.parser = "@typescript-eslint/parser";
+  }
+
+  const prettierRcFile = generatePrettierRcFile({
+    plugins: prettierConfigOptions.plugins,
+  });
+
+  createFile({
+    directoryPath: ".",
+    fileName: prettierRcFile.name,
+    fileContent: prettierRcFile.content,
+  });
+
+  const esLintConfigFile = generateEsLintConfigFile(esLintConfigOptions);
+
+  createFile({
+    directoryPath: ".",
+    fileName: esLintConfigFile.name,
+    fileContent: esLintConfigFile.content,
+  });
+
+  addScriptsToPackageJson([
+    ...packageScripts,
+    { key: `eslint`, value: `eslint 'src/ts/**/*.{js,jsx,ts,tsx}'` },
+    {
+      key: `eslint:watch`,
+      value: `onchange 'src/ts/**/*.{js,jsx,ts,tsx}' -- npm run eslint`,
+    },
+  ]);
+
+  await installNpmPackages(npmPackages);
+} catch (error) {
+  console.error(
+    formatMessage({ message: `An error occurred: ${error}`, color: "red" })
+  );
+}
+outro(green(bold("Your theme has been generated!")));
