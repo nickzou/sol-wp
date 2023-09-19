@@ -8,7 +8,7 @@ const generateEsbuildConfigFile = ({
   const content = `import * as esbuild from 'esbuild';
 import 'dotenv/config';
 import { resolve } from 'path';
-import glob from 'glob';
+import { glob } from 'glob';
 import browserslist from 'browserslist';
 import { esbuildPluginBrowserslist } from 'esbuild-plugin-browserslist';
 import { green, red } from 'colorette';
