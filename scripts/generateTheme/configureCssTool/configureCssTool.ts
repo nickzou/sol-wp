@@ -1,7 +1,6 @@
 import { Theme } from "@utils/types/Theme";
 import { File } from "@utils/types/File";
 import { CssOption } from "@utils/types/CssOption";
-import { PackageJsonScript } from "@utils/types/PackageJsonScript";
 import generatePhpFunctionFile from "@generateTheme/generatePhpFunctionFile/generatePhpFunctionFile";
 import createFolder from "@utils/createFolder/createFolder";
 import createFile from "@utils/createFile/createFile";
