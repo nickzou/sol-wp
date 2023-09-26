@@ -486,6 +486,14 @@ try {
       key: `eslint:watch`,
       value: `onchange 'src/ts/**/*.{js,jsx,ts,tsx}' -- npm run eslint`,
     },
+    {
+      key: `esbuild`,
+      value: `esrun esbuild.config.ts --sourcemap`,
+    },
+    {
+      key: `esbuild:prod`,
+      value: `esrun esbuild.config.ts --minify`,
+    },
   ]);
 
   await installNpmPackages(npmPackages);
