@@ -173,6 +173,7 @@ let npmPackages = [
   "eslint-config-prettier",
   "dotenv",
   "glob",
+  "@types/glob",
   "browserslist",
 ];
 let packageScripts = [];
