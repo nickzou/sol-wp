@@ -25,6 +25,7 @@ import generateEsLintConfigFile from "./generateEsLintConfigFile/generateEsLintC
 import addScriptsToPackageJson from "@utils/addScriptsToPackageJson/addScriptsToPackageJson";
 import generateEsbuildConfigFile from "./tsOptions/generateEsbuildConfigFile/generateEsbuildConfigFile";
 import generateTsFile from "./tsOptions/generateTsFile/generateTsFile";
+import generateJsFile from "./jsOptions/generateJsFile/generateJsFile";
 
 const htmlRegex = /<\/?[a-z][\s\S]*>/i;
 const spacesRegex = /\s+/;
@@ -489,6 +490,19 @@ try {
     ]);
 
     esLintConfigOptions.parser = "@typescript-eslint/parser";
+  } else {
+    createFolder({
+      directory: `src/themes/${answers.theme.folder}`,
+      folderName: `js`,
+    });
+
+    const jsFile = generateJsFile({ themeName: answers.theme.name });
+
+    createFile({
+      directoryPath: `src/themes/${answers.theme.folder}/js`,
+      fileName: jsFile.name,
+      fileContent: jsFile.content,
+    });
   }
 
   const prettierRcFile = generatePrettierRcFile({
