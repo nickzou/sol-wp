@@ -1,70 +1,39 @@
 import fs from "fs";
 import path from "path";
-import createFolder from "@utils/createFolder/createFolder";
-import formatMessage from "@utils/formatMessage/formatMessage";
+import createFolder from "../createFolder";
 
-// Mocking fs module
-jest.mock("fs", () => ({
-  existsSync: jest.fn(),
-  mkdirSync: jest.fn(),
-}));
-
-// Mocking path module
-jest.mock("path", () => ({
-  join: jest.fn((...args) => args.join("/")),
-}));
-
-// Mocking formatMessage function
-jest.mock("../../formatMessage/formatMessage.ts", () => jest.fn());
+jest.mock("fs");
+jest.mock("path");
+jest.mock("@utils/formatMessage/formatMessage", () => {
+  return ({ message }: { message: string; color: string }) => message;
+});
 
 describe("createFolder", () => {
-  let existsSyncMock: jest.Mock;
-  let mkdirSyncMock: jest.Mock;
-  let formatMessageMock: jest.Mock;
-  let joinMock: jest.Mock;
-
-  beforeEach(() => {
-    existsSyncMock = fs.existsSync as unknown as jest.Mock;
-    mkdirSyncMock = fs.mkdirSync as unknown as jest.Mock;
-    formatMessageMock = formatMessage as unknown as jest.Mock;
-    joinMock = path.join as unknown as jest.Mock;
-  });
-
   afterEach(() => {
-    jest.clearAllMocks();
-  });
-
-  it("should throw an error if folder already exists", () => {
-    existsSyncMock.mockReturnValue(true);
-
-    // Add a return value for formatMessageMock for debugging.
-    formatMessageMock.mockReturnValue(
-      'red: Folder "existingFolder" already exists.'
-    );
-
-    try {
-      createFolder("existingFolder");
-    } catch (e) {
-      expect(e.message).toEqual('red: Folder "existingFolder" already exists.');
-    }
-
-    expect(formatMessageMock).toHaveBeenCalledWith({
-      message: 'Folder "existingFolder" already exists.',
-      color: "red",
-    });
+    jest.resetAllMocks();
   });
 
   it("should create a folder if it does not exist", () => {
-    existsSyncMock.mockReturnValue(false);
+    (path.join as jest.Mock).mockReturnValue("/somePath/someFolder");
+    (fs.existsSync as jest.Mock).mockReturnValue(false);
 
-    const folderName = "newFolder";
-    const result = createFolder(folderName);
-
-    expect(result).toBe("wp/themes/newFolder");
-    expect(mkdirSyncMock).toHaveBeenCalledWith("wp/themes/newFolder");
-    expect(formatMessageMock).toHaveBeenCalledWith({
-      message: 'Folder "newFolder" has been created.',
-      color: "green",
+    const result = createFolder({
+      directory: "/somePath",
+      folderName: "someFolder",
     });
+
+    expect(fs.mkdirSync).toHaveBeenCalledWith("/somePath/someFolder");
+    expect(result).toBe("/somePath/someFolder");
+  });
+
+  it("should throw an error if folder already exists", () => {
+    (path.join as jest.Mock).mockReturnValue("/somePath/someFolder");
+    (fs.existsSync as jest.Mock).mockReturnValue(true);
+
+    expect(() => {
+      createFolder({ directory: "/somePath", folderName: "someFolder" });
+    }).toThrowError('Folder "someFolder" already exists.');
+
+    expect(fs.mkdirSync).not.toHaveBeenCalled();
   });
 });
