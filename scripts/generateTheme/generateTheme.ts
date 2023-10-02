@@ -144,6 +144,9 @@ const cssFile = generateCssFile({
 
 const phpFile = generateIndexFile();
 
+//Create Theme Folder in src folder
+createFolder({ directory: `src`, folderName: answers.theme.folder });
+
 //Creates Theme Folder in WP folder
 createFolder({ directory: "wp/themes", folderName: answers.theme.folder });
 
@@ -210,6 +213,7 @@ try {
         },
       ]);
 
+      //createFolder({directory:'src/'})
       const tailwindConfigFile = generateTailwindConfigFile({
         content: [
           `wp/themes/${answers.theme.folder}/**/*.php`,
