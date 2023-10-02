@@ -7,7 +7,7 @@ describe("generateTsFile", () => {
     const result = generateTsFile({ themeName });
 
     expect(result.name).toBe("index.ts");
-    expect(result.content).toBe(`console.log("hello dark");`);
+    expect(result.content).toBe(`console.log('hello dark');`);
   });
 
   it("should insert the themeName correctly into the content", () => {
@@ -15,6 +15,6 @@ describe("generateTsFile", () => {
 
     const result = generateTsFile({ themeName });
 
-    expect(result.content).toBe(`console.log("hello light");`);
+    expect(result.content).toBe(`console.log('hello light');`);
   });
 });
