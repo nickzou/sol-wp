@@ -234,7 +234,7 @@ try {
       });
 
       createFile({
-        directoryPath: `/${answers.theme.folder}`,
+        directoryPath: `src/themes/${answers.theme.folder}`,
         fileName: tailwindCssFile.name,
         fileContent: tailwindCssFile.content,
       });
