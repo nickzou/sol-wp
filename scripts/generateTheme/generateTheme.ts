@@ -198,6 +198,11 @@ try {
         option: answers.tooling.css,
       });
 
+      createFolder({
+        directory: `src/${answers.theme.folder}`,
+        folderName: `css`,
+      });
+
       Array.prototype.push.apply(packageScripts, [
         {
           key: "tailwind",
@@ -213,7 +218,6 @@ try {
         },
       ]);
 
-      //createFolder({directory:'src/'})
       const tailwindConfigFile = generateTailwindConfigFile({
         content: [
           `wp/themes/${answers.theme.folder}/**/*.php`,
@@ -285,6 +289,10 @@ try {
         cssFileName: "styles",
       });
 
+      createFolder({
+        directory: `src/${answers.theme.folder}`,
+        folderName: `scss`,
+      });
       Array.prototype.push.apply(packageScripts, [
         {
           key: "sass",
@@ -296,23 +304,23 @@ try {
         },
         {
           key: "sass:watch",
-          value: `sass src/${answers.theme.folder}/css:wp/themes/${answers.theme.folder}/css --load-path=node_modules --style=expanded --embed-source-map --watch`,
+          value: `sass src/${answers.theme.folder}/scss:wp/themes/${answers.theme.folder}/css --load-path=node_modules --style=expanded --embed-source-map --watch`,
         },
         {
           key: "sass:prettier",
-          value: `prettier 'src/${answers.theme.folder}/css/**/*.scss' --write`,
+          value: `prettier 'src/${answers.theme.folder}/scss/**/*.scss' --write`,
         },
         {
           key: "sass:prettier:watch",
-          value: `onchange "src/${answers.theme.folder}/css/**/*.scss" -- prettier --write --ignore-unknown {{changed}}`,
+          value: `onchange "src/${answers.theme.folder}/scss/**/*.scss" -- prettier --write --ignore-unknown {{changed}}`,
         },
         {
           key: "stylelint",
-          value: `stylelint src/${answers.theme.folder}/css/**/*.scss`,
+          value: `stylelint src/${answers.theme.folder}/scss/**/*.scss`,
         },
         {
           key: "stylelint:watch",
-          value: `onchange src/${answers.theme.folder}/css/**/*.scss -- npm run stylelint`,
+          value: `onchange src/${answers.theme.folder}/scss/**/*.scss -- npm run stylelint`,
         },
         {
           key: "style:watch",
@@ -340,7 +348,7 @@ try {
       });
 
       createFile({
-        directoryPath: `src/${answers.theme.folder}/css`,
+        directoryPath: `src/${answers.theme.folder}/scss`,
         fileName: "styles.scss",
         fileContent: "@use 'scss-reset/reset';",
       });
