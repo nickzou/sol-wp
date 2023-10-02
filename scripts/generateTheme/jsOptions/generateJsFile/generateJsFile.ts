@@ -1,16 +1,16 @@
 import { File } from "@utils/types/File";
 
-interface generateTsFile {
+interface generateJsFile {
   themeName: string;
 }
 
-const generateTsFile = ({ themeName }: generateTsFile): File => {
+const generateJsFile = ({ themeName }: generateJsFile): File => {
   const content = `console.log('hello ${themeName}');`;
 
   return {
-    name: "index.ts",
+    name: "index.js",
     content,
   };
 };
 
-export default generateTsFile;
+export default generateJsFile;
