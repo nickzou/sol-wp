@@ -24,6 +24,7 @@ import installNpmPackages from "@utils/installNpmPackages/installNpmPackages";
 import generateEsLintConfigFile from "./generateEsLintConfigFile/generateEsLintConfigFile";
 import addScriptsToPackageJson from "@utils/addScriptsToPackageJson/addScriptsToPackageJson";
 import generateEsbuildConfigFile from "./tsOptions/generateEsbuildConfigFile/generateEsbuildConfigFile";
+import generateTsFile from "./tsOptions/generateTsFile/generateTsFile";
 
 const htmlRegex = /<\/?[a-z][\s\S]*>/i;
 const spacesRegex = /\s+/;
@@ -463,6 +464,14 @@ try {
       directoryPath: ".",
       fileName: tsConfigFile.name,
       fileContent: tsConfigFile.content,
+    });
+
+    const tsFile = generateTsFile({ themeName: answers.theme.name });
+
+    createFile({
+      directoryPath: `src/themes/${answers.theme.folder}/ts`,
+      fileName: tsFile.name,
+      fileContent: tsFile.content,
     });
 
     Array.prototype.push.apply(npmPackages, [
