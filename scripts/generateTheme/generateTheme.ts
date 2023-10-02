@@ -19,11 +19,11 @@ import generateSassStylelintFile from "@generateTheme/cssOptions/sass/generateSa
 import formatFolderName from "@utils/formatFolderName/formatFolderName";
 import generatePostCssConfigFile from "./cssOptions/postcss/generatePostCssConfigFile/generatePostCssConfigFile";
 import generatePostCssProdConfigFile from "./cssOptions/postcss/generatePostCssProdConfigFile/generatePostCssProdConfigFile";
-import generateTsConfigFile from "./tsOption/generateTsConfigFile/generateTsConfigFile";
+import generateTsConfigFile from "./tsOptions/generateTsConfigFile/generateTsConfigFile";
 import installNpmPackages from "@utils/installNpmPackages/installNpmPackages";
 import generateEsLintConfigFile from "./generateEsLintConfigFile/generateEsLintConfigFile";
 import addScriptsToPackageJson from "@utils/addScriptsToPackageJson/addScriptsToPackageJson";
-import generateEsbuildConfigFile from "./tsOption/generateEsbuildConfigFile/generateEsbuildConfigFile";
+import generateEsbuildConfigFile from "./tsOptions/generateEsbuildConfigFile/generateEsbuildConfigFile";
 
 const htmlRegex = /<\/?[a-z][\s\S]*>/i;
 const spacesRegex = /\s+/;
@@ -452,12 +452,12 @@ try {
   });
 
   if (answers.tooling.ts) {
-    const tsConfigFile = generateTsConfigFile();
-
     createFolder({
       directory: `src/themes/${answers.theme.folder}`,
       folderName: `ts`,
     });
+
+    const tsConfigFile = generateTsConfigFile();
 
     createFile({
       directoryPath: ".",

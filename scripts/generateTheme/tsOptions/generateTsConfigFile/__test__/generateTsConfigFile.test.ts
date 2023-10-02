@@ -1,4 +1,4 @@
-import generateTsConfigFile from "@generateTheme/tsOption/generateTsConfigFile/generateTsConfigFile";
+import generateTsConfigFile from "@generateTheme/tsOptions/generateTsConfigFile/generateTsConfigFile";
 import { File } from "@utils/types/File";
 
 describe("generateTsConfigFile", () => {
