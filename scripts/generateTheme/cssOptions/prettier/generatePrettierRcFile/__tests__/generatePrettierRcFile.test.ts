@@ -1,24 +1,33 @@
-import generatePrettierRcFile from "@generateTheme/cssOptions/prettier/generatePrettierRcFile/generatePrettierRcFile";
-import { File } from "@utils/types/File";
+import generatePrettierRcFile from "../generatePrettierRcFile";
 
 describe("generatePrettierRcFile", () => {
-  it("should generate a valid .prettierrc file", () => {
-    // Arrange
-    const expectedContent = `{
+  it("should generate a correct .prettierrc file content with provided plugins", () => {
+    const plugins = ["plugin1", "plugin2"];
+
+    const result = generatePrettierRcFile({ plugins });
+
+    expect(result.name).toBe(".prettierrc");
+    expect(result.content).toBe(`{
     "semi": true,
     "trailingComma": "all",
     "singleQuote": true,
     "printWidth": 80,
-    "plugins": [
-    ]
+    "plugins": ["plugin1","plugin2"]
   }
-  `;
+  `);
+  });
 
-    // Act
-    const result: File = generatePrettierRcFile();
+  it("should generate a .prettierrc file with an empty plugins array if no plugins provided", () => {
+    const result = generatePrettierRcFile({ plugins: [] });
 
-    // Assert
     expect(result.name).toBe(".prettierrc");
-    expect(result.content).toBe(expectedContent);
+    expect(result.content).toBe(`{
+    "semi": true,
+    "trailingComma": "all",
+    "singleQuote": true,
+    "printWidth": 80,
+    "plugins": []
+  }
+  `);
   });
 });

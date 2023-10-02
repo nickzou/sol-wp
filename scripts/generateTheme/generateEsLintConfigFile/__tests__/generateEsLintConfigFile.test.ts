@@ -1,50 +1,36 @@
-import generateEsLintConfigFile from "@generateTheme/generateEsLintConfigFile/generateEsLintConfigFile";
-import { File } from "@utils/types/File";
+import generateEsLintConfigFile from "../generateEsLintConfigFile";
 
 describe("generateEsLintConfigFile", () => {
-  it("should generate the correct tsconfig.json file", () => {
-    const expectedContent = `{
-  "extends": ["eslint:recommended", "prettier"],
-  "plugins": [
-    "prettier"
-  ],
-  "env": {
-    "browser": true,
-    "node": true,
-    "es6": true
-  },
-  "parserOptions": {
-    "ecmaVersion": 12
-  },
-  "rules": {
-    "indent": [
-      "error",
-      2,
-      {
-        "ignoredNodes": ["TemplateLiteral *", "ConditionalExpression"],
-        "SwitchCase": 1
-      }
-    ],
-    "linebreak-style": ["error", "unix"],
-    "quotes": [
-      "error",
-      "single",
-      {
-        "allowTemplateLiterals": true
-      }
-    ],
-    "semi": ["error", "always"],
-    "prefer-template": 2
-  }
-}
-`;
+  it("should generate a correct .eslintrc.json file content with provided parameters", () => {
+    const extendsArr = ["plugin:react/recommended"];
+    const plugins = ["react"];
+    const parser = "babel-eslint";
 
-    const expected: File = {
-      name: ".eslintrc.json",
-      content: expectedContent,
-    };
+    const result = generateEsLintConfigFile({ extendsArr, plugins, parser });
 
-    const result = generateEsLintConfigFile();
-    expect(result).toEqual(expected);
+    expect(result.name).toBe(".eslintrc.json");
+    expect(result.content).toContain(
+      '"extends": ["eslint:recommended","prettier","plugin:react/recommended"]'
+    );
+    expect(result.content).toContain('"plugins": ["prettier","react"]');
+    expect(result.content).toContain('"parser": "babel-eslint"');
+  });
+
+  it("should generate a .eslintrc.json file with default values if optional parameters are not provided", () => {
+    const parser = "babel-eslint";
+    const result = generateEsLintConfigFile({ parser });
+
+    expect(result.name).toBe(".eslintrc.json");
+    expect(result.content).toContain(
+      '"extends": ["eslint:recommended","prettier"]'
+    );
+    expect(result.content).toContain('"plugins": ["prettier"]');
+  });
+
+  it("should not include the parser key if the parser parameter is not provided", () => {
+    const result = generateEsLintConfigFile({ parser: "" });
+
+    expect(result.name).toBe(".eslintrc.json");
+    expect(result.content).not.toContain('"parser":');
   });
 });
