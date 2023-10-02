@@ -217,7 +217,7 @@ try {
       const tailwindConfigFile = generateTailwindConfigFile({
         content: [
           `wp/themes/${answers.theme.folder}/**/*.php`,
-          `src/ts/**/*.{js, jsx, ts, tsx}`,
+          `src/${answers.theme.folder}/ts/**/*.{js, jsx, ts, tsx}`,
         ],
       });
 
@@ -261,7 +261,7 @@ try {
       const unoConfigFile = generateUnoConfigFile({
         content: [
           `wp/themes/${answers.theme.folder}/**/*.php`,
-          `src/ts/**/*.{js, jsx, ts, tsx}`,
+          `src/${answers.theme.folder}/ts/**/*.{js, jsx, ts, tsx}`,
         ],
         outFile: `wp/themes/${answers.theme.folder}/css/uno.css`,
       });
@@ -484,10 +484,13 @@ try {
 
   addScriptsToPackageJson([
     ...packageScripts,
-    { key: `eslint`, value: `eslint 'src/ts/**/*.{js,jsx,ts,tsx}'` },
+    {
+      key: `eslint`,
+      value: `eslint 'src/${answers.theme.folder}/ts/**/*.{js,jsx,ts,tsx}'`,
+    },
     {
       key: `eslint:watch`,
-      value: `onchange 'src/ts/**/*.{js,jsx,ts,tsx}' -- npm run eslint`,
+      value: `onchange 'src/${answers.theme.folder}/ts/**/*.{js,jsx,ts,tsx}' -- npm run eslint`,
     },
     {
       key: `esbuild`,
