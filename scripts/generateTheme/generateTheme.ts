@@ -454,6 +454,11 @@ try {
   if (answers.tooling.ts) {
     const tsConfigFile = generateTsConfigFile();
 
+    createFolder({
+      directory: `src/${answers.theme.folder}`,
+      folderName: `ts`,
+    });
+
     createFile({
       directoryPath: ".",
       fileName: tsConfigFile.name,
