@@ -1,11 +1,30 @@
 import { File } from "@utils/types/File";
 
-const generateEsLintConfigFile = (): File => {
+interface generateEsLintConfigFile {
+  extendsArr?: string[];
+  plugins?: string[];
+  parser: string;
+}
+
+const generateEsLintConfigFile = ({
+  extendsArr,
+  plugins,
+  parser,
+}: generateEsLintConfigFile): File => {
+  const extendsParam = ["eslint:recommended", "prettier"];
+  const pluginsParam = ["prettier"];
+
+  if (extendsArr) {
+    Array.prototype.push.apply(extendsParam, extendsArr);
+  }
+
+  if (plugins) {
+    Array.prototype.push.apply(pluginsParam, plugins);
+  }
   const content = `{
-  "extends": ["eslint:recommended", "prettier"],
-  "plugins": [
-    "prettier"
-  ],
+  "extends": ${JSON.stringify(extendsParam)},
+  "plugins": ${JSON.stringify(pluginsParam)},
+  ${!!parser ? `"parser": "${parser}",` : ""}
   "env": {
     "browser": true,
     "node": true,

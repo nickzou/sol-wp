@@ -1,12 +1,10 @@
 import { Theme } from "@utils/types/Theme";
 import { File } from "@utils/types/File";
 import { CssOption } from "@utils/types/CssOption";
-import { PackageJsonScript } from "@utils/types/PackageJsonScript";
 import generatePhpFunctionFile from "@generateTheme/generatePhpFunctionFile/generatePhpFunctionFile";
 import createFolder from "@utils/createFolder/createFolder";
 import createFile from "@utils/createFile/createFile";
 import appendToFunctionsFile from "@generateTheme/appendToFunctionsFile/appendToFunctionsFile";
-import addScriptsToPackageJson from "@utils/addScriptsToPackageJson/addScriptsToPackageJson";
 
 interface configureCssTool {
   functionFile: File;
@@ -14,7 +12,6 @@ interface configureCssTool {
   option: CssOption;
   cssRegisterName?: string;
   cssFileName?: string;
-  scripts: PackageJsonScript[];
 }
 
 const configureCssTool = async ({
@@ -23,7 +20,6 @@ const configureCssTool = async ({
   option,
   cssRegisterName,
   cssFileName,
-  scripts,
 }: configureCssTool) => {
   const registerAssetsFile = generatePhpFunctionFile({
     name: "register_assets",
@@ -41,9 +37,15 @@ const configureCssTool = async ({
     }' );`,
   });
 
-  createFolder(`${theme.folder}/functions`);
+  createFolder({
+    directory: `wp/themes/${theme.folder}`,
+    folderName: "functions",
+  });
 
-  createFolder(`${theme.folder}/css`);
+  createFolder({
+    directory: `wp/themes/${theme.folder}`,
+    folderName: "css",
+  });
 
   createFile({
     directoryPath: `wp/themes/${theme.folder}`,
@@ -72,8 +74,6 @@ const configureCssTool = async ({
     themeFolder: theme.folder,
     functionName: enqueueAssetsFile.functionName,
   });
-
-  addScriptsToPackageJson(scripts);
 };
 
 export default configureCssTool;
