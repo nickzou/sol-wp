@@ -145,7 +145,7 @@ const cssFile = generateCssFile({
 const phpFile = generateIndexFile();
 
 //Create Theme Folder in src folder
-createFolder({ directory: `src`, folderName: answers.theme.folder });
+createFolder({ directory: `src/themes`, folderName: answers.theme.folder });
 
 //Creates Theme Folder in WP folder
 createFolder({ directory: "wp/themes", folderName: answers.theme.folder });
@@ -199,29 +199,29 @@ try {
       });
 
       createFolder({
-        directory: `src/${answers.theme.folder}`,
+        directory: `src/themes/${answers.theme.folder}`,
         folderName: `css`,
       });
 
       Array.prototype.push.apply(packageScripts, [
         {
           key: "tailwind",
-          value: `tailwindcss -i ./src/${answers.theme.folder}/css/tailwind.css -o ./wp/themes/${answers.theme.folder}/css/tailwind.css`,
+          value: `tailwindcss -i ./src/themes/${answers.theme.folder}/css/tailwind.css -o ./wp/themes/${answers.theme.folder}/css/tailwind.css`,
         },
         {
           key: "tailwind:prod",
-          value: `tailwindcss -i ./src/${answers.theme.folder}/css/tailwind.css -o ./wp/themes/${answers.theme.folder}/css/tailwind.css`,
+          value: `tailwindcss -i ./src/themes/${answers.theme.folder}/css/tailwind.css -o ./wp/themes/${answers.theme.folder}/css/tailwind.css`,
         },
         {
           key: "tailwind:watch",
-          value: `tailwindcss -i ./src/${answers.theme.folder}/css/tailwind.css -o ./wp/themes/${answers.theme.folder}/css/tailwind.css --watch`,
+          value: `tailwindcss -i ./src/themes/${answers.theme.folder}/css/tailwind.css -o ./wp/themes/${answers.theme.folder}/css/tailwind.css --watch`,
         },
       ]);
 
       const tailwindConfigFile = generateTailwindConfigFile({
         content: [
           `wp/themes/${answers.theme.folder}/**/*.php`,
-          `src/${answers.theme.folder}/ts/**/*.{js, jsx, ts, tsx}`,
+          `src/themes/${answers.theme.folder}/ts/**/*.{js, jsx, ts, tsx}`,
         ],
       });
 
@@ -265,7 +265,7 @@ try {
       const unoConfigFile = generateUnoConfigFile({
         content: [
           `wp/themes/${answers.theme.folder}/**/*.php`,
-          `src/${answers.theme.folder}/ts/**/*.{js, jsx, ts, tsx}`,
+          `src/themes/${answers.theme.folder}/ts/**/*.{js, jsx, ts, tsx}`,
         ],
         outFile: `wp/themes/${answers.theme.folder}/css/uno.css`,
       });
@@ -290,7 +290,7 @@ try {
       });
 
       createFolder({
-        directory: `src/${answers.theme.folder}`,
+        directory: `src/themes/${answers.theme.folder}`,
         folderName: `scss`,
       });
       Array.prototype.push.apply(packageScripts, [
@@ -304,23 +304,23 @@ try {
         },
         {
           key: "sass:watch",
-          value: `sass src/${answers.theme.folder}/scss:wp/themes/${answers.theme.folder}/css --load-path=node_modules --style=expanded --embed-source-map --watch`,
+          value: `sass src/themes/${answers.theme.folder}/scss:wp/themes/${answers.theme.folder}/css --load-path=node_modules --style=expanded --embed-source-map --watch`,
         },
         {
           key: "sass:prettier",
-          value: `prettier 'src/${answers.theme.folder}/scss/**/*.scss' --write`,
+          value: `prettier 'src/themes/${answers.theme.folder}/scss/**/*.scss' --write`,
         },
         {
           key: "sass:prettier:watch",
-          value: `onchange "src/${answers.theme.folder}/scss/**/*.scss" -- prettier --write --ignore-unknown {{changed}}`,
+          value: `onchange "src/themes/${answers.theme.folder}/scss/**/*.scss" -- prettier --write --ignore-unknown {{changed}}`,
         },
         {
           key: "stylelint",
-          value: `stylelint src/${answers.theme.folder}/scss/**/*.scss`,
+          value: `stylelint src/themes/${answers.theme.folder}/scss/**/*.scss`,
         },
         {
           key: "stylelint:watch",
-          value: `onchange src/${answers.theme.folder}/scss/**/*.scss -- npm run stylelint`,
+          value: `onchange src/themes/${answers.theme.folder}/scss/**/*.scss -- npm run stylelint`,
         },
         {
           key: "style:watch",
@@ -348,7 +348,7 @@ try {
       });
 
       createFile({
-        directoryPath: `src/${answers.theme.folder}/scss`,
+        directoryPath: `src/themes/${answers.theme.folder}/scss`,
         fileName: "styles.scss",
         fileContent: "@use 'scss-reset/reset';",
       });
@@ -373,22 +373,22 @@ try {
       });
 
       createFolder({
-        directory: `src/${answers.theme.folder}`,
+        directory: `src/themes/${answers.theme.folder}`,
         folderName: `css`,
       });
 
       Array.prototype.push.apply(packageScripts, [
         {
           key: `css`,
-          value: `postcss src/${answers.theme.folder}/css/**/*.css --dir wp/themes/${answers.theme.folder}/css --config .postcssrc.json`,
+          value: `postcss src/themes/${answers.theme.folder}/css/**/*.css --dir wp/themes/${answers.theme.folder}/css --config .postcssrc.json`,
         },
         {
           key: `css:prod`,
-          value: `postcss src/${answers.theme.folder}/css/**/*.css --dir wp/themes/${answers.theme.folder}/css --config .postcssrc.prod.json`,
+          value: `postcss src/themes/${answers.theme.folder}/css/**/*.css --dir wp/themes/${answers.theme.folder}/css --config .postcssrc.prod.json`,
         },
         {
           key: `css:watch`,
-          value: `postcss src/${answers.theme.folder}/css/**/*.css --dir wp/themes/${answers.theme.folder}/css --config .postcssrc.json --watch`,
+          value: `postcss src/themes/${answers.theme.folder}/css/**/*.css --dir wp/themes/${answers.theme.folder}/css --config .postcssrc.json --watch`,
         },
       ]);
 
@@ -409,7 +409,7 @@ try {
       });
 
       createFile({
-        directoryPath: `src/${answers.theme.folder}/css`,
+        directoryPath: `src/themes/${answers.theme.folder}/css`,
         fileName: "styles.css",
         fileContent: '@import "normalize.css";',
       });
@@ -455,7 +455,7 @@ try {
     const tsConfigFile = generateTsConfigFile();
 
     createFolder({
-      directory: `src/${answers.theme.folder}`,
+      directory: `src/themes/${answers.theme.folder}`,
       folderName: `ts`,
     });
 
@@ -504,11 +504,11 @@ try {
     ...packageScripts,
     {
       key: `eslint`,
-      value: `eslint 'src/${answers.theme.folder}/ts/**/*.{js,jsx,ts,tsx}'`,
+      value: `eslint 'src/themes/${answers.theme.folder}/ts/**/*.{js,jsx,ts,tsx}'`,
     },
     {
       key: `eslint:watch`,
-      value: `onchange 'src/${answers.theme.folder}/ts/**/*.{js,jsx,ts,tsx}' -- npm run eslint`,
+      value: `onchange 'src/themes/${answers.theme.folder}/ts/**/*.{js,jsx,ts,tsx}' -- npm run eslint`,
     },
     {
       key: `esbuild`,
