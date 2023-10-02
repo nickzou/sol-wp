@@ -372,6 +372,11 @@ try {
         cssFileName: "styles",
       });
 
+      createFolder({
+        directory: `src/${answers.theme.folder}`,
+        folderName: `css`,
+      });
+
       Array.prototype.push.apply(packageScripts, [
         {
           key: `css`,
