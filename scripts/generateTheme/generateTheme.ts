@@ -236,7 +236,7 @@ try {
       });
 
       createFile({
-        directoryPath: `src/themes/${answers.theme.folder}`,
+        directoryPath: `src/themes/${answers.theme.folder}/css`,
         fileName: tailwindCssFile.name,
         fileContent: tailwindCssFile.content,
       });
@@ -295,6 +295,7 @@ try {
         directory: `src/themes/${answers.theme.folder}`,
         folderName: `scss`,
       });
+
       Array.prototype.push.apply(packageScripts, [
         {
           key: "sass",
