@@ -201,15 +201,15 @@ try {
       Array.prototype.push.apply(packageScripts, [
         {
           key: "tailwind",
-          value: `tailwindcss -i ./src/css/tailwind.css -o ./wp/themes/${answers.theme.folder}/css/tailwind.css`,
+          value: `tailwindcss -i ./src/${answers.theme.folder}/css/tailwind.css -o ./wp/themes/${answers.theme.folder}/css/tailwind.css`,
         },
         {
           key: "tailwind:prod",
-          value: `tailwindcss -i ./src/css/tailwind.css -o ./wp/themes/${answers.theme.folder}/css/tailwind.css`,
+          value: `tailwindcss -i ./src/${answers.theme.folder}/css/tailwind.css -o ./wp/themes/${answers.theme.folder}/css/tailwind.css`,
         },
         {
           key: "tailwind:watch",
-          value: `tailwindcss -i ./src/css/tailwind.css -o ./wp/themes/${answers.theme.folder}/css/tailwind.css --watch`,
+          value: `tailwindcss -i ./src/${answers.theme.folder}/css/tailwind.css -o ./wp/themes/${answers.theme.folder}/css/tailwind.css --watch`,
         },
       ]);
 
@@ -230,7 +230,7 @@ try {
       });
 
       createFile({
-        directoryPath: `src/css`,
+        directoryPath: `/${answers.theme.folder}`,
         fileName: tailwindCssFile.name,
         fileContent: tailwindCssFile.content,
       });
@@ -296,24 +296,23 @@ try {
         },
         {
           key: "sass:watch",
-          value: `sass src/css:wp/themes/${answers.theme.folder}/css --load-path=node_modules --style=expanded --embed-source-map --watch`,
+          value: `sass src/${answers.theme.folder}/css:wp/themes/${answers.theme.folder}/css --load-path=node_modules --style=expanded --embed-source-map --watch`,
         },
         {
           key: "sass:prettier",
-          value: 'prettier "src/css/**/*.scss" --write',
+          value: `prettier 'src/${answers.theme.folder}/css/**/*.scss' --write`,
         },
         {
           key: "sass:prettier:watch",
-          value:
-            'onchange "src/css/**/*.scss" -- prettier --write --ignore-unknown {{changed}}',
+          value: `onchange "src/${answers.theme.folder}/css/**/*.scss" -- prettier --write --ignore-unknown {{changed}}`,
         },
         {
           key: "stylelint",
-          value: `stylelint src/css/**/*.scss`,
+          value: `stylelint src/${answers.theme.folder}/css/**/*.scss`,
         },
         {
           key: "stylelint:watch",
-          value: `onchange src/css/**/*.scss -- npm run stylelint`,
+          value: `onchange src/${answers.theme.folder}/css/**/*.scss -- npm run stylelint`,
         },
         {
           key: "style:watch",
@@ -341,7 +340,7 @@ try {
       });
 
       createFile({
-        directoryPath: "src/css",
+        directoryPath: `src/${answers.theme.folder}/css`,
         fileName: "styles.scss",
         fileContent: "@use 'scss-reset/reset';",
       });
@@ -368,15 +367,15 @@ try {
       Array.prototype.push.apply(packageScripts, [
         {
           key: `css`,
-          value: `postcss src/css/**/*.css --dir wp/themes/${answers.theme.folder}/css --config .postcssrc.json`,
+          value: `postcss src/${answers.theme.folder}/css/**/*.css --dir wp/themes/${answers.theme.folder}/css --config .postcssrc.json`,
         },
         {
           key: `css:prod`,
-          value: `postcss src/css/**/*.css --dir wp/themes/${answers.theme.folder}/css --config .postcssrc.prod.json`,
+          value: `postcss src/${answers.theme.folder}/css/**/*.css --dir wp/themes/${answers.theme.folder}/css --config .postcssrc.prod.json`,
         },
         {
           key: `css:watch`,
-          value: `postcss src/css/**/*.css --dir wp/themes/${answers.theme.folder}/css --config .postcssrc.json --watch`,
+          value: `postcss src/${answers.theme.folder}/css/**/*.css --dir wp/themes/${answers.theme.folder}/css --config .postcssrc.json --watch`,
         },
       ]);
 
@@ -397,7 +396,7 @@ try {
       });
 
       createFile({
-        directoryPath: "src/css",
+        directoryPath: `src/${answers.theme.folder}/css`,
         fileName: "styles.css",
         fileContent: '@import "normalize.css";',
       });
