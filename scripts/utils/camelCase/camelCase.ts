@@ -10,3 +10,5 @@ const camelCase = (str: string): string => {
     })
     .join("");
 };
+
+export default camelCase;
