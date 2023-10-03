@@ -27,6 +27,7 @@ import addScriptsToPackageJson from "@utils/addScriptsToPackageJson/addScriptsTo
 import generateEsbuildConfigFile from "./tsOptions/generateEsbuildConfigFile/generateEsbuildConfigFile";
 import generateTsFile from "./tsOptions/generateTsFile/generateTsFile";
 import generateJsFile from "./jsOptions/generateJsFile/generateJsFile";
+import generateComposerFile from "./generateComposerFile/generateComposerFile";
 
 const htmlRegex = /<\/?[a-z][\s\S]*>/i;
 const spacesRegex = /\s+/;
@@ -541,6 +542,16 @@ try {
     directoryPath: ".",
     fileName: esLintConfigFile.name,
     fileContent: esLintConfigFile.content,
+  });
+
+  const composerFile = generateComposerFile({
+    themeFolder: answers.theme.folder,
+  });
+
+  createFile({
+    directoryPath: `wp/themes/${answers.theme.folder}`,
+    fileName: composerFile.name,
+    fileContent: composerFile.content,
   });
 
   addScriptsToPackageJson([
