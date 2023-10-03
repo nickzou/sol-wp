@@ -10,6 +10,7 @@ import generateFunctionsFile from "@generateTheme/generateFunctionsFile/generate
 import { Recipe } from "@utils/types/Recipe";
 import configureCssTool from "@generateTheme/configureCssTool/configureCssTool";
 import cssOptions from "@utils/vars/cssOptions";
+import phpOptions from "@utils/vars/phpOptions";
 import generateTailwindConfigFile from "@generateTheme/cssOptions/tailwind/generateTailwindConfigFile/generateTailwindConfigFile";
 import generateTailwindCssFile from "@generateTheme/cssOptions/tailwind/generateTailwindCssFile/generateTailwindCssFile";
 import generateUnoConfigFile from "@generateTheme/cssOptions/uno/generateUnoConfigFile/generateUnoConfigFile";
@@ -151,6 +152,7 @@ const answers: Recipe = {
   tooling: {
     css: cssOptions.filter((o) => o.name === cssOption)[0],
     ts: ts,
+    php: phpOptions.filter((o) => o.name === phpOption)[0],
   },
 };
 
