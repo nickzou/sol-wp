@@ -6,7 +6,7 @@ interface generateComposerFile {
 }
 
 const generateComposerFile = ({ themeFolder }: generateComposerFile): File => {
-  const content = `{"name": "nickzou/${themeFolder}}",
+  const content = `{"name": "nickzou/${themeFolder}",
   "description": "A modern toolchain for WordPress development.",
   "type": "library",
   "license": "MIT",
