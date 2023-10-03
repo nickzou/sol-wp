@@ -28,6 +28,7 @@ import generateEsbuildConfigFile from "./tsOptions/generateEsbuildConfigFile/gen
 import generateTsFile from "./tsOptions/generateTsFile/generateTsFile";
 import generateJsFile from "./jsOptions/generateJsFile/generateJsFile";
 import generateComposerFile from "./generateComposerFile/generateComposerFile";
+import installComposerPackages from "@utils/installComposerPackages/installComposerPackages";
 
 const htmlRegex = /<\/?[a-z][\s\S]*>/i;
 const spacesRegex = /\s+/;
@@ -202,6 +203,7 @@ let npmPackages = [
   "browserslist",
 ];
 let packageScripts = [];
+let composerPackages = ["twig/twig:^3.0"];
 const prettierConfigOptions = {
   plugins: [],
 };
@@ -544,16 +546,6 @@ try {
     fileContent: esLintConfigFile.content,
   });
 
-  const composerFile = generateComposerFile({
-    themeFolder: answers.theme.folder,
-  });
-
-  createFile({
-    directoryPath: `wp/themes/${answers.theme.folder}`,
-    fileName: composerFile.name,
-    fileContent: composerFile.content,
-  });
-
   addScriptsToPackageJson([
     ...packageScripts,
     {
@@ -574,7 +566,21 @@ try {
     },
   ]);
 
+  const composerFile = generateComposerFile({
+    themeFolder: answers.theme.folder,
+  });
+
+  createFile({
+    directoryPath: `wp/themes/${answers.theme.folder}`,
+    fileName: composerFile.name,
+    fileContent: composerFile.content,
+  });
+
   await installNpmPackages(npmPackages);
+  await installComposerPackages(
+    composerPackages,
+    `wp/themes/${answers.theme.folder}`
+  );
 } catch (error) {
   console.error(
     formatMessage({ message: `An error occurred: ${error}`, color: "red" })
