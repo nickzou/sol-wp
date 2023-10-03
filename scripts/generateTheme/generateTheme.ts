@@ -109,6 +109,23 @@ if (isCancel(ts)) {
   process.exit(0);
 }
 
+const phpOption = await select({
+  message: "What PHP Templating System would you like?",
+  options: [
+    { value: "twig", label: "Twig" },
+    { value: "latte", label: "Latte" },
+    { value: "bladeone", label: "BladeOne" },
+    { value: "plate", label: "Plate" },
+    { value: "smarty", label: "Smarty" },
+    { value: "mustache", label: "Mustache" },
+    { value: "none", label: "None, PHP is a templating engine!" },
+  ],
+});
+
+if (isCancel(phpOption)) {
+  process.exit(0);
+}
+
 const name = getName ? (getName as string) : "Sol WP";
 
 const directory = getDirectory
