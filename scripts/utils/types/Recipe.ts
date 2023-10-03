@@ -1,6 +1,6 @@
 import { Theme } from "./Theme";
 import { CssOption } from "./CssOption";
-import { PhpOption } from "./phpOption";
+import { PhpOption } from "./PhpOption";
 
 export type Recipe = {
   theme: Theme;

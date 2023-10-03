@@ -1,4 +1,4 @@
-import { PhpOption } from "@utils/types/phpOption";
+import { PhpOption } from "@utils/types/PhpOption";
 
 const phpOptions: PhpOption[] = [
   { name: "twig", packageName: "twig/twig:^3.0" },
