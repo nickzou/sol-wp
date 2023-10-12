@@ -465,6 +465,12 @@ try {
       break;
   }
 
+  switch (phpOption) {
+    case 'twig':
+      console.log('you have chosen twig!');
+      break;
+  }
+
   //JavaScript/TypeScript installs
   const esbuildConfigFile = generateEsbuildConfigFile({
     themeFolder: answers.theme.folder,
