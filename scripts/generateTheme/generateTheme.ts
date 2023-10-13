@@ -204,7 +204,7 @@ let npmPackages = [
   "browserslist",
 ];
 let packageScripts = [];
-let composerPackages = ["twig/twig:^3.0"];
+let composerPackages = [];
 const prettierConfigOptions = {
   plugins: [],
 };
@@ -468,7 +468,9 @@ try {
 
   switch (phpOption) {
     case 'twig':
-      console.log('you have chosen twig!');
+      Array.prototype.push.apply(composerPackages, [
+        "twig/twig:^3.0"
+      ]);
       break;
   }
 
