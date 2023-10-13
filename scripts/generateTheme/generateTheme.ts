@@ -29,6 +29,7 @@ import generateTsFile from "./tsOptions/generateTsFile/generateTsFile";
 import generateJsFile from "./jsOptions/generateJsFile/generateJsFile";
 import generateComposerFile from "./generateComposerFile/generateComposerFile";
 import installComposerPackages from "@utils/installComposerPackages/installComposerPackages";
+import addToGitignore from "@utils/addToGitignore/addToGitignore";
 
 const htmlRegex = /<\/?[a-z][\s\S]*>/i;
 const spacesRegex = /\s+/;
@@ -464,6 +465,8 @@ try {
       );
       break;
   }
+
+  addToGitignore('.gitignore', [`wp/themes/${answers.theme.folder}/vendor`]);
 
   switch (phpOption) {
     case 'twig':
