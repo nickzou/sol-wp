@@ -466,8 +466,6 @@ try {
       break;
   }
 
-  addToGitignore('.gitignore', [`wp/themes/${answers.theme.folder}/vendor`]);
-
   switch (phpOption) {
     case 'twig':
       console.log('you have chosen twig!');
@@ -584,6 +582,8 @@ try {
     fileName: composerFile.name,
     fileContent: composerFile.content,
   });
+
+  addToGitignore('.gitignore', [`wp/themes/${answers.theme.folder}/vendor`]);
 
   await installNpmPackages(npmPackages);
   await installComposerPackages(
