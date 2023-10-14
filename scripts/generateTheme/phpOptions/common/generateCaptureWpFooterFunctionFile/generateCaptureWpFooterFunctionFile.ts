@@ -2,6 +2,7 @@ import generatePhpFunctionFile from "@generateTheme/generatePhpFunctionFile/gene
 
 const generateCaptureWpFooterFunctionFile = generatePhpFunctionFile({
     name: "capture_wp_footer",
+    fileName: "capture_wp_footer",
     functionBody: ` ob_start();
     wp_footer();
     return ob_get_clean();`
