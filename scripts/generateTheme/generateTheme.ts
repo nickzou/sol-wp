@@ -32,6 +32,10 @@ import installComposerPackages from "@utils/installComposerPackages/installCompo
 import addToGitignore from "@utils/addToGitignore/addToGitignore";
 import generatePhpFunctionFile from "./generatePhpFunctionFile/generatePhpFunctionFile";
 import appendToFunctionsFile from "./appendToFunctionsFile/appendToFunctionsFile";
+import generateCaptureWpHeadFunctionFile from "./phpOptions/common/generateCaptureWpHeadFunctionFile/generateCaptureWpHeadFunctionFile";
+import generateCaptureWpFooterFunctionFile from "./phpOptions/common/generateCaptureWpFooterFunctionFile/generateCaptureWpFooterFunctionFile";
+import generateIndexTwigFile from "./phpOptions/twig/generateIndexTwigFile/generateIndexTwigFile";
+import generateIndexTwigTemplateFile from "./phpOptions/twig/generateIndexTwigTemplateFile/generateIndexTwigTemplateFile";
 
 const htmlRegex = /<\/?[a-z][\s\S]*>/i;
 const spacesRegex = /\s+/;
@@ -168,8 +172,6 @@ const cssFile = generateCssFile({
   version: answers.theme.version,
 });
 
-const phpFile = generateIndexFile();
-
 //Create Theme Folder in src folder
 createFolder({ directory: `src/themes`, folderName: answers.theme.folder });
 
@@ -180,12 +182,6 @@ createFile({
   directoryPath: `wp/themes/${answers.theme.folder}`,
   fileName: cssFile.name,
   fileContent: cssFile.content,
-});
-
-createFile({
-  directoryPath: `wp/themes/${answers.theme.folder}`,
-  fileName: phpFile.name,
-  fileContent: phpFile.content,
 });
 
 editWpEnv({ wpEnvFile: `.wp-env.json`, directory: answers.theme.folder });
@@ -468,6 +464,32 @@ try {
       break;
   }
 
+  const captureWpHeadFunctionFile = generateCaptureWpHeadFunctionFile;
+
+  createFile({
+    directoryPath: `wp/themes/${answers.theme.folder}/functions`,
+    fileName: captureWpHeadFunctionFile.name,
+    fileContent: captureWpHeadFunctionFile.content
+  });
+
+  appendToFunctionsFile({
+    themeFolder: answers.theme.folder,
+    functionName: captureWpHeadFunctionFile.name
+  });
+
+  const captureWpFooterFunctionFile = generateCaptureWpFooterFunctionFile;
+
+  createFile({
+    directoryPath: `wp/themes/${answers.theme.folder}/functions`,
+    fileName: captureWpFooterFunctionFile.name,
+    fileContent: captureWpFooterFunctionFile.content
+  });
+
+  appendToFunctionsFile({
+    themeFolder: answers.theme.folder,
+    functionName: captureWpFooterFunctionFile.name
+  });
+
   switch (phpOption) {
     case 'twig':
       Array.prototype.push.apply(composerPackages, [
@@ -498,7 +520,31 @@ try {
         directory: `wp/themes/${answers.theme.folder}`,
         folderName: 'views',
       });
+
+      const twigIndexFile = generateIndexTwigFile();
+
+      createFile({
+        directoryPath: `wp/themes/${answers.theme.folder}`,
+        fileName: twigIndexFile.name,
+        fileContent: twigIndexFile.content,
+      });
+
+      const twigIndexTemplateFile = generateIndexTwigTemplateFile();
+
+      createFile({
+        directoryPath: `wp/themes/${answers.theme.folder}/views`,
+        fileName: twigIndexTemplateFile.name,
+        fileContent: twigIndexTemplateFile.content,
+      });
       break;
+    default:
+    const phpFile = generateIndexFile();
+
+    createFile({
+      directoryPath: `wp/themes/${answers.theme.folder}`,
+      fileName: phpFile.name,
+      fileContent: phpFile.content,
+    });
   }
 
   //JavaScript/TypeScript installs

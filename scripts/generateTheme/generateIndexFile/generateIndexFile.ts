@@ -1,4 +1,4 @@
-import { File } from "../../utils/types/File";
+import { File } from "@utils/types/File";
 
 const generateIndexFile = (): File => {
   const content = `<!DOCTYPE html>
