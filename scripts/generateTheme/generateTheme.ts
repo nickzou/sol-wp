@@ -474,7 +474,7 @@ try {
 
   appendToFunctionsFile({
     themeFolder: answers.theme.folder,
-    functionName: captureWpHeadFunctionFile.name
+    functionName: captureWpHeadFunctionFile.functionName
   });
 
   const captureWpFooterFunctionFile = generateCaptureWpFooterFunctionFile;
@@ -487,7 +487,7 @@ try {
 
   appendToFunctionsFile({
     themeFolder: answers.theme.folder,
-    functionName: captureWpFooterFunctionFile.name
+    functionName: captureWpFooterFunctionFile.functionName
   });
 
   switch (phpOption) {
