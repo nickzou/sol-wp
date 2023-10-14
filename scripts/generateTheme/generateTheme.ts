@@ -477,16 +477,16 @@ try {
       const loadTwigFile = generatePhpFunctionFile({
         name: "load_twig",
         functionBody: `   $loader = new \\Twig\\Loader\\FilesystemLoader(get_template_directory() . '/views');
-        $twig = new \\Twig\\Environment($loader);
+      $twig = new \\Twig\\Environment($loader);
 
-        return $twig;
+      return $twig;
         `
       });
 
       createFile({
         directoryPath: `wp/themes/${answers.theme.folder}/functions`,
         fileName: loadTwigFile.name,
-        fileContent: `${loadTwigFile.content} \nglobal $twig \n\n$twig=load_twig();`
+        fileContent: `${loadTwigFile.content} \nglobal $twig; \n\n$twig=load_twig();`
       });
 
       appendToFunctionsFile({
