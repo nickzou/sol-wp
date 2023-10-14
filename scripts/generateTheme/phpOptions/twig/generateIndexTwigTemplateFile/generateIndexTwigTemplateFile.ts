@@ -7,7 +7,7 @@ const generateIndexTwigTemplateFile = (): File => {
         <meta charset="{{charset}}">
         <meta name="viewport" content="width=device-width, initial-scale=1.0\">
         <title>{{title}}</title>
-        {{wp_head}}
+        {{wp_head | raw}}
     </head>
     <body class="{{body_class|join(' ')}}">
         <header>
@@ -31,7 +31,7 @@ const generateIndexTwigTemplateFile = (): File => {
             <p>&copy; {{"now"|date("Y")}} {{site_name}}</p>
         </footer>
         
-        {{wp_footer}}
+        {{wp_footer | raw}}
     </body>
     </html>
     `;

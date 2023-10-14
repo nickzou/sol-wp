@@ -10,12 +10,12 @@ const generateIndexTwigFile = ():File => {
             $posts[] = [
                 'link' => get_the_permalink(),
                 'title' => get_the_title(),
-                'content' => get_the_contnent(),
+                'content' => get_the_content(),
             ];
         }
     };
 
-    $context => [
+    $context = [
         'wp_head' => capture_wp_head(),
         'wp_footer' => capture_wp_footer(),
         'language_attributes' => get_language_attributes(),
