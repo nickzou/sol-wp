@@ -30,6 +30,8 @@ import generateJsFile from "./jsOptions/generateJsFile/generateJsFile";
 import generateComposerFile from "./generateComposerFile/generateComposerFile";
 import installComposerPackages from "@utils/installComposerPackages/installComposerPackages";
 import addToGitignore from "@utils/addToGitignore/addToGitignore";
+import generatePhpFunctionFile from "./generatePhpFunctionFile/generatePhpFunctionFile";
+import appendToFunctionsFile from "./appendToFunctionsFile/appendToFunctionsFile";
 
 const htmlRegex = /<\/?[a-z][\s\S]*>/i;
 const spacesRegex = /\s+/;
@@ -471,6 +473,26 @@ try {
       Array.prototype.push.apply(composerPackages, [
         "twig/twig:^3.0"
       ]);
+
+      const loadTwigFile = generatePhpFunctionFile({
+        name: "load_twig",
+        functionBody: `   $loader = new \\Twig\\Loader\\FilesystemLoader(get_template_directory() . '/views');
+        $twig = new \\Twig\\Environment($loader);
+
+        return $twig;
+        `
+      });
+
+      createFile({
+        directoryPath: `wp/themes/${answers.theme.folder}/functions`,
+        fileName: loadTwigFile.name,
+        fileContent: `${loadTwigFile.content} \nglobal $twig \n\n$twig=load_twig();`
+      });
+
+      appendToFunctionsFile({
+        themeFolder: answers.theme.folder,
+        functionName: loadTwigFile.functionName
+      });
       break;
   }
 
