@@ -493,6 +493,11 @@ try {
         themeFolder: answers.theme.folder,
         functionName: loadTwigFile.functionName
       });
+
+      createFolder({
+        directory: `wp/themes/${answers.theme.folder}`,
+        folderName: 'views',
+      });
       break;
   }
 
