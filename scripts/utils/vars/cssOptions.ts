@@ -1,4 +1,4 @@
-import { CssOption } from "../types/CssOption";
+import { CssOption } from "@utils/types/CssOption";
 
 const cssOptions: CssOption[] = [
   { name: "tailwind", packageName: "tailwindcss" },

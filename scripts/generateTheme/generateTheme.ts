@@ -10,6 +10,7 @@ import generateFunctionsFile from "@generateTheme/generateFunctionsFile/generate
 import { Recipe } from "@utils/types/Recipe";
 import configureCssTool from "@generateTheme/configureCssTool/configureCssTool";
 import cssOptions from "@utils/vars/cssOptions";
+import phpOptions from "@utils/vars/phpOptions";
 import generateTailwindConfigFile from "@generateTheme/cssOptions/tailwind/generateTailwindConfigFile/generateTailwindConfigFile";
 import generateTailwindCssFile from "@generateTheme/cssOptions/tailwind/generateTailwindCssFile/generateTailwindCssFile";
 import generateUnoConfigFile from "@generateTheme/cssOptions/uno/generateUnoConfigFile/generateUnoConfigFile";
@@ -26,6 +27,16 @@ import addScriptsToPackageJson from "@utils/addScriptsToPackageJson/addScriptsTo
 import generateEsbuildConfigFile from "./tsOptions/generateEsbuildConfigFile/generateEsbuildConfigFile";
 import generateTsFile from "./tsOptions/generateTsFile/generateTsFile";
 import generateJsFile from "./jsOptions/generateJsFile/generateJsFile";
+import generateComposerFile from "./generateComposerFile/generateComposerFile";
+import installComposerPackages from "@utils/installComposerPackages/installComposerPackages";
+import addToGitignore from "@utils/addToGitignore/addToGitignore";
+import generatePhpFunctionFile from "./generatePhpFunctionFile/generatePhpFunctionFile";
+import appendToFunctionsFile from "./appendToFunctionsFile/appendToFunctionsFile";
+import generateCaptureWpHeadFunctionFile from "./phpOptions/common/generateCaptureWpHeadFunctionFile/generateCaptureWpHeadFunctionFile";
+import generateCaptureWpFooterFunctionFile from "./phpOptions/common/generateCaptureWpFooterFunctionFile/generateCaptureWpFooterFunctionFile";
+import generateIndexTwigFile from "./phpOptions/twig/generateIndexTwigFile/generateIndexTwigFile";
+import generateIndexTwigTemplateFile from "./phpOptions/twig/generateIndexTwigTemplateFile/generateIndexTwigTemplateFile";
+import generateLoadTwigPhpFunctionFile from "./phpOptions/twig/generateLoadTwigPhpFunctionFile/generateLoadTwigPhpFunctionFile";
 
 const htmlRegex = /<\/?[a-z][\s\S]*>/i;
 const spacesRegex = /\s+/;
@@ -151,6 +162,7 @@ const answers: Recipe = {
   tooling: {
     css: cssOptions.filter((o) => o.name === cssOption)[0],
     ts: ts,
+    php: phpOptions.filter((o) => o.name === phpOption)[0],
   },
 };
 
@@ -160,8 +172,6 @@ const cssFile = generateCssFile({
   description: answers.theme.description,
   version: answers.theme.version,
 });
-
-const phpFile = generateIndexFile();
 
 //Create Theme Folder in src folder
 createFolder({ directory: `src/themes`, folderName: answers.theme.folder });
@@ -173,12 +183,6 @@ createFile({
   directoryPath: `wp/themes/${answers.theme.folder}`,
   fileName: cssFile.name,
   fileContent: cssFile.content,
-});
-
-createFile({
-  directoryPath: `wp/themes/${answers.theme.folder}`,
-  fileName: phpFile.name,
-  fileContent: phpFile.content,
 });
 
 editWpEnv({ wpEnvFile: `.wp-env.json`, directory: answers.theme.folder });
@@ -199,6 +203,7 @@ let npmPackages = [
   "browserslist",
 ];
 let packageScripts = [];
+let composerPackages = [];
 const prettierConfigOptions = {
   plugins: [],
 };
@@ -460,6 +465,82 @@ try {
       break;
   }
 
+  const captureWpHeadFunctionFile = generateCaptureWpHeadFunctionFile;
+
+  createFile({
+    directoryPath: `wp/themes/${answers.theme.folder}/functions`,
+    fileName: captureWpHeadFunctionFile.name,
+    fileContent: captureWpHeadFunctionFile.content
+  });
+
+  appendToFunctionsFile({
+    themeFolder: answers.theme.folder,
+    functionName: captureWpHeadFunctionFile.functionName
+  });
+
+  const captureWpFooterFunctionFile = generateCaptureWpFooterFunctionFile;
+
+  createFile({
+    directoryPath: `wp/themes/${answers.theme.folder}/functions`,
+    fileName: captureWpFooterFunctionFile.name,
+    fileContent: captureWpFooterFunctionFile.content
+  });
+
+  appendToFunctionsFile({
+    themeFolder: answers.theme.folder,
+    functionName: captureWpFooterFunctionFile.functionName
+  });
+
+  switch (phpOption) {
+    case 'twig':
+      Array.prototype.push.apply(composerPackages, [
+        "twig/twig:^3.0"
+      ]);
+
+      const loadTwigFile = generateLoadTwigPhpFunctionFile();
+
+      createFile({
+        directoryPath: `wp/themes/${answers.theme.folder}/functions`,
+        fileName: loadTwigFile.name,
+        fileContent: `${loadTwigFile.content} \nadd_action('template_redirect', 'load_twig');`
+      });
+
+      appendToFunctionsFile({
+        themeFolder: answers.theme.folder,
+        functionName: loadTwigFile.functionName
+      });
+
+      createFolder({
+        directory: `wp/themes/${answers.theme.folder}`,
+        folderName: 'views',
+      });
+
+      const twigIndexFile = generateIndexTwigFile();
+
+      createFile({
+        directoryPath: `wp/themes/${answers.theme.folder}`,
+        fileName: twigIndexFile.name,
+        fileContent: twigIndexFile.content,
+      });
+
+      const twigIndexTemplateFile = generateIndexTwigTemplateFile();
+
+      createFile({
+        directoryPath: `wp/themes/${answers.theme.folder}/views`,
+        fileName: twigIndexTemplateFile.name,
+        fileContent: twigIndexTemplateFile.content,
+      });
+      break;
+    default:
+    const phpFile = generateIndexFile();
+
+    createFile({
+      directoryPath: `wp/themes/${answers.theme.folder}`,
+      fileName: phpFile.name,
+      fileContent: phpFile.content,
+    });
+  }
+
   //JavaScript/TypeScript installs
   const esbuildConfigFile = generateEsbuildConfigFile({
     themeFolder: answers.theme.folder,
@@ -561,7 +642,23 @@ try {
     },
   ]);
 
+  const composerFile = generateComposerFile({
+    themeFolder: answers.theme.folder,
+  });
+
+  createFile({
+    directoryPath: `wp/themes/${answers.theme.folder}`,
+    fileName: composerFile.name,
+    fileContent: composerFile.content,
+  });
+
+  addToGitignore('.gitignore', [`wp/themes/${answers.theme.folder}/vendor`]);
+
   await installNpmPackages(npmPackages);
+  await installComposerPackages(
+    composerPackages,
+    `wp/themes/${answers.theme.folder}`
+  );
 } catch (error) {
   console.error(
     formatMessage({ message: `An error occurred: ${error}`, color: "red" })
