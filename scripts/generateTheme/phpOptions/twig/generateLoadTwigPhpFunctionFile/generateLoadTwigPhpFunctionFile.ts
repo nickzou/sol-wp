@@ -19,7 +19,7 @@ const generateLoadTwigPhpFunctionFile = () => {
     $twig->addGlobal('site_description', get_bloginfo( 'description' ));
 
     if(WP_DEBUG) {
-        $twig->addExtension(new \Twig\Extension\DebugExtension());
+        $twig->addExtension(new \\Twig\\Extension\\DebugExtension());
     }
     `
     });
