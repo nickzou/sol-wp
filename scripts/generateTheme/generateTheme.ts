@@ -36,6 +36,7 @@ import generateCaptureWpHeadFunctionFile from "./phpOptions/common/generateCaptu
 import generateCaptureWpFooterFunctionFile from "./phpOptions/common/generateCaptureWpFooterFunctionFile/generateCaptureWpFooterFunctionFile";
 import generateIndexTwigFile from "./phpOptions/twig/generateIndexTwigFile/generateIndexTwigFile";
 import generateIndexTwigTemplateFile from "./phpOptions/twig/generateIndexTwigTemplateFile/generateIndexTwigTemplateFile";
+import generateLoadTwigPhpFunctionFile from "./phpOptions/twig/generateLoadTwigPhpFunctionFile/generateLoadTwigPhpFunctionFile";
 
 const htmlRegex = /<\/?[a-z][\s\S]*>/i;
 const spacesRegex = /\s+/;
@@ -496,19 +497,12 @@ try {
         "twig/twig:^3.0"
       ]);
 
-      const loadTwigFile = generatePhpFunctionFile({
-        name: "load_twig",
-        functionBody: `   $loader = new \\Twig\\Loader\\FilesystemLoader(get_template_directory() . '/views');
-      $twig = new \\Twig\\Environment($loader);
-
-      return $twig;
-        `
-      });
+      const loadTwigFile = generateLoadTwigPhpFunctionFile();
 
       createFile({
         directoryPath: `wp/themes/${answers.theme.folder}/functions`,
         fileName: loadTwigFile.name,
-        fileContent: `${loadTwigFile.content} \nglobal $twig; \n\n$twig=load_twig();`
+        fileContent: `${loadTwigFile.content} \nadd_action('template_redirect', 'load_twig');`
       });
 
       appendToFunctionsFile({

@@ -2,7 +2,7 @@ import { File } from "@utils/types/File";
 
 const generateIndexTwigTemplateFile = (): File => {
     const content = `<!DOCTYPE html>
-    <html lang="{{language_attributes}}">
+    <html {{language_attributes}}>
     <head>
         <meta charset="{{charset}}">
         <meta name="viewport" content="width=device-width, initial-scale=1.0\">
