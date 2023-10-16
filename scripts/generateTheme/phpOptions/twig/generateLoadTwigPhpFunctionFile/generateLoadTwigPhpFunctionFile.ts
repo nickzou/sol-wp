@@ -5,7 +5,9 @@ const generateLoadTwigPhpFunctionFile = () => {
         name: "load_twig",
         functionBody: ` global $twig;
     $loader = new \\Twig\\Loader\\FilesystemLoader(get_template_directory() . '/views');
-    $twig = new \\Twig\\Environment($loader);
+    $twig = new \\Twig\\Environment($loader, [
+        'debug' => WP_DEBUG
+    ]);
     
     $twig->addGlobal('wp_head', capture_wp_head());
     $twig->addGlobal('wp_footer', capture_wp_footer());
@@ -15,6 +17,10 @@ const generateLoadTwigPhpFunctionFile = () => {
     $twig->addGlobal('body_class', get_body_class());
     $twig->addGlobal('site_name', get_bloginfo( 'name' ));
     $twig->addGlobal('site_description', get_bloginfo( 'description' ));
+
+    if(WP_DEBUG) {
+        $twig->addExtension(new \Twig\Extension\DebugExtension());
+    }
     `
     });
 };
