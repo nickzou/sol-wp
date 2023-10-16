@@ -2,12 +2,12 @@ import { File } from "@utils/types/File";
 
 const generateIndexTwigFile = ():File => {
     const content = `<?php
-    $posts = [];
+    $post_data = [];
 
     if ( have_posts()){
         while(have_posts()) {
             the_post();
-            $posts[] = [
+            $post_data[] = [
                 'link' => get_the_permalink(),
                 'title' => get_the_title(),
                 'content' => get_the_content(),
@@ -24,7 +24,7 @@ const generateIndexTwigFile = ():File => {
         'body_class' => get_body_class(),
         'site_name' => get_bloginfo( 'name' ),
         'site_description' => get_bloginfo( 'description' ),
-        'posts' => $posts
+        'posts' => $post_data
     ];
 
     echo $twig->render('index.twig', $context);
