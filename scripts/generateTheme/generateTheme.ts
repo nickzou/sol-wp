@@ -534,6 +534,11 @@ try {
         fileContent: twigIndexTemplateFile.content,
       });
       break;
+    case 'latte':
+      Array.prototype.push.apply(composerPackages, [
+        "latte/latte"
+      ]);
+      break;
     default:
     const phpFile = generateIndexFile();
 
