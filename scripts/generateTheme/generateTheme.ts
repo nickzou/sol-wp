@@ -537,6 +537,16 @@ try {
       Array.prototype.push.apply(composerPackages, [
         "latte/latte"
       ]);
+
+      createFolder({
+        directory: `wp/themes/${answers.theme.folder}`,
+        folderName: 'temp',
+      });
+
+      createFolder({
+        directory: `wp/themes/${answers.theme.folder}`,
+        folderName: 'views',
+      });
       break;
     default:
     const phpFile = generateIndexFile();
