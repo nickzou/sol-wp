@@ -204,6 +204,15 @@ let npmPackages = [
 ];
 let packageScripts = [];
 let composerPackages = [];
+let tailwindAndUnoContent = [
+  `wp/themes/${answers.theme.folder}/**/*.php`,
+  `src/themes/${answers.theme.folder}/ts/**/*.{js, jsx, ts, tsx}`
+];
+if(answers.tooling.php.name === 'twig') {
+  Array.prototype.push.apply(tailwindAndUnoContent, [
+    `wp/themes/${answers.theme.folder}/views/**/*.twig`
+  ]);
+}
 const prettierConfigOptions = {
   plugins: [],
 };
@@ -243,10 +252,7 @@ try {
       ]);
 
       const tailwindConfigFile = generateTailwindConfigFile({
-        content: [
-          `wp/themes/${answers.theme.folder}/**/*.php`,
-          `src/themes/${answers.theme.folder}/ts/**/*.{js, jsx, ts, tsx}`,
-        ],
+        content: tailwindAndUnoContent,
       });
 
       const tailwindCssFile = generateTailwindCssFile();
@@ -287,10 +293,7 @@ try {
       ]);
 
       const unoConfigFile = generateUnoConfigFile({
-        content: [
-          `wp/themes/${answers.theme.folder}/**/*.php`,
-          `src/themes/${answers.theme.folder}/ts/**/*.{js, jsx, ts, tsx}`,
-        ],
+        content: tailwindAndUnoContent,
         outFile: `wp/themes/${answers.theme.folder}/css/uno.css`,
       });
 
