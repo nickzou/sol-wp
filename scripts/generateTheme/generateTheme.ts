@@ -30,13 +30,12 @@ import generateJsFile from "./jsOptions/generateJsFile/generateJsFile";
 import generateComposerFile from "./generateComposerFile/generateComposerFile";
 import installComposerPackages from "@utils/installComposerPackages/installComposerPackages";
 import addToGitignore from "@utils/addToGitignore/addToGitignore";
-import generatePhpFunctionFile from "./generatePhpFunctionFile/generatePhpFunctionFile";
 import appendToFunctionsFile from "./appendToFunctionsFile/appendToFunctionsFile";
 import generateCaptureWpHeadFunctionFile from "./phpOptions/common/generateCaptureWpHeadFunctionFile/generateCaptureWpHeadFunctionFile";
 import generateCaptureWpFooterFunctionFile from "./phpOptions/common/generateCaptureWpFooterFunctionFile/generateCaptureWpFooterFunctionFile";
 import generateIndexTwigFile from "./phpOptions/twig/generateIndexTwigFile/generateIndexTwigFile";
 import generateIndexTwigTemplateFile from "./phpOptions/twig/generateIndexTwigTemplateFile/generateIndexTwigTemplateFile";
-import generateLoadTwigPhpFunctionFile from "./phpOptions/twig/generateLoadTwigPhpFunctionFile/generateLoadTwigPhpFunctionFile";
+import generateSetupTwigPhpFunctionFile from "./phpOptions/twig/generateSetupTwigPhpFunctionFile/generateSetupTwigPhpFunctionFile";
 
 const htmlRegex = /<\/?[a-z][\s\S]*>/i;
 const spacesRegex = /\s+/;
@@ -500,17 +499,17 @@ try {
         "twig/twig:^3.0"
       ]);
 
-      const loadTwigFile = generateLoadTwigPhpFunctionFile();
+      const setupTwigFile = generateSetupTwigPhpFunctionFile();
 
       createFile({
         directoryPath: `wp/themes/${answers.theme.folder}/functions`,
-        fileName: loadTwigFile.name,
-        fileContent: `${loadTwigFile.content} \nadd_action('template_redirect', 'load_twig');`
+        fileName: setupTwigFile.name,
+        fileContent: `${setupTwigFile.content} \nadd_action('template_redirect', 'setup_twig');`
       });
 
       appendToFunctionsFile({
         themeFolder: answers.theme.folder,
-        functionName: loadTwigFile.functionName
+        functionName: setupTwigFile.functionName
       });
 
       createFolder({

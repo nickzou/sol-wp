@@ -1,8 +1,8 @@
 import generatePhpFunctionFile from "@generateTheme/generatePhpFunctionFile/generatePhpFunctionFile";
 
-const generateLoadTwigPhpFunctionFile = () => {
+const generateSetupTwigPhpFunctionFile = () => {
     return generatePhpFunctionFile({
-        name: "load_twig",
+        name: "setup_twig",
         functionBody: ` global $twig;
     $loader = new \\Twig\\Loader\\FilesystemLoader(get_template_directory() . '/views');
     $twig = new \\Twig\\Environment($loader, [
@@ -25,4 +25,4 @@ const generateLoadTwigPhpFunctionFile = () => {
     });
 };
 
-export default generateLoadTwigPhpFunctionFile;
+export default generateSetupTwigPhpFunctionFile;
