@@ -17,6 +17,17 @@ const generateSetupTwigPhpFunctionFile = () => {
     $twig->addGlobal('body_class', get_body_class());
     $twig->addGlobal('site_name', get_bloginfo( 'name' ));
     $twig->addGlobal('site_description', get_bloginfo( 'description' ));
+    $twig->addGlobal('posts', $posts);
+    $twig->addGlobal('post', $post);
+    $twig->addGlobal('wp_did_header', $wp_did_header);
+    $twig->addGlobal('wp_query', $wp_query);
+    $twig->addGlobal('wp_rewrite', $wp_rewrite);
+    $twig->addGlobal('wpdb', $wpdb);
+    $twig->addGlobal('wp_version', $wp_version);
+    $twig->addGlobal('wp', $wp);
+    $twig->addGlobal('id', $id);
+    $twig->addGlobal('comment', $comment);
+    $twig->addGlobal('user_ID', $user_ID);
 
     if(WP_DEBUG) {
         $twig->addExtension(new \\Twig\\Extension\\DebugExtension());
