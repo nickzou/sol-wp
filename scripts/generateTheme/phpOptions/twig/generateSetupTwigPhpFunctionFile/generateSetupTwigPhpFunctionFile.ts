@@ -3,7 +3,7 @@ import generatePhpFunctionFile from "@generateTheme/generatePhpFunctionFile/gene
 const generateSetupTwigPhpFunctionFile = () => {
     return generatePhpFunctionFile({
         name: "setup_twig",
-        functionBody: `  global $twig, $posts, $post, $wp_did_header, $wp_query, $wp_rewrite, $wpdb, $wp_versions, $wp, $id, $comment, $user_ID;
+        functionBody: `  global $twig, $posts, $post, $wp_did_header, $wp_query, $wp_rewrite, $wpdb, $wp_version, $wp, $id, $comment, $user_ID;
     $loader = new \\Twig\\Loader\\FilesystemLoader(get_template_directory() . '/views');
     $twig = new \\Twig\\Environment($loader, [
         'debug' => WP_DEBUG
