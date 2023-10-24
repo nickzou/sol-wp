@@ -38,6 +38,8 @@ import generateIndexTwigTemplateFile from "./phpOptions/twig/generateIndexTwigTe
 import generateSetupTwigPhpFunctionFile from "./phpOptions/twig/generateSetupTwigPhpFunctionFile/generateSetupTwigPhpFunctionFile";
 import generateSetupLattePhpFunctionFile from "./phpOptions/latte/generateSetupLattePhpFunctionFIle/generateSetupLattePhpFunctionFile";
 import generateSetupGlobalContextFunctionFile from "./phpOptions/latte/generateSetupGlobalContextFunctionFile/generateSetupGlobalContextFunctionFile";
+import generateIndexLatteFile from "./phpOptions/latte/generateIndexLatteFile/generateIndexLatteFile";
+import generateIndexLatteTemplateFile from "./phpOptions/latte/generateIndexLatteTemplateFile/generateIndexLatteTemplateFile";
 
 const htmlRegex = /<\/?[a-z][\s\S]*>/i;
 const spacesRegex = /\s+/;
@@ -566,7 +568,23 @@ try {
         fileName: setupGlobalContextFunctionFile.name,
         fileContent: setupGlobalContextFunctionFile.content
       });
-      
+
+      const indexLatteFile = generateIndexLatteFile();
+
+      createFile({
+        directoryPath: `wp/themes/${answers.theme.folder}`,
+        fileName: indexLatteFile.name,
+        fileContent: indexLatteFile.content
+      });
+
+      const indexLatteTemplateFile = generateIndexLatteTemplateFile();
+
+      createFile({
+        directoryPath: `wp/themes/${answers.theme.folder}`,
+        fileName: indexLatteTemplateFile.name,
+        fileContent: indexLatteTemplateFile.content
+      });
+
       break;
     default:
     const phpFile = generateIndexFile();

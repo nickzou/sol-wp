@@ -11,4 +11,4 @@ const generateIndexLatteFile = ():File => {
     }
 };
 
-export default generateIndexLatteFile();
+export default generateIndexLatteFile;
