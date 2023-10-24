@@ -2,7 +2,7 @@ import { File } from "@utils/types/File";
 
 const generateIndexLatteFile = ():File => {
     const content = `<?php
-    $latte->render('index.latte', get_global_context());
+    $latte->render(get_template_directory() . '/views/index.latte', get_global_context());
     `;
 
     return {
