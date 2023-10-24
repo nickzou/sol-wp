@@ -107,7 +107,7 @@ const esLintConfigOptions = {
 };
 
 try {
-  switch (cssOption) {
+  switch (answers.tooling.css as unknown) {
     case "tailwind":
       await configureCssTool({
         functionFile,
@@ -378,7 +378,7 @@ try {
     functionName: captureWpFooterFunctionFile.functionName
   });
 
-  switch (phpOption) {
+  switch (answers.tooling.php as unknown) {
     case 'twig':
       Array.prototype.push.apply(composerPackages, [
         "twig/twig:^3.0"

@@ -105,7 +105,7 @@ const getAnswers = async ():Promise<Recipe> => {
     return {
         theme: {
             name: getName as string ?? 'Sol WP',
-            folder: getDirectory ? formatFolderName(getDirectory) ? formatFolderName(getName),
+            folder: getDirectory ? formatFolderName(getDirectory) : formatFolderName(getName),
             author: getAuthor as string ?? 'Sol WPer',
             description: getDescription as string ?? 'Theme Description',
             version: getVersion as string ?? '1.0.0',
