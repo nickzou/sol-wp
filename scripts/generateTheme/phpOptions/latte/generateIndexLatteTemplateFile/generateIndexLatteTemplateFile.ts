@@ -11,8 +11,8 @@ const generateIndexLatteTemplateFile = ():File => {
     </head>
     <body class="{$body_class|join:' '}">
         <header>
-            <h1>{{site_name}}</h1>
-            <p>{{site_description}}</p>
+            <h1>{$site_name}</h1>
+            <p>{$site_description}</p>
         </header>
         <main>
             { if $posts }
