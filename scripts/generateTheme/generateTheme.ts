@@ -37,7 +37,7 @@ import generateIndexTwigFile from "./phpOptions/twig/generateIndexTwigFile/gener
 import generateIndexTwigTemplateFile from "./phpOptions/twig/generateIndexTwigTemplateFile/generateIndexTwigTemplateFile";
 import generateSetupTwigPhpFunctionFile from "./phpOptions/twig/generateSetupTwigPhpFunctionFile/generateSetupTwigPhpFunctionFile";
 import generateSetupLattePhpFunctionFile from "./phpOptions/latte/generateSetupLattePhpFunctionFIle/generateSetupLattePhpFunctionFile";
-import generateSetupGlobalContextFunctionFile from "./phpOptions/latte/generateSetupGlobalContextFunctionFile/generateSetupGlobalContextFunctionFile";
+import generateGetGlobalContextFunctionFile from "./phpOptions/latte/generateGetGlobalContextFunctionFile/generateGetGlobalContextFunctionFile";
 import generateIndexLatteFile from "./phpOptions/latte/generateIndexLatteFile/generateIndexLatteFile";
 import generateIndexLatteTemplateFile from "./phpOptions/latte/generateIndexLatteTemplateFile/generateIndexLatteTemplateFile";
 
@@ -565,7 +565,7 @@ try {
         functionName: setupLattePhpFunctionFile.functionName
       });
 
-      const setupGlobalContextFunctionFile = generateSetupGlobalContextFunctionFile();
+      const setupGlobalContextFunctionFile = generateGetGlobalContextFunctionFile();
 
       createFile({
         directoryPath: `wp/themes/${answers.theme.folder}/functions`,
