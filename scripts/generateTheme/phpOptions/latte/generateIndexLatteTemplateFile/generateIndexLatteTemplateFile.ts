@@ -16,7 +16,7 @@ const generateIndexLatteTemplateFile = ():File => {
         </header>
         <main>
             {if $posts}
-                { foreach $posts as $p }
+                {foreach $posts as $p}
                     <article>
                         <h2><a href="{get_the_permalink()}">{the_title()}</a></h2>
                         {the_content()}
