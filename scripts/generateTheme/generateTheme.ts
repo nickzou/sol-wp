@@ -215,6 +215,10 @@ if(answers.tooling.php.name === 'twig') {
   Array.prototype.push.apply(tailwindAndUnoContent, [
     `wp/themes/${answers.theme.folder}/views/**/*.twig`
   ]);
+} else if (answers.tooling.php.name === 'latte') {
+  Array.prototype.push.apply(tailwindAndUnoContent, [
+    `wp/themes/${answers.theme.folder}/views/**/*.latte`
+  ]);
 }
 const prettierConfigOptions = {
   plugins: [],
