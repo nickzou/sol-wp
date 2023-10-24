@@ -36,6 +36,8 @@ import generateCaptureWpFooterFunctionFile from "./phpOptions/common/generateCap
 import generateIndexTwigFile from "./phpOptions/twig/generateIndexTwigFile/generateIndexTwigFile";
 import generateIndexTwigTemplateFile from "./phpOptions/twig/generateIndexTwigTemplateFile/generateIndexTwigTemplateFile";
 import generateSetupTwigPhpFunctionFile from "./phpOptions/twig/generateSetupTwigPhpFunctionFile/generateSetupTwigPhpFunctionFile";
+import generateSetupLattePhpFunctionFile from "./phpOptions/latte/generateSetupLattePhpFunctionFIle/generateSetupLattePhpFunctionFile";
+import generateSetupGlobalContextFunctionFile from "./phpOptions/latte/generateSetupGlobalContextFunctionFile/generateSetupGlobalContextFunctionFile";
 
 const htmlRegex = /<\/?[a-z][\s\S]*>/i;
 const spacesRegex = /\s+/;
@@ -547,6 +549,24 @@ try {
         directory: `wp/themes/${answers.theme.folder}`,
         folderName: 'views',
       });
+
+      const setupLattePhpFunctionFile = generateSetupLattePhpFunctionFile();
+
+      createFile({
+        directoryPath: `wp/themes/${answers.theme.folder}/functions`,
+        fileName: setupLattePhpFunctionFile.name,
+        fileContent: setupLattePhpFunctionFile.content
+      });
+
+
+      const setupGlobalContextFunctionFile = generateSetupGlobalContextFunctionFile();
+
+      createFile({
+        directoryPath: `wp/themes/${answers.theme.folder}/functions`,
+        fileName: setupGlobalContextFunctionFile.name,
+        fileContent: setupGlobalContextFunctionFile.content
+      });
+      
       break;
     default:
     const phpFile = generateIndexFile();
