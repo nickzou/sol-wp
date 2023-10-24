@@ -15,20 +15,20 @@ const generateIndexLatteTemplateFile = ():File => {
             <p>{$site_description}</p>
         </header>
         <main>
-            { if $posts }
-                { for $posts as $post }
+            {if $posts}
+                { foreach $posts as $p }
                     <article>
-                        <h2><a href="{$post.link}">{$post.title}</a></h2>
-                        {$post.content}
+                        <h2><a href="{get_the_permalink()}">{the_title()}</a></h2>
+                        {the_content()}
                     </article>
-                {% endfor %}
-            { else }
+                {/foreach}
+            {else}
                 No posts found.
-            { endif }
+            {/if}
         </main>
         
         <footer>
-            <p>&copy; {"now"|date:'Y'} {$site_name}</p>
+            <p>&copy; {="now"|date:'Y'} {$site_name}</p>
         </footer>
         
         {php wp_footer()}
