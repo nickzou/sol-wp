@@ -589,11 +589,10 @@ try {
       const indexLatteTemplateFile = generateIndexLatteTemplateFile();
 
       createFile({
-        directoryPath: `wp/themes/${answers.theme.folder}`,
+        directoryPath: `wp/themes/${answers.theme.folder}/views`,
         fileName: indexLatteTemplateFile.name,
         fileContent: indexLatteTemplateFile.content
       });
-
       break;
     default:
     const phpFile = generateIndexFile();
