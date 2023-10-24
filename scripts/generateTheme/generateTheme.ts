@@ -557,9 +557,13 @@ try {
       createFile({
         directoryPath: `wp/themes/${answers.theme.folder}/functions`,
         fileName: setupLattePhpFunctionFile.name,
-        fileContent: setupLattePhpFunctionFile.content
+        fileContent: `${setupLattePhpFunctionFile.content}  \nadd_action('template_redirect', 'setup_latte');`
       });
 
+      appendToFunctionsFile({
+        themeFolder: answers.theme.folder,
+        functionName: setupLattePhpFunctionFile.functionName
+      });
 
       const setupGlobalContextFunctionFile = generateSetupGlobalContextFunctionFile();
 
@@ -567,6 +571,11 @@ try {
         directoryPath: `wp/themes/${answers.theme.folder}/functions`,
         fileName: setupGlobalContextFunctionFile.name,
         fileContent: setupGlobalContextFunctionFile.content
+      });
+
+      appendToFunctionsFile({
+        themeFolder: answers.theme.folder,
+        functionName: setupGlobalContextFunctionFile.functionName
       });
 
       const indexLatteFile = generateIndexLatteFile();
