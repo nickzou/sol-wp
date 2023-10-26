@@ -102,13 +102,19 @@ const getAnswers = async ():Promise<Recipe> => {
         process.exit(0);
     }
 
+    const name = getName as string ?? 'Sol WP';
+    const directory = getDirectory as string ? formatFolderName(getDirectory) : formatFolderName(name);
+    const author = getAuthor as string ?? 'Sol Wper';
+    const description = getDescription as string ?? 'Theme Description';
+    const version = getVersion as string ?? '1.0.0'; 
+
     return {
         theme: {
-            name: getName as string ?? 'Sol WP',
-            folder: getDirectory ? formatFolderName(getDirectory) : formatFolderName(getName),
-            author: getAuthor as string ?? 'Sol WPer',
-            description: getDescription as string ?? 'Theme Description',
-            version: getVersion as string ?? '1.0.0',
+            name,
+            folder: directory,
+            author,
+            description,
+            version,
         },
         tooling: {
             css: cssOptions.filter((o) => o.name === cssOption)[0],
