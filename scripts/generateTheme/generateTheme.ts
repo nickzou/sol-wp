@@ -102,8 +102,6 @@ const esLintConfigOptions = {
   parser: "",
 };
 
-console.log('something');
-
 try {
   switch (answers.tooling.css.name) {
     case "tailwind":
