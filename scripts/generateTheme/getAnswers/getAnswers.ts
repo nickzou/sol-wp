@@ -107,8 +107,6 @@ const getAnswers = async ():Promise<Recipe> => {
     const author = getAuthor as string ?? 'Sol Wper';
     const description = getDescription as string ?? 'Theme Description';
     const version = getVersion as string ?? '1.0.0'; 
-    const css = cssOption as string;
-    const php = phpOption as string;
 
     return {
         theme: {
@@ -119,9 +117,9 @@ const getAnswers = async ():Promise<Recipe> => {
             version,
         },
         tooling: {
-            css: cssOptions.filter((o) => o.name === css)[0],
+            css: cssOptions.filter((o) => o.name === cssOption)[0],
             ts: ts,
-            php: phpOptions.filter((o) => o.name === php)[0]
+            php: phpOptions.filter((o) => o.name === phpOption)[0]
         }
     }
 };

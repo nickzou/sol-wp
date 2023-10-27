@@ -103,7 +103,7 @@ const esLintConfigOptions = {
 };
 
 try {
-  switch (answers.tooling.css as unknown) {
+  switch (answers.tooling.css.name) {
     case "tailwind":
       await configureCssTool({
         functionFile,
