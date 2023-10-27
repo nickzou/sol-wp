@@ -1,4 +1,4 @@
-import { intro, outro, text, select, confirm, isCancel } from "@clack/prompts";
+import { intro, outro } from "@clack/prompts";
 import formatMessage from "@utils/formatMessage/formatMessage";
 import createFolder from "@utils/createFolder/createFolder";
 import generateCssFile from "@generateTheme/generateCssFile/generateCssFile";
@@ -7,17 +7,13 @@ import createFile from "@utils/createFile/createFile";
 import editWpEnv from "@generateTheme/editWpEnv/editWpEnv";
 import { bold, green } from "colorette";
 import generateFunctionsFile from "@generateTheme/generateFunctionsFile/generateFunctionsFile";
-import { Recipe } from "@utils/types/Recipe";
 import configureCssTool from "@generateTheme/configureCssTool/configureCssTool";
-import cssOptions from "@utils/vars/cssOptions";
-import phpOptions from "@utils/vars/phpOptions";
 import generateTailwindConfigFile from "@generateTheme/cssOptions/tailwind/generateTailwindConfigFile/generateTailwindConfigFile";
 import generateTailwindCssFile from "@generateTheme/cssOptions/tailwind/generateTailwindCssFile/generateTailwindCssFile";
 import generateUnoConfigFile from "@generateTheme/cssOptions/uno/generateUnoConfigFile/generateUnoConfigFile";
 import generateSassConfigFile from "@generateTheme/cssOptions/sass/generateSassConfigFile/generateSassConfigFile";
 import generatePrettierRcFile from "./cssOptions/prettier/generatePrettierRcFile/generatePrettierRcFile";
 import generateSassStylelintFile from "@generateTheme/cssOptions/sass/generateSassStylelintFile/generateSassStylelintFile";
-import formatFolderName from "@utils/formatFolderName/formatFolderName";
 import generatePostCssConfigFile from "./cssOptions/postcss/generatePostCssConfigFile/generatePostCssConfigFile";
 import generatePostCssProdConfigFile from "./cssOptions/postcss/generatePostCssProdConfigFile/generatePostCssProdConfigFile";
 import generateTsConfigFile from "./tsOptions/generateTsConfigFile/generateTsConfigFile";
@@ -40,134 +36,11 @@ import generateSetupLattePhpFunctionFile from "./phpOptions/latte/generateSetupL
 import generateGetGlobalContextFunctionFile from "./phpOptions/latte/generateGetGlobalContextFunctionFile/generateGetGlobalContextFunctionFile";
 import generateIndexLatteFile from "./phpOptions/latte/generateIndexLatteFile/generateIndexLatteFile";
 import generateIndexLatteTemplateFile from "./phpOptions/latte/generateIndexLatteTemplateFile/generateIndexLatteTemplateFile";
-
-const htmlRegex = /<\/?[a-z][\s\S]*>/i;
-const spacesRegex = /\s+/;
+import getAnswers from "./getAnswers/getAnswers";
 
 intro(bold(`Generate Theme`));
 
-const getName = await text({
-  message: `Enter a name for your theme.`,
-  placeholder: `Sol WP`,
-  initialValue: ``,
-  validate(value) {
-    if (htmlRegex.test(value)) return `Theme Name cannot contain HTML`;
-  },
-});
-
-if (isCancel(getName)) {
-  process.exit(0);
-}
-
-const getDirectory = await text({
-  message: `Enter theme folder name.`,
-  placeholder: `leave blank and we'll generate one based off your theme name`,
-  initialValue: ``,
-  validate(value) {
-    if (htmlRegex.test(value)) return `Folder Name cannot contain HTML`;
-    if (spacesRegex.test(value)) return `Folder Name cannot contain spaces`;
-  },
-});
-
-if (isCancel(getDirectory)) {
-  process.exit(0);
-}
-
-const getAuthor = await text({
-  message: `Provide an author (optional)`,
-  placeholder: `Your name here`,
-});
-
-if (isCancel(getAuthor)) {
-  process.exit(0);
-}
-
-const getDescription = await text({
-  message: `Provide a description (optional)`,
-  placeholder: `Your theme description here`,
-});
-
-if (isCancel(getDescription)) {
-  process.exit(0);
-}
-
-const getVersion = await text({
-  message: `Provide a version (optional):`,
-  placeholder: `1.0.0`,
-});
-
-if (isCancel(getVersion)) {
-  process.exit(0);
-}
-
-const cssOption = await select({
-  message: `What CSS tools would you like?`,
-  options: [
-    { value: "tailwind", label: "Tailwind" },
-    { value: "uno", label: "UnoCSS" },
-    { value: "sass", label: "Sass" },
-    { value: "postcss", label: "PostCSS" },
-    { value: "none", label: "None, I'll figure it out my own damn self." },
-  ],
-});
-
-if (isCancel(cssOption)) {
-  process.exit(0);
-}
-
-const ts = await confirm({
-  message: `Would you to use TypeScript?`,
-});
-
-if (isCancel(ts)) {
-  process.exit(0);
-}
-
-const phpOption = await select({
-  message: "What PHP Templating System would you like?",
-  options: [
-    { value: "twig", label: "Twig" },
-    { value: "latte", label: "Latte" },
-    { value: "bladeone", label: "BladeOne" },
-    { value: "plate", label: "Plate" },
-    { value: "smarty", label: "Smarty" },
-    { value: "mustache", label: "Mustache" },
-    { value: "none", label: "None, PHP is a templating engine!" },
-  ],
-});
-
-if (isCancel(phpOption)) {
-  process.exit(0);
-}
-
-const name = getName ? (getName as string) : "Sol WP";
-
-const directory = getDirectory
-  ? formatFolderName(getDirectory)
-  : formatFolderName(name);
-
-const author = getAuthor ? (getAuthor as string) : "Sol WPer";
-
-const description = getDescription
-  ? (getDescription as string)
-  : "Theme description";
-
-const version = getVersion ? (getVersion as string) : "1.0.0";
-
-const answers: Recipe = {
-  theme: {
-    name,
-    folder: directory,
-    author,
-    description,
-    version,
-  },
-  tooling: {
-    css: cssOptions.filter((o) => o.name === cssOption)[0],
-    ts: ts,
-    php: phpOptions.filter((o) => o.name === phpOption)[0],
-  },
-};
+const answers = await getAnswers();
 
 const cssFile = generateCssFile({
   name: answers.theme.name,
@@ -230,7 +103,7 @@ const esLintConfigOptions = {
 };
 
 try {
-  switch (cssOption) {
+  switch (answers.tooling.css.name) {
     case "tailwind":
       await configureCssTool({
         functionFile,
@@ -501,7 +374,7 @@ try {
     functionName: captureWpFooterFunctionFile.functionName
   });
 
-  switch (phpOption) {
+  switch (answers.tooling.php.name) {
     case 'twig':
       Array.prototype.push.apply(composerPackages, [
         "twig/twig:^3.0"
