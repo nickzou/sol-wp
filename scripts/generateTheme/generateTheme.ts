@@ -374,7 +374,7 @@ try {
     functionName: captureWpFooterFunctionFile.functionName
   });
 
-  switch (answers.tooling.php as unknown) {
+  switch (answers.tooling.php.name) {
     case 'twig':
       Array.prototype.push.apply(composerPackages, [
         "twig/twig:^3.0"
