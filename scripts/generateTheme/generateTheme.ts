@@ -7,7 +7,7 @@ import createFile from "@utils/createFile/createFile";
 import editWpEnv from "@generateTheme/editWpEnv/editWpEnv";
 import { bold, green } from "colorette";
 import generateFunctionsFile from "@generateTheme/generateFunctionsFile/generateFunctionsFile";
-import configureCssTool from "@generateTheme/configureCssTool/configureCssTool";
+import styleSolutionEnqueuer from "@generateTheme/styleSolutionEnqueuer/styleSolutionEnqueuer";
 import generateTailwindConfigFile from "@generateTheme/cssOptions/tailwind/generateTailwindConfigFile/generateTailwindConfigFile";
 import generateTailwindCssFile from "@generateTheme/cssOptions/tailwind/generateTailwindCssFile/generateTailwindCssFile";
 import generateUnoConfigFile from "@generateTheme/cssOptions/uno/generateUnoConfigFile/generateUnoConfigFile";
@@ -105,7 +105,7 @@ const esLintConfigOptions = {
 try {
   switch (answers.tooling.css.name) {
     case "tailwind":
-      await configureCssTool({
+      await styleSolutionEnqueuer({
         functionFile,
         theme: answers.theme,
         option: answers.tooling.css,
@@ -160,7 +160,7 @@ try {
       ]);
       break;
     case "uno":
-      await configureCssTool({
+      await styleSolutionEnqueuer({
         functionFile,
         theme: answers.theme,
         option: answers.tooling.css,
@@ -188,7 +188,7 @@ try {
       ]);
       break;
     case "sass":
-      await configureCssTool({
+      await styleSolutionEnqueuer({
         functionFile,
         theme: answers.theme,
         option: answers.tooling.css,
@@ -272,7 +272,7 @@ try {
       ]);
       break;
     case "postcss":
-      await configureCssTool({
+      await styleSolutionEnqueuer({
         functionFile,
         theme: answers.theme,
         option: answers.tooling.css,
