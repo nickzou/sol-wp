@@ -2,7 +2,7 @@ import { Theme } from "@utils/types/Theme";
 import { File } from "@utils/types/File";
 import { CssOption } from "@utils/types/CssOption";
 import generatePhpFunctionFile from "@generateTheme/generatePhpFunctionFile/generatePhpFunctionFile";
-import createFolder from "@utils/createFolder/createFolder";
+import createFolder from "@utils/createDirectory/createDirectory";
 import createFile from "@utils/createFile/createFile";
 import appendToFunctionsFile from "@generateTheme/appendToFunctionsFile/appendToFunctionsFile";
 
@@ -38,40 +38,40 @@ const styleSolutionEnqueuer = async ({
   });
 
   createFolder({
-    directory: `wp/themes/${theme.folder}`,
+    directory: `wp/themes/${theme.directory}`,
     folderName: "functions",
   });
 
   createFolder({
-    directory: `wp/themes/${theme.folder}`,
+    directory: `wp/themes/${theme.directory}`,
     folderName: "css",
   });
 
   createFile({
-    directoryPath: `wp/themes/${theme.folder}`,
+    directoryPath: `wp/themes/${theme.directory}`,
     fileName: functionFile.name,
     fileContent: functionFile.content,
   });
 
   createFile({
-    directoryPath: `wp/themes/${theme.folder}/functions`,
+    directoryPath: `wp/themes/${theme.directory}/functions`,
     fileName: registerAssetsFile.name,
     fileContent: `${registerAssetsFile.content} \nadd_action( 'wp_enqueue_scripts', '${registerAssetsFile.functionName}');`,
   });
 
   createFile({
-    directoryPath: `wp/themes/${theme.folder}/functions`,
+    directoryPath: `wp/themes/${theme.directory}/functions`,
     fileName: enqueueAssetsFile.name,
     fileContent: `${enqueueAssetsFile.content} \nadd_action( 'wp_enqueue_scripts', '${enqueueAssetsFile.functionName}');`,
   });
 
   appendToFunctionsFile({
-    themeFolder: theme.folder,
+    themeFolder: theme.directory,
     functionName: registerAssetsFile.functionName,
   });
 
   appendToFunctionsFile({
-    themeFolder: theme.folder,
+    themeFolder: theme.directory,
     functionName: enqueueAssetsFile.functionName,
   });
 };
