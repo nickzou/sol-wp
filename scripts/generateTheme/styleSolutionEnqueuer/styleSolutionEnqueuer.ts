@@ -6,7 +6,7 @@ import createFolder from "@utils/createFolder/createFolder";
 import createFile from "@utils/createFile/createFile";
 import appendToFunctionsFile from "@generateTheme/appendToFunctionsFile/appendToFunctionsFile";
 
-interface configureCssTool {
+interface styleSolutionEnqueuer {
   functionFile: File;
   theme: Theme;
   option: CssOption;
@@ -14,13 +14,13 @@ interface configureCssTool {
   cssFileName?: string;
 }
 
-const configureCssTool = async ({
+const styleSolutionEnqueuer = async ({
   functionFile,
   theme,
   option,
   cssRegisterName,
   cssFileName,
-}: configureCssTool) => {
+}: styleSolutionEnqueuer) => {
   const registerAssetsFile = generatePhpFunctionFile({
     name: "register_assets",
     functionBody: `wp_register_style( '${
@@ -76,4 +76,4 @@ const configureCssTool = async ({
   });
 };
 
-export default configureCssTool;
+export default styleSolutionEnqueuer;
