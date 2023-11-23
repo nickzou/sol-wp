@@ -43,6 +43,7 @@ import composerPackages from "@utils/vars/composerPackages";
 import generateTailwindAndUnoContent from "@utils/generateTailwindAndUnoContent/generateTailwindAndUnoContent";
 import prettierConfigOptions from "@utils/vars/prettierConfigOptions";
 import esLintConfigOptions from "@utils/vars/esLintConfigOptions";
+import setupTailwind from "./cssOptions/tailwind/setupTailwind/setupTailwind";
 
 intro(bold(`Generate Theme`));
 
@@ -76,59 +77,7 @@ let tailwindAndUnoContent = generateTailwindAndUnoContent(answers);
 try {
   switch (answers.tooling.css.name) {
     case "tailwind":
-      await styleSolutionEnqueuer({
-        functionFile,
-        theme: answers.theme,
-        option: answers.tooling.css,
-      });
-
-      createDirectory({
-        location: `src/themes/${answers.theme.directory}`,
-        directoryName: `css`,
-      });
-
-      packageScripts.push(...[
-        {
-          key: "tailwind",
-          value: `tailwindcss -i ./src/themes/${answers.theme.directory}/css/tailwind.css -o ./wp/themes/${answers.theme.directory}/css/tailwind.css`,
-        },
-        {
-          key: "tailwind:prod",
-          value: `tailwindcss -i ./src/themes/${answers.theme.directory}/css/tailwind.css -o ./wp/themes/${answers.theme.directory}/css/tailwind.css`,
-        },
-        {
-          key: "tailwind:watch",
-          value: `tailwindcss -i ./src/themes/${answers.theme.directory}/css/tailwind.css -o ./wp/themes/${answers.theme.directory}/css/tailwind.css --watch`,
-        },
-      ]);
-
-      const tailwindConfigFile = generateTailwindConfigFile({
-        content: tailwindAndUnoContent,
-      });
-
-      const tailwindCssFile = generateTailwindCssFile();
-
-      createFile({
-        directoryPath: `.`,
-        fileName: tailwindConfigFile.name,
-        fileContent: tailwindConfigFile.content,
-      });
-
-      createFile({
-        directoryPath: `src/themes/${answers.theme.directory}/css`,
-        fileName: tailwindCssFile.name,
-        fileContent: tailwindCssFile.content,
-      });
-
-      prettierConfigOptions.plugins.push(...[
-        "prettier-plugin-tailwindcss",
-      ]);
-
-      npmPackages.push(...[
-        `${answers.tooling.css.packageName}`,
-        "prettier",
-        "prettier-plugin-tailwindcss",
-      ]);
+      await setupTailwind({functionFile, answers});
       break;
     case "uno":
       await styleSolutionEnqueuer({
