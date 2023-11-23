@@ -9,7 +9,7 @@ describe("generateTailwindConfig", () => {
 
     expect(result.name).toBe("tailwind.config.ts");
 
-    const expectedFileContent = `import { Config } from 'tailwindcss';
+    const expectedFileContent = `import { type Config } from 'tailwindcss';
 
   const config: Config = {
     content: ${JSON.stringify(content)},

@@ -1,6 +1,6 @@
 import fs from "fs";
 import path from "path";
-import createFolder from "../createFolder";
+import createDirectory from "../createDirectory";
 
 jest.mock("fs");
 jest.mock("path");
@@ -8,7 +8,7 @@ jest.mock("@utils/formatMessage/formatMessage", () => {
   return ({ message }: { message: string; color: string }) => message;
 });
 
-describe("createFolder", () => {
+describe("createDirectory", () => {
   afterEach(() => {
     jest.resetAllMocks();
   });
@@ -17,9 +17,9 @@ describe("createFolder", () => {
     (path.join as jest.Mock).mockReturnValue("/somePath/someFolder");
     (fs.existsSync as jest.Mock).mockReturnValue(false);
 
-    const result = createFolder({
-      directory: "/somePath",
-      folderName: "someFolder",
+    const result = createDirectory({
+      location: "/somePath",
+      directoryName: "someFolder",
     });
 
     expect(fs.mkdirSync).toHaveBeenCalledWith("/somePath/someFolder");
@@ -31,7 +31,7 @@ describe("createFolder", () => {
     (fs.existsSync as jest.Mock).mockReturnValue(true);
 
     expect(() => {
-      createFolder({ directory: "/somePath", folderName: "someFolder" });
+      createDirectory({ location: "/somePath", directoryName: "someFolder" });
     }).toThrowError('Folder "someFolder" already exists.');
 
     expect(fs.mkdirSync).not.toHaveBeenCalled();
