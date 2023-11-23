@@ -71,15 +71,6 @@ const functionFile = generateFunctionsFile();
 
 let tailwindAndUnoContent = generateTailwindAndUnoContent(answers);
 
-if(answers.tooling.php.name === 'twig') {
-  tailwindAndUnoContent.push(...[
-    `wp/themes/${answers.theme.directory}/views/**/*.twig`
-  ]);
-} else if (answers.tooling.php.name === 'latte') {
-  tailwindAndUnoContent.push(...[
-    `wp/themes/${answers.theme.directory}/views/**/*.latte`
-  ]);
-}
 const prettierConfigOptions = {
   plugins: [],
 };
