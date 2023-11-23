@@ -37,7 +37,6 @@ import getAnswers from "./getAnswers/getAnswers";
 import npmPackages from "@utils/vars/npmPackages";
 import packageScripts from "@utils/vars/packageScripts";
 import composerPackages from "@utils/vars/composerPackages";
-import generateTailwindAndUnoContent from "@utils/generateTailwindAndUnoContent/generateTailwindAndUnoContent";
 import prettierConfigOptions from "@utils/vars/prettierConfigOptions";
 import esLintConfigOptions from "@utils/vars/esLintConfigOptions";
 import setupTailwind from "./cssOptions/tailwind/setupTailwind/setupTailwind";
@@ -69,8 +68,6 @@ createFile({
 editWpEnv({ wpEnvFile: `.wp-env.json`, directory: answers.theme.directory });
 
 const functionFile = generateFunctionsFile();
-
-let tailwindAndUnoContent = generateTailwindAndUnoContent(answers);
 
 try {
   switch (answers.tooling.css.name) {
