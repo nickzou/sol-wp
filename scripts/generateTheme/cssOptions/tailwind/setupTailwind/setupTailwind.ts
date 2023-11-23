@@ -2,10 +2,17 @@ import styleSolutionEnqueuer from "@generateTheme/styleSolutionEnqueuer/styleSol
 import createDirectory from "@utils/createDirectory/createDirectory";
 import { File } from "@utils/types/File";
 import { Recipe } from "@utils/types/Recipe";
+import packageScripts from "@utils/vars/packageScripts";
+import generateTailwindConfigFile from "../generateTailwindConfigFile/generateTailwindConfigFile";
+import createFile from "@utils/createFile/createFile";
+import generateTailwindAndUnoContent from "@utils/generateTailwindAndUnoContent/generateTailwindAndUnoContent";
+import generateTailwindCssFile from "../generateTailwindCssFile/generateTailwindCssFile";
+import prettierConfigOptions from "@utils/vars/prettierConfigOptions";
+import npmPackages from "@utils/vars/npmPackages";
 
 interface SetupTailwind {
     functionFile: File,
-    answers: Recipe
+    answers: Recipe,
 }
 
 const setupTailwind = async ({functionFile, answers}:SetupTailwind) => {
@@ -14,6 +21,8 @@ const setupTailwind = async ({functionFile, answers}:SetupTailwind) => {
         theme: answers.theme,
         option: answers.tooling.css,
       });
+
+      let tailwindAndUnoContent = generateTailwindAndUnoContent(answers);
 
       createDirectory({
         location: `src/themes/${answers.theme.directory}`,
@@ -62,4 +71,6 @@ const setupTailwind = async ({functionFile, answers}:SetupTailwind) => {
         "prettier",
         "prettier-plugin-tailwindcss",
       ]);
-}
+};
+
+export default setupTailwind;
