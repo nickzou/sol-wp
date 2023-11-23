@@ -1,6 +1,6 @@
 import { Recipe } from "@utils/types/Recipe";
 import { text, select, confirm, isCancel } from "@clack/prompts";
-import formatFolderName from "@utils/formatFolderName/formatFolderName";
+import formatFolderName from "@utils/formatDirectoryName/formatDirectoryName";
 import cssOptions from "@utils/vars/cssOptions";
 import phpOptions from "@utils/vars/phpOptions";
 
