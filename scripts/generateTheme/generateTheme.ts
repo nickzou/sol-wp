@@ -64,6 +64,7 @@ createFile({
 editWpEnv({ wpEnvFile: `.wp-env.json`, directory: answers.theme.directory });
 
 const functionFile = generateFunctionsFile();
+
 let npmPackages = [
   "prettier",
   "onchange",
