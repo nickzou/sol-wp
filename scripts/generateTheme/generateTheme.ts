@@ -8,9 +8,7 @@ import editWpEnv from "@generateTheme/editWpEnv/editWpEnv";
 import { bold, green } from "colorette";
 import generateFunctionsFile from "@generateTheme/generateFunctionsFile/generateFunctionsFile";
 import styleSolutionEnqueuer from "@generateTheme/styleSolutionEnqueuer/styleSolutionEnqueuer";
-import generateSassConfigFile from "@generateTheme/cssOptions/sass/generateSassConfigFile/generateSassConfigFile";
 import generatePrettierRcFile from "./cssOptions/prettier/generatePrettierRcFile/generatePrettierRcFile";
-import generateSassStylelintFile from "@generateTheme/cssOptions/sass/generateSassStylelintFile/generateSassStylelintFile";
 import generatePostCssConfigFile from "./cssOptions/postcss/generatePostCssConfigFile/generatePostCssConfigFile";
 import generatePostCssProdConfigFile from "./cssOptions/postcss/generatePostCssProdConfigFile/generatePostCssProdConfigFile";
 import generateTsConfigFile from "./tsOptions/generateTsConfigFile/generateTsConfigFile";
@@ -41,6 +39,7 @@ import prettierConfigOptions from "@utils/vars/prettierConfigOptions";
 import esLintConfigOptions from "@utils/vars/esLintConfigOptions";
 import setupTailwind from "./cssOptions/tailwind/setupTailwind/setupTailwind";
 import setupUno from "./cssOptions/uno/setupUno/setupUno";
+import setupSass from "./cssOptions/sass/setupSass/setupSass";
 
 intro(bold(`Generate Theme`));
 
@@ -78,88 +77,7 @@ try {
       await setupUno({functionFile, answers});
       break;
     case "sass":
-      await styleSolutionEnqueuer({
-        functionFile,
-        theme: answers.theme,
-        option: answers.tooling.css,
-        cssRegisterName: "styles",
-        cssFileName: "styles",
-      });
-
-      createDirectory({
-        location: `src/themes/${answers.theme.directory}`,
-        directoryName: `scss`,
-      });
-
-      packageScripts.push(...[
-        {
-          key: "sass",
-          value: `esrun sass.config.ts --minify=false --sourcemap=true`,
-        },
-        {
-          key: "sass:prod",
-          value: `esrun sass.config.ts --minify=true --sourcemap=false`,
-        },
-        {
-          key: "sass:watch",
-          value: `sass src/themes/${answers.theme.directory}/scss:wp/themes/${answers.theme.directory}/css --load-path=node_modules --style=expanded --embed-source-map --watch`,
-        },
-        {
-          key: "sass:prettier",
-          value: `prettier 'src/themes/${answers.theme.directory}/scss/**/*.scss' --write`,
-        },
-        {
-          key: "sass:prettier:watch",
-          value: `onchange "src/themes/${answers.theme.directory}/scss/**/*.scss" -- prettier --write --ignore-unknown {{changed}}`,
-        },
-        {
-          key: "stylelint",
-          value: `stylelint src/themes/${answers.theme.directory}/scss/**/*.scss`,
-        },
-        {
-          key: "stylelint:watch",
-          value: `onchange src/themes/${answers.theme.directory}/scss/**/*.scss -- npm run stylelint`,
-        },
-        {
-          key: "style:watch",
-          value:
-            'concurrently "npm run sass:watch" "npm run sass:prettier:watch" "npm run stylelint:watch"',
-        },
-      ]);
-
-      const sassConfigFile = generateSassConfigFile({
-        themeFolder: answers.theme.directory,
-      });
-
-      const sassStylelintFile = generateSassStylelintFile();
-
-      createFile({
-        directoryPath: ".",
-        fileName: sassConfigFile.name,
-        fileContent: sassConfigFile.content,
-      });
-
-      createFile({
-        directoryPath: ".",
-        fileName: sassStylelintFile.name,
-        fileContent: sassStylelintFile.content,
-      });
-
-      createFile({
-        directoryPath: `src/themes/${answers.theme.directory}/scss`,
-        fileName: "styles.scss",
-        fileContent: "@use 'scss-reset/reset';",
-      });
-
-      npmPackages.push(...[
-        `${answers.tooling.css.packageName}`,
-        `scss-reset`,
-        `prettier`,
-        `stylelint`,
-        `stylelint-config-standard-scss`,
-        `onchange`,
-        `concurrently`,
-      ]);
+      await setupSass({functionFile, answers});
       break;
     case "postcss":
       await styleSolutionEnqueuer({
