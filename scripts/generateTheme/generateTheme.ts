@@ -63,7 +63,6 @@ createFile({
 
 editWpEnv({ wpEnvFile: `.wp-env.json`, directory: answers.theme.directory });
 
-// Finalize setup and display outro
 const functionFile = generateFunctionsFile();
 let npmPackages = [
   "prettier",
@@ -85,11 +84,11 @@ let tailwindAndUnoContent = [
   `src/themes/${answers.theme.directory}/ts/**/*.{js, jsx, ts, tsx}`
 ];
 if(answers.tooling.php.name === 'twig') {
-  Array.prototype.push.apply(tailwindAndUnoContent, [
+  tailwindAndUnoContent.push(...[
     `wp/themes/${answers.theme.directory}/views/**/*.twig`
   ]);
 } else if (answers.tooling.php.name === 'latte') {
-  Array.prototype.push.apply(tailwindAndUnoContent, [
+  tailwindAndUnoContent.push(...[
     `wp/themes/${answers.theme.directory}/views/**/*.latte`
   ]);
 }
@@ -116,7 +115,7 @@ try {
         directoryName: `css`,
       });
 
-      Array.prototype.push.apply(packageScripts, [
+      packageScripts.push(...[
         {
           key: "tailwind",
           value: `tailwindcss -i ./src/themes/${answers.theme.directory}/css/tailwind.css -o ./wp/themes/${answers.theme.directory}/css/tailwind.css`,
@@ -149,11 +148,11 @@ try {
         fileContent: tailwindCssFile.content,
       });
 
-      Array.prototype.push.apply(prettierConfigOptions.plugins, [
+      prettierConfigOptions.plugins.push(...[
         "prettier-plugin-tailwindcss",
       ]);
 
-      Array.prototype.push.apply(npmPackages, [
+      npmPackages.push(...[
         `${answers.tooling.css.packageName}`,
         "prettier",
         "prettier-plugin-tailwindcss",
@@ -166,7 +165,7 @@ try {
         option: answers.tooling.css,
       });
 
-      Array.prototype.push.apply(packageScripts, [
+      packageScripts.push(...[
         { key: "uno", value: "unocss" },
         { key: "uno:prod", value: "unocss --minify" },
         { key: "uno:watch", value: "unocss --watch" },
@@ -183,7 +182,7 @@ try {
         fileContent: unoConfigFile.content,
       });
 
-      Array.prototype.push.apply(npmPackages, [
+      npmPackages.push(...[
         `${answers.tooling.css.packageName}`,
       ]);
       break;
@@ -201,7 +200,7 @@ try {
         directoryName: `scss`,
       });
 
-      Array.prototype.push.apply(packageScripts, [
+      packageScripts.push(...[
         {
           key: "sass",
           value: `esrun sass.config.ts --minify=false --sourcemap=true`,
@@ -261,7 +260,7 @@ try {
         fileContent: "@use 'scss-reset/reset';",
       });
 
-      Array.prototype.push.apply(npmPackages, [
+      npmPackages.push(...[
         `${answers.tooling.css.packageName}`,
         `scss-reset`,
         `prettier`,
@@ -285,7 +284,7 @@ try {
         directoryName: `css`,
       });
 
-      Array.prototype.push.apply(packageScripts, [
+      packageScripts.push(...[
         {
           key: `css`,
           value: `postcss src/themes/${answers.theme.directory}/css/**/*.css --dir wp/themes/${answers.theme.directory}/css --config .postcssrc.json`,
@@ -322,11 +321,11 @@ try {
         fileContent: '@import "normalize.css";',
       });
 
-      Array.prototype.push.apply(prettierConfigOptions.plugins, [
+      prettierConfigOptions.plugins.push(...[
         "prettier-plugin-standard",
       ]);
 
-      Array.prototype.push.apply(npmPackages, [
+      npmPackages.push(...[
         `${answers.tooling.css.packageName}`,
         `postcss-cli`,
         `autoprefixer`,
@@ -376,7 +375,7 @@ try {
 
   switch (answers.tooling.php.name) {
     case 'twig':
-      Array.prototype.push.apply(composerPackages, [
+      composerPackages.push(...[
         "twig/twig:^3.0"
       ]);
 
@@ -415,7 +414,7 @@ try {
       });
       break;
     case 'latte':
-      Array.prototype.push.apply(composerPackages, [
+      composerPackages.push(...[
         "latte/latte"
       ]);
 
@@ -514,17 +513,17 @@ try {
       fileContent: tsFile.content,
     });
 
-    Array.prototype.push.apply(npmPackages, [
+    npmPackages.push(...[
       "@typescript-eslint/eslint-plugin",
       "@typescript-eslint/parser",
     ]);
 
-    Array.prototype.push.apply(esLintConfigOptions.extendsArr, [
+    esLintConfigOptions.extendsArr.push(...[
       "plugin:@typescript-eslint/eslint-recommended",
       "plugin:@typescript-eslint/recommended",
     ]);
 
-    Array.prototype.push.apply(esLintConfigOptions.plugins, [
+    esLintConfigOptions.plugins.push(...[
       "@typescript/parser",
     ]);
 
