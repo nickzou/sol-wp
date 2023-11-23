@@ -2,7 +2,7 @@ import { Theme } from "@utils/types/Theme";
 import { File } from "@utils/types/File";
 import { CssOption } from "@utils/types/CssOption";
 import generatePhpFunctionFile from "@generateTheme/generatePhpFunctionFile/generatePhpFunctionFile";
-import createFolder from "@utils/createDirectory/createDirectory";
+import createDirectory from "@utils/createDirectory/createDirectory";
 import createFile from "@utils/createFile/createFile";
 import appendToFunctionsFile from "@generateTheme/appendToFunctionsFile/appendToFunctionsFile";
 
@@ -37,14 +37,14 @@ const styleSolutionEnqueuer = async ({
     }' );`,
   });
 
-  createFolder({
-    directory: `wp/themes/${theme.directory}`,
-    folderName: "functions",
+  createDirectory({
+    location: `wp/themes/${theme.directory}`,
+    directoryName: "functions",
   });
 
-  createFolder({
-    directory: `wp/themes/${theme.directory}`,
-    folderName: "css",
+  createDirectory({
+    location: `wp/themes/${theme.directory}`,
+    directoryName: "css",
   });
 
   createFile({
