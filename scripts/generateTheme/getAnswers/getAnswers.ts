@@ -111,7 +111,7 @@ const getAnswers = async ():Promise<Recipe> => {
     return {
         theme: {
             name,
-            folder: directory,
+            directory,
             author,
             description,
             version,
