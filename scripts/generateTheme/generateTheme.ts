@@ -37,6 +37,10 @@ import generateGetGlobalContextFunctionFile from "./phpOptions/latte/generateGet
 import generateIndexLatteFile from "./phpOptions/latte/generateIndexLatteFile/generateIndexLatteFile";
 import generateIndexLatteTemplateFile from "./phpOptions/latte/generateIndexLatteTemplateFile/generateIndexLatteTemplateFile";
 import getAnswers from "./getAnswers/getAnswers";
+import npmPackages from "@utils/vars/npmPackages";
+import packageScripts from "@utils/vars/packageScripts";
+import composerPackages from "@utils/vars/composerPackages";
+import generateTailwindAndUnoContent from "@utils/generateTailwindAndUnoContent/generateTailwindAndUnoContent";
 
 intro(bold(`Generate Theme`));
 
@@ -65,25 +69,8 @@ editWpEnv({ wpEnvFile: `.wp-env.json`, directory: answers.theme.directory });
 
 const functionFile = generateFunctionsFile();
 
-let npmPackages = [
-  "prettier",
-  "onchange",
-  "esbuild",
-  "esbuild-plugin-browserslist",
-  "eslint",
-  "eslint-plugin-prettier",
-  "eslint-config-prettier",
-  "dotenv",
-  "glob",
-  "@types/glob",
-  "browserslist",
-];
-let packageScripts = [];
-let composerPackages = [];
-let tailwindAndUnoContent = [
-  `wp/themes/${answers.theme.directory}/**/*.php`,
-  `src/themes/${answers.theme.directory}/ts/**/*.{js, jsx, ts, tsx}`
-];
+let tailwindAndUnoContent = generateTailwindAndUnoContent(answers);
+
 if(answers.tooling.php.name === 'twig') {
   tailwindAndUnoContent.push(...[
     `wp/themes/${answers.theme.directory}/views/**/*.twig`
