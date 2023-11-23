@@ -41,6 +41,8 @@ import npmPackages from "@utils/vars/npmPackages";
 import packageScripts from "@utils/vars/packageScripts";
 import composerPackages from "@utils/vars/composerPackages";
 import generateTailwindAndUnoContent from "@utils/generateTailwindAndUnoContent/generateTailwindAndUnoContent";
+import prettierConfigOptions from "@utils/vars/prettierConfigOptions";
+import esLintConfigOptions from "@utils/vars/esLintConfigOptions";
 
 intro(bold(`Generate Theme`));
 
@@ -70,15 +72,6 @@ editWpEnv({ wpEnvFile: `.wp-env.json`, directory: answers.theme.directory });
 const functionFile = generateFunctionsFile();
 
 let tailwindAndUnoContent = generateTailwindAndUnoContent(answers);
-
-const prettierConfigOptions = {
-  plugins: [],
-};
-const esLintConfigOptions = {
-  extendsArr: [],
-  plugins: [],
-  parser: "",
-};
 
 try {
   switch (answers.tooling.css.name) {

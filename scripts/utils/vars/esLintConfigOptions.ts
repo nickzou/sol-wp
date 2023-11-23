@@ -1,5 +1,5 @@
 const esLintConfigOptions = {
-    extends: [],
+    extendsArr: [],
     plugins: [],
     parser: "",
 };
