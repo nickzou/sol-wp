@@ -8,7 +8,6 @@ import editWpEnv from "@generateTheme/editWpEnv/editWpEnv";
 import { bold, green } from "colorette";
 import generateFunctionsFile from "@generateTheme/generateFunctionsFile/generateFunctionsFile";
 import styleSolutionEnqueuer from "@generateTheme/styleSolutionEnqueuer/styleSolutionEnqueuer";
-import generateUnoConfigFile from "@generateTheme/cssOptions/uno/generateUnoConfigFile/generateUnoConfigFile";
 import generateSassConfigFile from "@generateTheme/cssOptions/sass/generateSassConfigFile/generateSassConfigFile";
 import generatePrettierRcFile from "./cssOptions/prettier/generatePrettierRcFile/generatePrettierRcFile";
 import generateSassStylelintFile from "@generateTheme/cssOptions/sass/generateSassStylelintFile/generateSassStylelintFile";
@@ -42,6 +41,7 @@ import generateTailwindAndUnoContent from "@utils/generateTailwindAndUnoContent/
 import prettierConfigOptions from "@utils/vars/prettierConfigOptions";
 import esLintConfigOptions from "@utils/vars/esLintConfigOptions";
 import setupTailwind from "./cssOptions/tailwind/setupTailwind/setupTailwind";
+import setupUno from "./cssOptions/uno/setupUno/setupUno";
 
 intro(bold(`Generate Theme`));
 
@@ -78,32 +78,7 @@ try {
       await setupTailwind({functionFile, answers});
       break;
     case "uno":
-      await styleSolutionEnqueuer({
-        functionFile,
-        theme: answers.theme,
-        option: answers.tooling.css,
-      });
-
-      packageScripts.push(...[
-        { key: "uno", value: "unocss" },
-        { key: "uno:prod", value: "unocss --minify" },
-        { key: "uno:watch", value: "unocss --watch" },
-      ]);
-
-      const unoConfigFile = generateUnoConfigFile({
-        content: tailwindAndUnoContent,
-        outFile: `wp/themes/${answers.theme.directory}/css/uno.css`,
-      });
-
-      createFile({
-        directoryPath: ".",
-        fileName: unoConfigFile.name,
-        fileContent: unoConfigFile.content,
-      });
-
-      npmPackages.push(...[
-        `${answers.tooling.css.packageName}`,
-      ]);
+      await setupUno({functionFile, answers});
       break;
     case "sass":
       await styleSolutionEnqueuer({
