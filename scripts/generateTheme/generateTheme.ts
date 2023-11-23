@@ -7,10 +7,7 @@ import createFile from "@utils/createFile/createFile";
 import editWpEnv from "@generateTheme/editWpEnv/editWpEnv";
 import { bold, green } from "colorette";
 import generateFunctionsFile from "@generateTheme/generateFunctionsFile/generateFunctionsFile";
-import styleSolutionEnqueuer from "@generateTheme/styleSolutionEnqueuer/styleSolutionEnqueuer";
 import generatePrettierRcFile from "./cssOptions/prettier/generatePrettierRcFile/generatePrettierRcFile";
-import generatePostCssConfigFile from "./cssOptions/postcss/generatePostCssConfigFile/generatePostCssConfigFile";
-import generatePostCssProdConfigFile from "./cssOptions/postcss/generatePostCssProdConfigFile/generatePostCssProdConfigFile";
 import generateTsConfigFile from "./tsOptions/generateTsConfigFile/generateTsConfigFile";
 import installNpmPackages from "@utils/installNpmPackages/installNpmPackages";
 import generateEsLintConfigFile from "./generateEsLintConfigFile/generateEsLintConfigFile";
@@ -40,6 +37,7 @@ import esLintConfigOptions from "@utils/vars/esLintConfigOptions";
 import setupTailwind from "./cssOptions/tailwind/setupTailwind/setupTailwind";
 import setupUno from "./cssOptions/uno/setupUno/setupUno";
 import setupSass from "./cssOptions/sass/setupSass/setupSass";
+import setupPostCss from "./cssOptions/postcss/setupPostCss/setupPostCss";
 
 intro(bold(`Generate Theme`));
 
@@ -80,74 +78,7 @@ try {
       await setupSass({functionFile, answers});
       break;
     case "postcss":
-      await styleSolutionEnqueuer({
-        functionFile,
-        theme: answers.theme,
-        option: answers.tooling.css,
-        cssRegisterName: "styles",
-        cssFileName: "styles",
-      });
-
-      createDirectory({
-        location: `src/themes/${answers.theme.directory}`,
-        directoryName: `css`,
-      });
-
-      packageScripts.push(...[
-        {
-          key: `css`,
-          value: `postcss src/themes/${answers.theme.directory}/css/**/*.css --dir wp/themes/${answers.theme.directory}/css --config .postcssrc.json`,
-        },
-        {
-          key: `css:prod`,
-          value: `postcss src/themes/${answers.theme.directory}/css/**/*.css --dir wp/themes/${answers.theme.directory}/css --config .postcssrc.prod.json`,
-        },
-        {
-          key: `css:watch`,
-          value: `postcss src/themes/${answers.theme.directory}/css/**/*.css --dir wp/themes/${answers.theme.directory}/css --config .postcssrc.json --watch`,
-        },
-      ]);
-
-      const postCssConfigFile = generatePostCssConfigFile();
-
-      const postCssProdConfigFile = generatePostCssProdConfigFile();
-
-      createFile({
-        directoryPath: ".",
-        fileName: postCssConfigFile.name,
-        fileContent: postCssConfigFile.content,
-      });
-
-      createFile({
-        directoryPath: ".",
-        fileName: postCssProdConfigFile.name,
-        fileContent: postCssProdConfigFile.content,
-      });
-
-      createFile({
-        directoryPath: `src/themes/${answers.theme.directory}/css`,
-        fileName: "styles.css",
-        fileContent: '@import "normalize.css";',
-      });
-
-      prettierConfigOptions.plugins.push(...[
-        "prettier-plugin-standard",
-      ]);
-
-      npmPackages.push(...[
-        `${answers.tooling.css.packageName}`,
-        `postcss-cli`,
-        `autoprefixer`,
-        `postcss-import`,
-        `normalize.css`,
-        `postcss-nested`,
-        `cssnano`,
-        `prettier`,
-        `stylelint`,
-        `stylelint-config-standard`,
-        `onchange`,
-        `concurrently`,
-      ]);
+      await setupPostCss({functionFile, answers});
       break;
     case "none":
       console.log(
