@@ -1,7 +1,6 @@
 import { intro, outro } from "@clack/prompts";
 import createDirectory from "@utils/createDirectory/createDirectory";
 import generateCssFile from "@generateTheme/generateCssFile/generateCssFile";
-import generateIndexFile from "@generateTheme/generateIndexFile/generateIndexFile";
 import createFile from "@utils/createFile/createFile";
 import editWpEnv from "@generateTheme/editWpEnv/editWpEnv";
 import { bold, green } from "colorette";
@@ -18,15 +17,8 @@ import generateComposerFile from "./generateComposerFile/generateComposerFile";
 import installComposerPackages from "@utils/installComposerPackages/installComposerPackages";
 import addToGitignore from "@utils/addToGitignore/addToGitignore";
 import appendToFunctionsFile from "./appendToFunctionsFile/appendToFunctionsFile";
-import generateCaptureWpHeadFunctionFile from "./phpOptions/common/generateCaptureWpHeadFunctionFile/generateCaptureWpHeadFunctionFile";
-import generateCaptureWpFooterFunctionFile from "./phpOptions/common/generateCaptureWpFooterFunctionFile/generateCaptureWpFooterFunctionFile";
-import generateIndexTwigFile from "./phpOptions/twig/generateIndexTwigFile/generateIndexTwigFile";
-import generateIndexTwigTemplateFile from "./phpOptions/twig/generateIndexTwigTemplateFile/generateIndexTwigTemplateFile";
-import generateSetupTwigPhpFunctionFile from "./phpOptions/twig/generateSetupTwigPhpFunctionFile/generateSetupTwigPhpFunctionFile";
-import generateSetupLattePhpFunctionFile from "./phpOptions/latte/generateSetupLattePhpFunctionFIle/generateSetupLattePhpFunctionFile";
-import generateGetGlobalContextFunctionFile from "./phpOptions/latte/generateGetGlobalContextFunctionFile/generateGetGlobalContextFunctionFile";
-import generateIndexLatteFile from "./phpOptions/latte/generateIndexLatteFile/generateIndexLatteFile";
-import generateIndexLatteTemplateFile from "./phpOptions/latte/generateIndexLatteTemplateFile/generateIndexLatteTemplateFile";
+import generateCaptureWpHeadFunctionFile from "./templateOptions/common/generateCaptureWpHeadFunctionFile/generateCaptureWpHeadFunctionFile";
+import generateCaptureWpFooterFunctionFile from "./templateOptions/common/generateCaptureWpFooterFunctionFile/generateCaptureWpFooterFunctionFile";
 import getAnswers from "./getAnswers/getAnswers";
 import npmPackages from "@utils/vars/npmPackages";
 import packageScripts from "@utils/vars/packageScripts";
@@ -34,6 +26,7 @@ import composerPackages from "@utils/vars/composerPackages";
 import prettierConfigOptions from "@utils/vars/prettierConfigOptions";
 import esLintConfigOptions from "@utils/vars/esLintConfigOptions";
 import setupCssOption from "./cssOptions/setupCssOption/setupCssOption";
+import setupTemplateOption from "./templateOptions/setupTemplateOption/setupTemplateOption";
 
 intro(bold(`Generate Theme`));
 
@@ -90,112 +83,7 @@ await setupCssOption({functionFile, answers, npmPackages, packageScripts, pretti
     functionName: captureWpFooterFunctionFile.functionName
   });
 
-  switch (answers.tooling.php.name) {
-    case 'twig':
-      composerPackages.push(...[
-        "twig/twig:^3.0"
-      ]);
-
-      const setupTwigFile = generateSetupTwigPhpFunctionFile();
-
-      createFile({
-        directoryPath: `wp/themes/${answers.theme.directory}/functions`,
-        fileName: setupTwigFile.name,
-        fileContent: `${setupTwigFile.content} \nadd_action('template_redirect', 'setup_twig');`
-      });
-
-      appendToFunctionsFile({
-        themeFolder: answers.theme.directory,
-        functionName: setupTwigFile.functionName
-      });
-
-      createDirectory({
-        location: `wp/themes/${answers.theme.directory}`,
-        directoryName: 'views',
-      });
-
-      const twigIndexFile = generateIndexTwigFile();
-
-      createFile({
-        directoryPath: `wp/themes/${answers.theme.directory}`,
-        fileName: twigIndexFile.name,
-        fileContent: twigIndexFile.content,
-      });
-
-      const twigIndexTemplateFile = generateIndexTwigTemplateFile();
-
-      createFile({
-        directoryPath: `wp/themes/${answers.theme.directory}/views`,
-        fileName: twigIndexTemplateFile.name,
-        fileContent: twigIndexTemplateFile.content,
-      });
-      break;
-    case 'latte':
-      composerPackages.push(...[
-        "latte/latte"
-      ]);
-
-      createDirectory({
-        location: `wp/themes/${answers.theme.directory}`,
-        directoryName: 'temp',
-      });
-
-      createDirectory({
-        location: `wp/themes/${answers.theme.directory}`,
-        directoryName: 'views',
-      });
-
-      const setupLattePhpFunctionFile = generateSetupLattePhpFunctionFile();
-
-      createFile({
-        directoryPath: `wp/themes/${answers.theme.directory}/functions`,
-        fileName: setupLattePhpFunctionFile.name,
-        fileContent: `${setupLattePhpFunctionFile.content}  \nadd_action('template_redirect', 'setup_latte');`
-      });
-
-      appendToFunctionsFile({
-        themeFolder: answers.theme.directory,
-        functionName: setupLattePhpFunctionFile.functionName
-      });
-
-      const setupGlobalContextFunctionFile = generateGetGlobalContextFunctionFile();
-
-      createFile({
-        directoryPath: `wp/themes/${answers.theme.directory}/functions`,
-        fileName: setupGlobalContextFunctionFile.name,
-        fileContent: setupGlobalContextFunctionFile.content
-      });
-
-      appendToFunctionsFile({
-        themeFolder: answers.theme.directory,
-        functionName: setupGlobalContextFunctionFile.functionName
-      });
-
-      const indexLatteFile = generateIndexLatteFile();
-
-      createFile({
-        directoryPath: `wp/themes/${answers.theme.directory}`,
-        fileName: indexLatteFile.name,
-        fileContent: indexLatteFile.content
-      });
-
-      const indexLatteTemplateFile = generateIndexLatteTemplateFile();
-
-      createFile({
-        directoryPath: `wp/themes/${answers.theme.directory}/views`,
-        fileName: indexLatteTemplateFile.name,
-        fileContent: indexLatteTemplateFile.content
-      });
-      break;
-    default:
-    const phpFile = generateIndexFile();
-
-    createFile({
-      directoryPath: `wp/themes/${answers.theme.directory}`,
-      fileName: phpFile.name,
-      fileContent: phpFile.content,
-    });
-  }
+  await setupTemplateOption({answers, composerPackages});
 
   //JavaScript/TypeScript installs
   const esbuildConfigFile = generateEsbuildConfigFile({
