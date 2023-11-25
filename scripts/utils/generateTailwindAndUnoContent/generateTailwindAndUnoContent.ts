@@ -8,9 +8,9 @@ const generateTailwindAndUnoContent = (answers:Recipe) => {
         `src/themes/${theme.directory}/ts/**/*.{js, jsx, ts, tsx}`
     ];
 
-    if(tooling.php.name === 'twig') {
+    if(tooling.template.name === 'twig') {
         content.push(`wp/themes/${theme.directory}/views/**/*.twig`);
-    } else if (tooling.php.name === 'latte') {
+    } else if (tooling.template.name === 'latte') {
         content.push(`wp/themes/${theme.directory}/views/**/*.latte`);
     }
     
