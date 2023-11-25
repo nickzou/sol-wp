@@ -26,8 +26,6 @@ import composerPackages from "@utils/vars/composerPackages";
 import prettierConfigOptions from "@utils/vars/prettierConfigOptions";
 import esLintConfigOptions from "@utils/vars/esLintConfigOptions";
 import setupCssOption from "./cssOptions/setupCssOption/setupCssOption";
-import setupTwig from "./templateOptions/twig/setupTwig/setupTwig";
-import setupLatte from "./templateOptions/latte/setupLatte/setupLatte";
 import setupTemplateOption from "./templateOptions/setupTemplateOption/setupTemplateOption";
 
 intro(bold(`Generate Theme`));
@@ -86,116 +84,6 @@ await setupCssOption({functionFile, answers, npmPackages, packageScripts, pretti
   });
 
   await setupTemplateOption({answers, composerPackages});
-
-  // switch (answers.tooling.template.name) {
-  //   case 'twig':
-
-  //     await setupTwig({answers, composerPackages});
-  //     composerPackages.push(...[
-  //       "twig/twig:^3.0"
-  //     ]);
-
-  //     const setupTwigFile = generateSetupTwigPhpFunctionFile();
-
-  //     createFile({
-  //       directoryPath: `wp/themes/${answers.theme.directory}/functions`,
-  //       fileName: setupTwigFile.name,
-  //       fileContent: `${setupTwigFile.content} \nadd_action('template_redirect', 'setup_twig');`
-  //     });
-
-  //     appendToFunctionsFile({
-  //       themeFolder: answers.theme.directory,
-  //       functionName: setupTwigFile.functionName
-  //     });
-
-  //     createDirectory({
-  //       location: `wp/themes/${answers.theme.directory}`,
-  //       directoryName: 'views',
-  //     });
-
-  //     const twigIndexFile = generateIndexTwigFile();
-
-  //     createFile({
-  //       directoryPath: `wp/themes/${answers.theme.directory}`,
-  //       fileName: twigIndexFile.name,
-  //       fileContent: twigIndexFile.content,
-  //     });
-
-  //     const twigIndexTemplateFile = generateIndexTwigTemplateFile();
-
-  //     createFile({
-  //       directoryPath: `wp/themes/${answers.theme.directory}/views`,
-  //       fileName: twigIndexTemplateFile.name,
-  //       fileContent: twigIndexTemplateFile.content,
-  //     });
-  //     break;
-  //   case 'latte':
-  //     await setupLatte({answers, composerPackages});
-  //     composerPackages.push(...[
-  //       "latte/latte"
-  //     ]);
-
-  //     createDirectory({
-  //       location: `wp/themes/${answers.theme.directory}`,
-  //       directoryName: 'temp',
-  //     });
-
-  //     createDirectory({
-  //       location: `wp/themes/${answers.theme.directory}`,
-  //       directoryName: 'views',
-  //     });
-
-  //     const setupLattePhpFunctionFile = generateSetupLattePhpFunctionFile();
-
-  //     createFile({
-  //       directoryPath: `wp/themes/${answers.theme.directory}/functions`,
-  //       fileName: setupLattePhpFunctionFile.name,
-  //       fileContent: `${setupLattePhpFunctionFile.content}  \nadd_action('template_redirect', 'setup_latte');`
-  //     });
-
-  //     appendToFunctionsFile({
-  //       themeFolder: answers.theme.directory,
-  //       functionName: setupLattePhpFunctionFile.functionName
-  //     });
-
-  //     const setupGlobalContextFunctionFile = generateGetGlobalContextFunctionFile();
-
-  //     createFile({
-  //       directoryPath: `wp/themes/${answers.theme.directory}/functions`,
-  //       fileName: setupGlobalContextFunctionFile.name,
-  //       fileContent: setupGlobalContextFunctionFile.content
-  //     });
-
-  //     appendToFunctionsFile({
-  //       themeFolder: answers.theme.directory,
-  //       functionName: setupGlobalContextFunctionFile.functionName
-  //     });
-
-  //     const indexLatteFile = generateIndexLatteFile();
-
-  //     createFile({
-  //       directoryPath: `wp/themes/${answers.theme.directory}`,
-  //       fileName: indexLatteFile.name,
-  //       fileContent: indexLatteFile.content
-  //     });
-
-  //     const indexLatteTemplateFile = generateIndexLatteTemplateFile();
-
-  //     createFile({
-  //       directoryPath: `wp/themes/${answers.theme.directory}/views`,
-  //       fileName: indexLatteTemplateFile.name,
-  //       fileContent: indexLatteTemplateFile.content
-  //     });
-  //     break;
-  //   default:
-  //   const phpFile = generateIndexFile();
-
-  //   createFile({
-  //     directoryPath: `wp/themes/${answers.theme.directory}`,
-  //     fileName: phpFile.name,
-  //     fileContent: phpFile.content,
-  //   });
-  // }
 
   //JavaScript/TypeScript installs
   const esbuildConfigFile = generateEsbuildConfigFile({
