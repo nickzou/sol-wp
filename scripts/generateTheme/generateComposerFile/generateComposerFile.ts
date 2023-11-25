@@ -26,7 +26,7 @@ const generateComposerFile = ({ themeFolder }: generateComposerFile): File => {
     ],
     "minimum-stability": "dev",
     "require": {}
-}`);
+  }`);
 
   return {
     name: "composer.json",
