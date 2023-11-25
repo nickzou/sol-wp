@@ -18,15 +18,15 @@ import generateComposerFile from "./generateComposerFile/generateComposerFile";
 import installComposerPackages from "@utils/installComposerPackages/installComposerPackages";
 import addToGitignore from "@utils/addToGitignore/addToGitignore";
 import appendToFunctionsFile from "./appendToFunctionsFile/appendToFunctionsFile";
-import generateCaptureWpHeadFunctionFile from "./phpOptions/common/generateCaptureWpHeadFunctionFile/generateCaptureWpHeadFunctionFile";
-import generateCaptureWpFooterFunctionFile from "./phpOptions/common/generateCaptureWpFooterFunctionFile/generateCaptureWpFooterFunctionFile";
-import generateIndexTwigFile from "./phpOptions/twig/generateIndexTwigFile/generateIndexTwigFile";
-import generateIndexTwigTemplateFile from "./phpOptions/twig/generateIndexTwigTemplateFile/generateIndexTwigTemplateFile";
-import generateSetupTwigPhpFunctionFile from "./phpOptions/twig/generateSetupTwigPhpFunctionFile/generateSetupTwigPhpFunctionFile";
-import generateSetupLattePhpFunctionFile from "./phpOptions/latte/generateSetupLattePhpFunctionFIle/generateSetupLattePhpFunctionFile";
-import generateGetGlobalContextFunctionFile from "./phpOptions/latte/generateGetGlobalContextFunctionFile/generateGetGlobalContextFunctionFile";
-import generateIndexLatteFile from "./phpOptions/latte/generateIndexLatteFile/generateIndexLatteFile";
-import generateIndexLatteTemplateFile from "./phpOptions/latte/generateIndexLatteTemplateFile/generateIndexLatteTemplateFile";
+import generateCaptureWpHeadFunctionFile from "./templateOptions/common/generateCaptureWpHeadFunctionFile/generateCaptureWpHeadFunctionFile";
+import generateCaptureWpFooterFunctionFile from "./templateOptions/common/generateCaptureWpFooterFunctionFile/generateCaptureWpFooterFunctionFile";
+import generateIndexTwigFile from "./templateOptions/twig/generateIndexTwigFile/generateIndexTwigFile";
+import generateIndexTwigTemplateFile from "./templateOptions/twig/generateIndexTwigTemplateFile/generateIndexTwigTemplateFile";
+import generateSetupTwigPhpFunctionFile from "./templateOptions/twig/generateSetupTwigPhpFunctionFile/generateSetupTwigPhpFunctionFile";
+import generateSetupLattePhpFunctionFile from "./templateOptions/latte/generateSetupLattePhpFunctionFIle/generateSetupLattePhpFunctionFile";
+import generateGetGlobalContextFunctionFile from "./templateOptions/latte/generateGetGlobalContextFunctionFile/generateGetGlobalContextFunctionFile";
+import generateIndexLatteFile from "./templateOptions/latte/generateIndexLatteFile/generateIndexLatteFile";
+import generateIndexLatteTemplateFile from "./templateOptions/latte/generateIndexLatteTemplateFile/generateIndexLatteTemplateFile";
 import getAnswers from "./getAnswers/getAnswers";
 import npmPackages from "@utils/vars/npmPackages";
 import packageScripts from "@utils/vars/packageScripts";
@@ -34,6 +34,7 @@ import composerPackages from "@utils/vars/composerPackages";
 import prettierConfigOptions from "@utils/vars/prettierConfigOptions";
 import esLintConfigOptions from "@utils/vars/esLintConfigOptions";
 import setupCssOption from "./cssOptions/setupCssOption/setupCssOption";
+import setupTwig from "./templateOptions/twig/setupTwig/setupTwig";
 
 intro(bold(`Generate Theme`));
 
@@ -92,43 +93,45 @@ await setupCssOption({functionFile, answers, npmPackages, packageScripts, pretti
 
   switch (answers.tooling.php.name) {
     case 'twig':
-      composerPackages.push(...[
-        "twig/twig:^3.0"
-      ]);
 
-      const setupTwigFile = generateSetupTwigPhpFunctionFile();
+      await setupTwig({answers, composerPackages});
+      // composerPackages.push(...[
+      //   "twig/twig:^3.0"
+      // ]);
 
-      createFile({
-        directoryPath: `wp/themes/${answers.theme.directory}/functions`,
-        fileName: setupTwigFile.name,
-        fileContent: `${setupTwigFile.content} \nadd_action('template_redirect', 'setup_twig');`
-      });
+      // const setupTwigFile = generateSetupTwigPhpFunctionFile();
 
-      appendToFunctionsFile({
-        themeFolder: answers.theme.directory,
-        functionName: setupTwigFile.functionName
-      });
+      // createFile({
+      //   directoryPath: `wp/themes/${answers.theme.directory}/functions`,
+      //   fileName: setupTwigFile.name,
+      //   fileContent: `${setupTwigFile.content} \nadd_action('template_redirect', 'setup_twig');`
+      // });
 
-      createDirectory({
-        location: `wp/themes/${answers.theme.directory}`,
-        directoryName: 'views',
-      });
+      // appendToFunctionsFile({
+      //   themeFolder: answers.theme.directory,
+      //   functionName: setupTwigFile.functionName
+      // });
 
-      const twigIndexFile = generateIndexTwigFile();
+      // createDirectory({
+      //   location: `wp/themes/${answers.theme.directory}`,
+      //   directoryName: 'views',
+      // });
 
-      createFile({
-        directoryPath: `wp/themes/${answers.theme.directory}`,
-        fileName: twigIndexFile.name,
-        fileContent: twigIndexFile.content,
-      });
+      // const twigIndexFile = generateIndexTwigFile();
 
-      const twigIndexTemplateFile = generateIndexTwigTemplateFile();
+      // createFile({
+      //   directoryPath: `wp/themes/${answers.theme.directory}`,
+      //   fileName: twigIndexFile.name,
+      //   fileContent: twigIndexFile.content,
+      // });
 
-      createFile({
-        directoryPath: `wp/themes/${answers.theme.directory}/views`,
-        fileName: twigIndexTemplateFile.name,
-        fileContent: twigIndexTemplateFile.content,
-      });
+      // const twigIndexTemplateFile = generateIndexTwigTemplateFile();
+
+      // createFile({
+      //   directoryPath: `wp/themes/${answers.theme.directory}/views`,
+      //   fileName: twigIndexTemplateFile.name,
+      //   fileContent: twigIndexTemplateFile.content,
+      // });
       break;
     case 'latte':
       composerPackages.push(...[
