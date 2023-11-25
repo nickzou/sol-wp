@@ -1,4 +1,4 @@
-export type PhpOption = {
+export type TemplateOption = {
   name: string;
   packageName: string | null;
 };

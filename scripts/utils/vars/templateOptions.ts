@@ -1,6 +1,6 @@
-import { PhpOption } from "@utils/types/PhpOption";
+import { TemplateOption } from "@utils/types/TemplateOption";
 
-const phpOptions: PhpOption[] = [
+const templateOptions: TemplateOption[] = [
   { name: "twig", packageName: "twig/twig:^3.0" },
   { name: "latte", packageName: "latte/latte" },
   { name: "bladeone", packageName: "eftec/bladeone" },
@@ -10,4 +10,4 @@ const phpOptions: PhpOption[] = [
   { name: "none", packageName: null },
 ];
 
-export default phpOptions;
+export default templateOptions;

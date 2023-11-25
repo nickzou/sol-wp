@@ -1,12 +1,12 @@
 import { Theme } from "./Theme";
 import { CssOption } from "./CssOption";
-import { PhpOption } from "./PhpOption";
+import { TemplateOption } from "./TemplateOption";
 
 export type Recipe = {
   theme: Theme;
   tooling: {
     css: CssOption;
     ts: boolean;
-    php: PhpOption;
+    php: TemplateOption;
   };
 };
