@@ -38,6 +38,7 @@ import setupTailwind from "./cssOptions/tailwind/setupTailwind/setupTailwind";
 import setupUno from "./cssOptions/uno/setupUno/setupUno";
 import setupSass from "./cssOptions/sass/setupSass/setupSass";
 import setupPostCss from "./cssOptions/postcss/setupPostCss/setupPostCss";
+import setupCss from "./cssOptions/setupCss/setupCss";
 
 intro(bold(`Generate Theme`));
 
@@ -66,26 +67,28 @@ editWpEnv({ wpEnvFile: `.wp-env.json`, directory: answers.theme.directory });
 
 const functionFile = generateFunctionsFile();
 
-try {
-  switch (answers.tooling.css.name) {
-    case "tailwind":
-      await setupTailwind({functionFile, answers});
-      break;
-    case "uno":
-      await setupUno({functionFile, answers});
-      break;
-    case "sass":
-      await setupSass({functionFile, answers});
-      break;
-    case "postcss":
-      await setupPostCss({functionFile, answers});
-      break;
-    case "none":
-      console.log(
-        formatMessage({ message: `Alright, good luck!`, color: "yellow" })
-      );
-      break;
-  }
+setupCss({functionFile, answers});
+
+// try {
+//   switch (answers.tooling.css.name) {
+//     case "tailwind":
+//       await setupTailwind({functionFile, answers});
+//       break;
+//     case "uno":
+//       await setupUno({functionFile, answers});
+//       break;
+//     case "sass":
+//       await setupSass({functionFile, answers});
+//       break;
+//     case "postcss":
+//       await setupPostCss({functionFile, answers});
+//       break;
+//     case "none":
+//       console.log(
+//         formatMessage({ message: `Alright, good luck!`, color: "yellow" })
+//       );
+//       break;
+//   }
 
   const captureWpHeadFunctionFile = generateCaptureWpHeadFunctionFile;
 
@@ -338,9 +341,9 @@ try {
     composerPackages,
     `wp/themes/${answers.theme.directory}`
   );
-} catch (error) {
-  console.error(
-    formatMessage({ message: `An error occurred: ${error}`, color: "red" })
-  );
-}
+// } catch (error) {
+//   console.error(
+//     formatMessage({ message: `An error occurred: ${error}`, color: "red" })
+//   );
+// }
 outro(green(bold("Your theme has been generated!")));
