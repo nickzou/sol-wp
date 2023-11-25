@@ -9,22 +9,22 @@ interface generateComposerFile {
 const generateComposerFile = ({ themeFolder }: generateComposerFile): File => {
   const content = dedent(`{
     "name": "nickzou/${themeFolder}",
-  "description": "A modern toolchain for WordPress development.",
-  "type": "library",
-  "license": "MIT",
-  "autoload": {
-    "psr-4": {
-      "wpSol\\\\${camelCase(themeFolder)}\\\\": "./"
-    }
-  },
-  "authors": [
-    {
-      "name": "Nick Zou",
-      "email": "contact@nickzou.com"
-    }
-  ],
-  "minimum-stability": "dev",
-  "require": {}
+    "description": "A modern toolchain for WordPress development.",
+    "type": "library",
+    "license": "MIT",
+    "autoload": {
+      "psr-4": {
+        "wpSol\\\\${camelCase(themeFolder)}\\\\": "./"
+      }
+    },
+    "authors": [
+      {
+        "name": "Nick Zou",
+        "email": "contact@nickzou.com"
+      }
+    ],
+    "minimum-stability": "dev",
+    "require": {}
 }`);
 
   return {
