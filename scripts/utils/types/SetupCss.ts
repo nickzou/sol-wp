@@ -6,7 +6,7 @@ import { PrettierConfigOptions } from "@utils/vars/prettierConfigOptions";
 export type SetupCss = {
     functionFile: File;
     answers: Recipe;
-    npmPackages: string[];
-    packageScripts: PackageScript[];
+    npmPackages?: string[];
+    packageScripts?: PackageScript[];
     prettierConfigOptions?:PrettierConfigOptions;
 };
