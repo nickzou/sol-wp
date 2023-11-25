@@ -61,7 +61,7 @@ const setupTailwind = async ({functionFile, answers}:SetupCss) => {
       ]);
 
       npmPackages.push(...[
-        `${answers.tooling.css.packageName}`,
+        `tailwindcss`,
         "prettier",
         "prettier-plugin-tailwindcss",
       ]);

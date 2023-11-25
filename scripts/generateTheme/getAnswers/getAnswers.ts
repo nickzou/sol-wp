@@ -65,7 +65,7 @@ const getAnswers = async ():Promise<Recipe> => {
     const cssOption = await select({
         message: `What CSS tools would you like?`,
         options: [
-          { value: "tailwindcss", label: "Tailwind" },
+          { value: "tailwind", label: "Tailwind" },
           { value: "uno", label: "UnoCSS" },
           { value: "sass", label: "Sass" },
           { value: "postcss", label: "PostCSS" },
