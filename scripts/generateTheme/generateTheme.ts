@@ -35,6 +35,7 @@ import prettierConfigOptions from "@utils/vars/prettierConfigOptions";
 import esLintConfigOptions from "@utils/vars/esLintConfigOptions";
 import setupCssOption from "./cssOptions/setupCssOption/setupCssOption";
 import setupTwig from "./templateOptions/twig/setupTwig/setupTwig";
+import setupLatte from "./templateOptions/latte/setupLatte/setupLatte";
 
 intro(bold(`Generate Theme`));
 
@@ -134,61 +135,62 @@ await setupCssOption({functionFile, answers, npmPackages, packageScripts, pretti
       // });
       break;
     case 'latte':
-      composerPackages.push(...[
-        "latte/latte"
-      ]);
+      await setupLatte({answers, composerPackages});
+      // composerPackages.push(...[
+      //   "latte/latte"
+      // ]);
 
-      createDirectory({
-        location: `wp/themes/${answers.theme.directory}`,
-        directoryName: 'temp',
-      });
+      // createDirectory({
+      //   location: `wp/themes/${answers.theme.directory}`,
+      //   directoryName: 'temp',
+      // });
 
-      createDirectory({
-        location: `wp/themes/${answers.theme.directory}`,
-        directoryName: 'views',
-      });
+      // createDirectory({
+      //   location: `wp/themes/${answers.theme.directory}`,
+      //   directoryName: 'views',
+      // });
 
-      const setupLattePhpFunctionFile = generateSetupLattePhpFunctionFile();
+      // const setupLattePhpFunctionFile = generateSetupLattePhpFunctionFile();
 
-      createFile({
-        directoryPath: `wp/themes/${answers.theme.directory}/functions`,
-        fileName: setupLattePhpFunctionFile.name,
-        fileContent: `${setupLattePhpFunctionFile.content}  \nadd_action('template_redirect', 'setup_latte');`
-      });
+      // createFile({
+      //   directoryPath: `wp/themes/${answers.theme.directory}/functions`,
+      //   fileName: setupLattePhpFunctionFile.name,
+      //   fileContent: `${setupLattePhpFunctionFile.content}  \nadd_action('template_redirect', 'setup_latte');`
+      // });
 
-      appendToFunctionsFile({
-        themeFolder: answers.theme.directory,
-        functionName: setupLattePhpFunctionFile.functionName
-      });
+      // appendToFunctionsFile({
+      //   themeFolder: answers.theme.directory,
+      //   functionName: setupLattePhpFunctionFile.functionName
+      // });
 
-      const setupGlobalContextFunctionFile = generateGetGlobalContextFunctionFile();
+      // const setupGlobalContextFunctionFile = generateGetGlobalContextFunctionFile();
 
-      createFile({
-        directoryPath: `wp/themes/${answers.theme.directory}/functions`,
-        fileName: setupGlobalContextFunctionFile.name,
-        fileContent: setupGlobalContextFunctionFile.content
-      });
+      // createFile({
+      //   directoryPath: `wp/themes/${answers.theme.directory}/functions`,
+      //   fileName: setupGlobalContextFunctionFile.name,
+      //   fileContent: setupGlobalContextFunctionFile.content
+      // });
 
-      appendToFunctionsFile({
-        themeFolder: answers.theme.directory,
-        functionName: setupGlobalContextFunctionFile.functionName
-      });
+      // appendToFunctionsFile({
+      //   themeFolder: answers.theme.directory,
+      //   functionName: setupGlobalContextFunctionFile.functionName
+      // });
 
-      const indexLatteFile = generateIndexLatteFile();
+      // const indexLatteFile = generateIndexLatteFile();
 
-      createFile({
-        directoryPath: `wp/themes/${answers.theme.directory}`,
-        fileName: indexLatteFile.name,
-        fileContent: indexLatteFile.content
-      });
+      // createFile({
+      //   directoryPath: `wp/themes/${answers.theme.directory}`,
+      //   fileName: indexLatteFile.name,
+      //   fileContent: indexLatteFile.content
+      // });
 
-      const indexLatteTemplateFile = generateIndexLatteTemplateFile();
+      // const indexLatteTemplateFile = generateIndexLatteTemplateFile();
 
-      createFile({
-        directoryPath: `wp/themes/${answers.theme.directory}/views`,
-        fileName: indexLatteTemplateFile.name,
-        fileContent: indexLatteTemplateFile.content
-      });
+      // createFile({
+      //   directoryPath: `wp/themes/${answers.theme.directory}/views`,
+      //   fileName: indexLatteTemplateFile.name,
+      //   fileContent: indexLatteTemplateFile.content
+      // });
       break;
     default:
     const phpFile = generateIndexFile();
