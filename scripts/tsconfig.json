@@ -7,8 +7,8 @@
     "noEmit": true,
     "baseUrl": "./",
     "paths": {
-      "@utils/*": ["utils/*"],
-      "@generateTheme/*": ["generateTheme/*"]
+      "@utils/*": ["./utils/*"],
+      "@generateTheme/*": ["./generateTheme/*"]
     }
   }
 }

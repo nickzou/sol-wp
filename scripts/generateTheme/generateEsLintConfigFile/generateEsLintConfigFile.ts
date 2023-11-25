@@ -15,11 +15,11 @@ const generateEsLintConfigFile = ({
   const pluginsParam = ["prettier"];
 
   if (extendsArr) {
-    Array.prototype.push.apply(extendsParam, extendsArr);
+    extendsParam.push(...extendsArr);
   }
 
   if (plugins) {
-    Array.prototype.push.apply(pluginsParam, plugins);
+    pluginsParam.push(...plugins);
   }
   const content = `{
   "extends": ${JSON.stringify(extendsParam)},
