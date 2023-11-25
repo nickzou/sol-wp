@@ -1,15 +1,11 @@
-import { Recipe } from "@utils/types/Recipe";
 import generateSetupTwigPhpFunctionFile from "../generateSetupTwigPhpFunctionFile/generateSetupTwigPhpFunctionFile";
 import createFile from "@utils/createFile/createFile";
 import createDirectory from "@utils/createDirectory/createDirectory";
 import appendToFunctionsFile from "@generateTheme/appendToFunctionsFile/appendToFunctionsFile";
 import generateIndexTwigFile from "../generateIndexTwigFile/generateIndexTwigFile";
 import generateIndexTwigTemplateFile from "../generateIndexTwigTemplateFile/generateIndexTwigTemplateFile";
+import { SetupTemplate } from "@utils/types/SetupTemplate";
 
-type SetupTemplate = {
-    answers: Recipe;
-    composerPackages: string[];
-}
 const setupTwig = async ({answers, composerPackages}:SetupTemplate) => {
     composerPackages.push(...[
         "twig/twig:^3.0"
