@@ -1,14 +1,11 @@
 import styleSolutionEnqueuer from "@generateTheme/styleSolutionEnqueuer/styleSolutionEnqueuer";
 import createDirectory from "@utils/createDirectory/createDirectory";
 import createFile from "@utils/createFile/createFile";
-import packageScripts from "@utils/vars/packageScripts";
 import generatePostCssConfigFile from "../generatePostCssConfigFile/generatePostCssConfigFile";
 import generatePostCssProdConfigFile from "../generatePostCssProdConfigFile/generatePostCssProdConfigFile";
-import prettierConfigOptions from "@utils/vars/prettierConfigOptions";
-import npmPackages from "@utils/vars/npmPackages";
 import { SetupCss } from "@utils/types/SetupCss";
 
-const setupPostCss = async ({functionFile, answers}:SetupCss) => {
+const setupPostCss = async ({functionFile, answers, npmPackages, packageScripts, prettierConfigOptions}:SetupCss) => {
       await styleSolutionEnqueuer({
         functionFile,
         theme: answers.theme,
