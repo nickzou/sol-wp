@@ -7,6 +7,6 @@ export type Recipe = {
   tooling: {
     css: CssOption;
     ts: boolean;
-    php: TemplateOption;
+    template: TemplateOption;
   };
 };

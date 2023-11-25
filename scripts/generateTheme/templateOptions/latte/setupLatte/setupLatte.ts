@@ -7,7 +7,7 @@ import generateGetGlobalContextFunctionFile from "../generateGetGlobalContextFun
 import generateIndexLatteFile from "../generateIndexLatteFile/generateIndexLatteFile";
 import generateIndexLatteTemplateFile from "../generateIndexLatteTemplateFile/generateIndexLatteTemplateFile";
 
-const setupLatte = ({answers, composerPackages}:SetupTemplate) => {
+const setupLatte = async ({answers, composerPackages}:SetupTemplate) => {
     composerPackages.push(...[
     "latte/latte"
     ]);
