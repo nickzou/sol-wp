@@ -5,7 +5,7 @@ import setupTailwind from "../tailwind/setupTailwind/setupTailwind";
 import setupUno from "../uno/setupUno/setupUno";
 import { SetupCss } from "@utils/types/SetupCss";
 
-const setupCss = async ({functionFile, answers}:SetupCss) => {
+const setupCss = async ({functionFile, answers, npmPackages, packageScripts, prettierConfigOptions}:SetupCss) => {
     const cssOptions = {
         tailwind: setupTailwind,
         uno: setupUno,
@@ -21,7 +21,7 @@ const setupCss = async ({functionFile, answers}:SetupCss) => {
         const optionFunction = cssOptions[optionName];
 
         if(optionFunction) {
-            await optionFunction({functionFile, answers});
+            await optionFunction({functionFile, answers, npmPackages, packageScripts, prettierConfigOptions});
         }
     } catch (error) {
         throw error;
