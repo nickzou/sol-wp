@@ -10,7 +10,7 @@ const setupCssOption = async ({functionFile, answers, npmPackages, packageScript
         tailwind: setupTailwind,
         uno: setupUno,
         sass: setupSass,
-        postCss: setupPostCss,
+        postcss: setupPostCss,
         none: async ({functionFile, answers}:SetupCss) => {
             console.log(formatMessage({message: `Alright, good luck!`, color: 'yellow'}))
         }
