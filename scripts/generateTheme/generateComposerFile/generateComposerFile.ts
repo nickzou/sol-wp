@@ -20,7 +20,7 @@ const generateComposerFile = ({ themeFolder }: generateComposerFile): File => {
     {
       "name": "Nick Zou",
       "email": "contact@nickzou.com"
-    }ß
+    }
   ],
   "minimum-stability": "dev",
   "require": {}
