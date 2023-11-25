@@ -1,11 +1,13 @@
 import { SetupTemplate } from "@utils/types/SetupTemplate";
 import setupTwig from "../twig/setupTwig/setupTwig";
 import setupLatte from "../latte/setupLatte/setupLatte";
+import setupNone from "../none/setupNone";
 
 const setupTemplateOption = async ({answers, composerPackages}:SetupTemplate) => {
     const templateOptions = {
         twig: setupTwig,
-        latte: setupLatte
+        latte: setupLatte,
+        none: setupNone
     };
 
     try {
