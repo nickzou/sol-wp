@@ -1,7 +1,6 @@
 import { intro, outro } from "@clack/prompts";
 import createDirectory from "@utils/createDirectory/createDirectory";
 import generateCssFile from "@generateTheme/generateCssFile/generateCssFile";
-import generateIndexFile from "@generateTheme/generateIndexFile/generateIndexFile";
 import createFile from "@utils/createFile/createFile";
 import editWpEnv from "@generateTheme/editWpEnv/editWpEnv";
 import { bold, green } from "colorette";
@@ -20,13 +19,6 @@ import addToGitignore from "@utils/addToGitignore/addToGitignore";
 import appendToFunctionsFile from "./appendToFunctionsFile/appendToFunctionsFile";
 import generateCaptureWpHeadFunctionFile from "./templateOptions/common/generateCaptureWpHeadFunctionFile/generateCaptureWpHeadFunctionFile";
 import generateCaptureWpFooterFunctionFile from "./templateOptions/common/generateCaptureWpFooterFunctionFile/generateCaptureWpFooterFunctionFile";
-import generateIndexTwigFile from "./templateOptions/twig/generateIndexTwigFile/generateIndexTwigFile";
-import generateIndexTwigTemplateFile from "./templateOptions/twig/generateIndexTwigTemplateFile/generateIndexTwigTemplateFile";
-import generateSetupTwigPhpFunctionFile from "./templateOptions/twig/generateSetupTwigPhpFunctionFile/generateSetupTwigPhpFunctionFile";
-import generateSetupLattePhpFunctionFile from "./templateOptions/latte/generateSetupLattePhpFunctionFIle/generateSetupLattePhpFunctionFile";
-import generateGetGlobalContextFunctionFile from "./templateOptions/latte/generateGetGlobalContextFunctionFile/generateGetGlobalContextFunctionFile";
-import generateIndexLatteFile from "./templateOptions/latte/generateIndexLatteFile/generateIndexLatteFile";
-import generateIndexLatteTemplateFile from "./templateOptions/latte/generateIndexLatteTemplateFile/generateIndexLatteTemplateFile";
 import getAnswers from "./getAnswers/getAnswers";
 import npmPackages from "@utils/vars/npmPackages";
 import packageScripts from "@utils/vars/packageScripts";
@@ -36,6 +28,7 @@ import esLintConfigOptions from "@utils/vars/esLintConfigOptions";
 import setupCssOption from "./cssOptions/setupCssOption/setupCssOption";
 import setupTwig from "./templateOptions/twig/setupTwig/setupTwig";
 import setupLatte from "./templateOptions/latte/setupLatte/setupLatte";
+import setupTemplateOption from "./templateOptions/setupTemplateOption/setupTemplateOption";
 
 intro(bold(`Generate Theme`));
 
@@ -92,115 +85,117 @@ await setupCssOption({functionFile, answers, npmPackages, packageScripts, pretti
     functionName: captureWpFooterFunctionFile.functionName
   });
 
-  switch (answers.tooling.php.name) {
-    case 'twig':
+  await setupTemplateOption({answers, composerPackages});
 
-      await setupTwig({answers, composerPackages});
-      // composerPackages.push(...[
-      //   "twig/twig:^3.0"
-      // ]);
+  // switch (answers.tooling.template.name) {
+  //   case 'twig':
 
-      // const setupTwigFile = generateSetupTwigPhpFunctionFile();
+  //     await setupTwig({answers, composerPackages});
+  //     composerPackages.push(...[
+  //       "twig/twig:^3.0"
+  //     ]);
 
-      // createFile({
-      //   directoryPath: `wp/themes/${answers.theme.directory}/functions`,
-      //   fileName: setupTwigFile.name,
-      //   fileContent: `${setupTwigFile.content} \nadd_action('template_redirect', 'setup_twig');`
-      // });
+  //     const setupTwigFile = generateSetupTwigPhpFunctionFile();
 
-      // appendToFunctionsFile({
-      //   themeFolder: answers.theme.directory,
-      //   functionName: setupTwigFile.functionName
-      // });
+  //     createFile({
+  //       directoryPath: `wp/themes/${answers.theme.directory}/functions`,
+  //       fileName: setupTwigFile.name,
+  //       fileContent: `${setupTwigFile.content} \nadd_action('template_redirect', 'setup_twig');`
+  //     });
 
-      // createDirectory({
-      //   location: `wp/themes/${answers.theme.directory}`,
-      //   directoryName: 'views',
-      // });
+  //     appendToFunctionsFile({
+  //       themeFolder: answers.theme.directory,
+  //       functionName: setupTwigFile.functionName
+  //     });
 
-      // const twigIndexFile = generateIndexTwigFile();
+  //     createDirectory({
+  //       location: `wp/themes/${answers.theme.directory}`,
+  //       directoryName: 'views',
+  //     });
 
-      // createFile({
-      //   directoryPath: `wp/themes/${answers.theme.directory}`,
-      //   fileName: twigIndexFile.name,
-      //   fileContent: twigIndexFile.content,
-      // });
+  //     const twigIndexFile = generateIndexTwigFile();
 
-      // const twigIndexTemplateFile = generateIndexTwigTemplateFile();
+  //     createFile({
+  //       directoryPath: `wp/themes/${answers.theme.directory}`,
+  //       fileName: twigIndexFile.name,
+  //       fileContent: twigIndexFile.content,
+  //     });
 
-      // createFile({
-      //   directoryPath: `wp/themes/${answers.theme.directory}/views`,
-      //   fileName: twigIndexTemplateFile.name,
-      //   fileContent: twigIndexTemplateFile.content,
-      // });
-      break;
-    case 'latte':
-      await setupLatte({answers, composerPackages});
-      // composerPackages.push(...[
-      //   "latte/latte"
-      // ]);
+  //     const twigIndexTemplateFile = generateIndexTwigTemplateFile();
 
-      // createDirectory({
-      //   location: `wp/themes/${answers.theme.directory}`,
-      //   directoryName: 'temp',
-      // });
+  //     createFile({
+  //       directoryPath: `wp/themes/${answers.theme.directory}/views`,
+  //       fileName: twigIndexTemplateFile.name,
+  //       fileContent: twigIndexTemplateFile.content,
+  //     });
+  //     break;
+  //   case 'latte':
+  //     await setupLatte({answers, composerPackages});
+  //     composerPackages.push(...[
+  //       "latte/latte"
+  //     ]);
 
-      // createDirectory({
-      //   location: `wp/themes/${answers.theme.directory}`,
-      //   directoryName: 'views',
-      // });
+  //     createDirectory({
+  //       location: `wp/themes/${answers.theme.directory}`,
+  //       directoryName: 'temp',
+  //     });
 
-      // const setupLattePhpFunctionFile = generateSetupLattePhpFunctionFile();
+  //     createDirectory({
+  //       location: `wp/themes/${answers.theme.directory}`,
+  //       directoryName: 'views',
+  //     });
 
-      // createFile({
-      //   directoryPath: `wp/themes/${answers.theme.directory}/functions`,
-      //   fileName: setupLattePhpFunctionFile.name,
-      //   fileContent: `${setupLattePhpFunctionFile.content}  \nadd_action('template_redirect', 'setup_latte');`
-      // });
+  //     const setupLattePhpFunctionFile = generateSetupLattePhpFunctionFile();
 
-      // appendToFunctionsFile({
-      //   themeFolder: answers.theme.directory,
-      //   functionName: setupLattePhpFunctionFile.functionName
-      // });
+  //     createFile({
+  //       directoryPath: `wp/themes/${answers.theme.directory}/functions`,
+  //       fileName: setupLattePhpFunctionFile.name,
+  //       fileContent: `${setupLattePhpFunctionFile.content}  \nadd_action('template_redirect', 'setup_latte');`
+  //     });
 
-      // const setupGlobalContextFunctionFile = generateGetGlobalContextFunctionFile();
+  //     appendToFunctionsFile({
+  //       themeFolder: answers.theme.directory,
+  //       functionName: setupLattePhpFunctionFile.functionName
+  //     });
 
-      // createFile({
-      //   directoryPath: `wp/themes/${answers.theme.directory}/functions`,
-      //   fileName: setupGlobalContextFunctionFile.name,
-      //   fileContent: setupGlobalContextFunctionFile.content
-      // });
+  //     const setupGlobalContextFunctionFile = generateGetGlobalContextFunctionFile();
 
-      // appendToFunctionsFile({
-      //   themeFolder: answers.theme.directory,
-      //   functionName: setupGlobalContextFunctionFile.functionName
-      // });
+  //     createFile({
+  //       directoryPath: `wp/themes/${answers.theme.directory}/functions`,
+  //       fileName: setupGlobalContextFunctionFile.name,
+  //       fileContent: setupGlobalContextFunctionFile.content
+  //     });
 
-      // const indexLatteFile = generateIndexLatteFile();
+  //     appendToFunctionsFile({
+  //       themeFolder: answers.theme.directory,
+  //       functionName: setupGlobalContextFunctionFile.functionName
+  //     });
 
-      // createFile({
-      //   directoryPath: `wp/themes/${answers.theme.directory}`,
-      //   fileName: indexLatteFile.name,
-      //   fileContent: indexLatteFile.content
-      // });
+  //     const indexLatteFile = generateIndexLatteFile();
 
-      // const indexLatteTemplateFile = generateIndexLatteTemplateFile();
+  //     createFile({
+  //       directoryPath: `wp/themes/${answers.theme.directory}`,
+  //       fileName: indexLatteFile.name,
+  //       fileContent: indexLatteFile.content
+  //     });
 
-      // createFile({
-      //   directoryPath: `wp/themes/${answers.theme.directory}/views`,
-      //   fileName: indexLatteTemplateFile.name,
-      //   fileContent: indexLatteTemplateFile.content
-      // });
-      break;
-    default:
-    const phpFile = generateIndexFile();
+  //     const indexLatteTemplateFile = generateIndexLatteTemplateFile();
 
-    createFile({
-      directoryPath: `wp/themes/${answers.theme.directory}`,
-      fileName: phpFile.name,
-      fileContent: phpFile.content,
-    });
-  }
+  //     createFile({
+  //       directoryPath: `wp/themes/${answers.theme.directory}/views`,
+  //       fileName: indexLatteTemplateFile.name,
+  //       fileContent: indexLatteTemplateFile.content
+  //     });
+  //     break;
+  //   default:
+  //   const phpFile = generateIndexFile();
+
+  //   createFile({
+  //     directoryPath: `wp/themes/${answers.theme.directory}`,
+  //     fileName: phpFile.name,
+  //     fileContent: phpFile.content,
+  //   });
+  // }
 
   //JavaScript/TypeScript installs
   const esbuildConfigFile = generateEsbuildConfigFile({
