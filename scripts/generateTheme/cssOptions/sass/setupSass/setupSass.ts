@@ -1,13 +1,11 @@
 import styleSolutionEnqueuer from "@generateTheme/styleSolutionEnqueuer/styleSolutionEnqueuer";
 import createDirectory from "@utils/createDirectory/createDirectory";
-import packageScripts from "@utils/vars/packageScripts";
 import createFile from "@utils/createFile/createFile";
 import generateSassConfigFile from "../generateSassConfigFile/generateSassConfigFile";
 import generateStylelintFile from "../generateSassStylelintFile/generateSassStylelintFile";
-import npmPackages from "@utils/vars/npmPackages";
 import { SetupCss } from "@utils/types/SetupCss";
 
-const setupSass = async ({functionFile, answers}:SetupCss) => {
+const setupSass = async ({functionFile, answers, npmPackages, packageScripts}:SetupCss) => {
       await styleSolutionEnqueuer({
         functionFile,
         theme: answers.theme,
