@@ -1,5 +1,4 @@
 import { intro, outro } from "@clack/prompts";
-import formatMessage from "@utils/formatMessage/formatMessage";
 import createDirectory from "@utils/createDirectory/createDirectory";
 import generateCssFile from "@generateTheme/generateCssFile/generateCssFile";
 import generateIndexFile from "@generateTheme/generateIndexFile/generateIndexFile";
@@ -34,10 +33,6 @@ import packageScripts from "@utils/vars/packageScripts";
 import composerPackages from "@utils/vars/composerPackages";
 import prettierConfigOptions from "@utils/vars/prettierConfigOptions";
 import esLintConfigOptions from "@utils/vars/esLintConfigOptions";
-import setupTailwind from "./cssOptions/tailwind/setupTailwind/setupTailwind";
-import setupUno from "./cssOptions/uno/setupUno/setupUno";
-import setupSass from "./cssOptions/sass/setupSass/setupSass";
-import setupPostCss from "./cssOptions/postcss/setupPostCss/setupPostCss";
 import setupCssOption from "./cssOptions/setupCssOption/setupCssOption";
 
 intro(bold(`Generate Theme`));
@@ -68,27 +63,6 @@ editWpEnv({ wpEnvFile: `.wp-env.json`, directory: answers.theme.directory });
 const functionFile = generateFunctionsFile();
 
 await setupCssOption({functionFile, answers, npmPackages, packageScripts, prettierConfigOptions});
-
-// try {
-//   switch (answers.tooling.css.name) {
-//     case "tailwind":
-//       await setupTailwind({functionFile, answers});
-//       break;
-//     case "uno":
-//       await setupUno({functionFile, answers});
-//       break;
-//     case "sass":
-//       await setupSass({functionFile, answers});
-//       break;
-//     case "postcss":
-//       await setupPostCss({functionFile, answers});
-//       break;
-//     case "none":
-//       console.log(
-//         formatMessage({ message: `Alright, good luck!`, color: "yellow" })
-//       );
-//       break;
-//   }
 
   const captureWpHeadFunctionFile = generateCaptureWpHeadFunctionFile;
 
@@ -341,9 +315,5 @@ await setupCssOption({functionFile, answers, npmPackages, packageScripts, pretti
     composerPackages,
     `wp/themes/${answers.theme.directory}`
   );
-// } catch (error) {
-//   console.error(
-//     formatMessage({ message: `An error occurred: ${error}`, color: "red" })
-//   );
-// }
+
 outro(green(bold("Your theme has been generated!")));
