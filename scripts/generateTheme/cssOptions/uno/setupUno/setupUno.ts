@@ -4,7 +4,7 @@ import generateUnoConfigFile from "../generateUnoConfigFile/generateUnoConfigFil
 import generateTailwindAndUnoContent from "@utils/generateTailwindAndUnoContent/generateTailwindAndUnoContent";
 import createFile from "@utils/createFile/createFile";
 import npmPackages from "@utils/vars/npmPackages";
-import { SetupCss } from "@utils/types/SetupCSS";
+import { SetupCss } from "@utils/types/SetupCss";
 
 const setupUno = async ({functionFile, answers}:SetupCss) => {
       await styleSolutionEnqueuer({

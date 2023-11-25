@@ -5,7 +5,7 @@ import createFile from "@utils/createFile/createFile";
 import generateSassConfigFile from "../generateSassConfigFile/generateSassConfigFile";
 import generateStylelintFile from "../generateSassStylelintFile/generateSassStylelintFile";
 import npmPackages from "@utils/vars/npmPackages";
-import { SetupCss } from "@utils/types/SetupCSS";
+import { SetupCss } from "@utils/types/SetupCss";
 
 const setupSass = async ({functionFile, answers}:SetupCss) => {
       await styleSolutionEnqueuer({

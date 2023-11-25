@@ -7,7 +7,7 @@ import generateTailwindAndUnoContent from "@utils/generateTailwindAndUnoContent/
 import generateTailwindCssFile from "../generateTailwindCssFile/generateTailwindCssFile";
 import prettierConfigOptions from "@utils/vars/prettierConfigOptions";
 import npmPackages from "@utils/vars/npmPackages";
-import { SetupCss } from "@utils/types/SetupCSS";
+import { SetupCss } from "@utils/types/SetupCss";
 
 const setupTailwind = async ({functionFile, answers}:SetupCss) => {
       await styleSolutionEnqueuer({

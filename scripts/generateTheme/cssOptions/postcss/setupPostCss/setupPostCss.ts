@@ -6,7 +6,7 @@ import generatePostCssConfigFile from "../generatePostCssConfigFile/generatePost
 import generatePostCssProdConfigFile from "../generatePostCssProdConfigFile/generatePostCssProdConfigFile";
 import prettierConfigOptions from "@utils/vars/prettierConfigOptions";
 import npmPackages from "@utils/vars/npmPackages";
-import { SetupCss } from "@utils/types/SetupCSS";
+import { SetupCss } from "@utils/types/SetupCss";
 
 const setupPostCss = async ({functionFile, answers}:SetupCss) => {
       await styleSolutionEnqueuer({
