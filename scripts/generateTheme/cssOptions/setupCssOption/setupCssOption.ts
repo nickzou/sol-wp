@@ -4,6 +4,7 @@ import setupSass from "../sass/setupSass/setupSass";
 import setupTailwind from "../tailwind/setupTailwind/setupTailwind";
 import setupUno from "../uno/setupUno/setupUno";
 import { SetupCss } from "@utils/types/SetupCss";
+import styleSolutionEnqueuer from "@generateTheme/styleSolutionEnqueuer/styleSolutionEnqueuer";
 
 const setupCssOption = async ({functionFile, answers, npmPackages, packageScripts, prettierConfigOptions}:SetupCss) => {
     const cssOptions = {
@@ -12,7 +13,14 @@ const setupCssOption = async ({functionFile, answers, npmPackages, packageScript
         sass: setupSass,
         postcss: setupPostCss,
         none: async ({functionFile, answers}:SetupCss) => {
-            console.log(formatMessage({message: `Alright, good luck!`, color: 'yellow'}))
+            await styleSolutionEnqueuer({
+                functionFile,
+                theme: answers.theme,
+                option: answers.tooling.css,
+                cssRegisterName: "styles",
+                cssFileName: "styles",
+              });
+            console.log(formatMessage({message: `Alright, good luck!`, color: 'yellow'}));
         }
     };
 
