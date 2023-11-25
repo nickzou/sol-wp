@@ -1,12 +1,10 @@
 import styleSolutionEnqueuer from "@generateTheme/styleSolutionEnqueuer/styleSolutionEnqueuer";
-import packageScripts from "@utils/vars/packageScripts";
 import generateUnoConfigFile from "../generateUnoConfigFile/generateUnoConfigFile";
 import generateTailwindAndUnoContent from "@utils/generateTailwindAndUnoContent/generateTailwindAndUnoContent";
 import createFile from "@utils/createFile/createFile";
-import npmPackages from "@utils/vars/npmPackages";
 import { SetupCss } from "@utils/types/SetupCss";
 
-const setupUno = async ({functionFile, answers}:SetupCss) => {
+const setupUno = async ({functionFile, answers, npmPackages, packageScripts}:SetupCss) => {
       await styleSolutionEnqueuer({
         functionFile,
         theme: answers.theme,
