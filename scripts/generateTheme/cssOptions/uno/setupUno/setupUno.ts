@@ -1,18 +1,12 @@
 import styleSolutionEnqueuer from "@generateTheme/styleSolutionEnqueuer/styleSolutionEnqueuer";
-import { Recipe } from "@utils/types/Recipe";
-import { File } from "@utils/types/File";
 import packageScripts from "@utils/vars/packageScripts";
 import generateUnoConfigFile from "../generateUnoConfigFile/generateUnoConfigFile";
 import generateTailwindAndUnoContent from "@utils/generateTailwindAndUnoContent/generateTailwindAndUnoContent";
 import createFile from "@utils/createFile/createFile";
 import npmPackages from "@utils/vars/npmPackages";
+import { SetupCss } from "@utils/types/SetupCSS";
 
-interface SetupUno {
-    functionFile: File,
-    answers: Recipe
-}
-
-const setupUno = async ({functionFile, answers}:SetupUno) => {
+const setupUno = async ({functionFile, answers}:SetupCss) => {
       await styleSolutionEnqueuer({
         functionFile,
         theme: answers.theme,

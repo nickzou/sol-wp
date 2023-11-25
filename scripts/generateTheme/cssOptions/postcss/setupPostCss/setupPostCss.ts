@@ -1,6 +1,4 @@
 import styleSolutionEnqueuer from "@generateTheme/styleSolutionEnqueuer/styleSolutionEnqueuer";
-import { File } from "@utils/types/File";
-import { Recipe } from "@utils/types/Recipe";
 import createDirectory from "@utils/createDirectory/createDirectory";
 import createFile from "@utils/createFile/createFile";
 import packageScripts from "@utils/vars/packageScripts";
@@ -8,13 +6,9 @@ import generatePostCssConfigFile from "../generatePostCssConfigFile/generatePost
 import generatePostCssProdConfigFile from "../generatePostCssProdConfigFile/generatePostCssProdConfigFile";
 import prettierConfigOptions from "@utils/vars/prettierConfigOptions";
 import npmPackages from "@utils/vars/npmPackages";
+import { SetupCss } from "@utils/types/SetupCSS";
 
-interface SetupPostCss {
-    functionFile:File,
-    answers: Recipe
-}
-
-const setupPostCss = async ({functionFile, answers}:SetupPostCss) => {
+const setupPostCss = async ({functionFile, answers}:SetupCss) => {
       await styleSolutionEnqueuer({
         functionFile,
         theme: answers.theme,

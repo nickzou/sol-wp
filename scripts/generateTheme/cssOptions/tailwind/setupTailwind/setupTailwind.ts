@@ -1,7 +1,5 @@
 import styleSolutionEnqueuer from "@generateTheme/styleSolutionEnqueuer/styleSolutionEnqueuer";
 import createDirectory from "@utils/createDirectory/createDirectory";
-import { File } from "@utils/types/File";
-import { Recipe } from "@utils/types/Recipe";
 import packageScripts from "@utils/vars/packageScripts";
 import generateTailwindConfigFile from "../generateTailwindConfigFile/generateTailwindConfigFile";
 import createFile from "@utils/createFile/createFile";
@@ -9,13 +7,9 @@ import generateTailwindAndUnoContent from "@utils/generateTailwindAndUnoContent/
 import generateTailwindCssFile from "../generateTailwindCssFile/generateTailwindCssFile";
 import prettierConfigOptions from "@utils/vars/prettierConfigOptions";
 import npmPackages from "@utils/vars/npmPackages";
+import { SetupCss } from "@utils/types/SetupCSS";
 
-interface SetupTailwind {
-    functionFile: File,
-    answers: Recipe,
-}
-
-const setupTailwind = async ({functionFile, answers}:SetupTailwind) => {
+const setupTailwind = async ({functionFile, answers}:SetupCss) => {
       await styleSolutionEnqueuer({
         functionFile,
         theme: answers.theme,
