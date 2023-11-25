@@ -7,7 +7,8 @@ interface generateComposerFile {
 }
 
 const generateComposerFile = ({ themeFolder }: generateComposerFile): File => {
-  const content = dedent(`{"name": "nickzou/${themeFolder}",
+  const content = dedent(`{
+    "name": "nickzou/${themeFolder}",
   "description": "A modern toolchain for WordPress development.",
   "type": "library",
   "license": "MIT",
