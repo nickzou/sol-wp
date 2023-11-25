@@ -38,7 +38,7 @@ import setupTailwind from "./cssOptions/tailwind/setupTailwind/setupTailwind";
 import setupUno from "./cssOptions/uno/setupUno/setupUno";
 import setupSass from "./cssOptions/sass/setupSass/setupSass";
 import setupPostCss from "./cssOptions/postcss/setupPostCss/setupPostCss";
-import setupCss from "./cssOptions/setupCss/setupCss";
+import setupCssOption from "./cssOptions/setupCssOption/setupCssOption";
 
 intro(bold(`Generate Theme`));
 
@@ -67,7 +67,7 @@ editWpEnv({ wpEnvFile: `.wp-env.json`, directory: answers.theme.directory });
 
 const functionFile = generateFunctionsFile();
 
-await setupCss({functionFile, answers, npmPackages, packageScripts, prettierConfigOptions});
+await setupCssOption({functionFile, answers, npmPackages, packageScripts, prettierConfigOptions});
 
 // try {
 //   switch (answers.tooling.css.name) {

@@ -5,7 +5,7 @@ import setupTailwind from "../tailwind/setupTailwind/setupTailwind";
 import setupUno from "../uno/setupUno/setupUno";
 import { SetupCss } from "@utils/types/SetupCss";
 
-const setupCss = async ({functionFile, answers, npmPackages, packageScripts, prettierConfigOptions}:SetupCss) => {
+const setupCssOption = async ({functionFile, answers, npmPackages, packageScripts, prettierConfigOptions}:SetupCss) => {
     const cssOptions = {
         tailwind: setupTailwind,
         uno: setupUno,
@@ -28,4 +28,4 @@ const setupCss = async ({functionFile, answers, npmPackages, packageScripts, pre
     }
 };
 
-export default setupCss;
+export default setupCssOption;
