@@ -67,7 +67,7 @@ editWpEnv({ wpEnvFile: `.wp-env.json`, directory: answers.theme.directory });
 
 const functionFile = generateFunctionsFile();
 
-setupCss({functionFile, answers, npmPackages, packageScripts, prettierConfigOptions});
+await setupCss({functionFile, answers, npmPackages, packageScripts, prettierConfigOptions});
 
 // try {
 //   switch (answers.tooling.css.name) {
