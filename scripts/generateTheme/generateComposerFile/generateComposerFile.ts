@@ -7,11 +7,12 @@ interface generateComposerFile {
 }
 
 const generateComposerFile = ({ themeFolder }: generateComposerFile): File => {
-  const content = dedent(`{
+  const content = dedent(`
+  {
     "name": "nickzou/${themeFolder}",
     "description": "A modern toolchain for WordPress development.",
     "type": "library",
-    "license": "MIT",
+    "license": "MIT", 
     "autoload": {
       "psr-4": {
         "wpSol\\\\${camelCase(themeFolder)}\\\\": "./"
