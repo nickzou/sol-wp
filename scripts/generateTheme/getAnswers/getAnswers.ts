@@ -2,7 +2,7 @@ import { Recipe } from "@utils/types/Recipe";
 import { text, select, confirm, isCancel } from "@clack/prompts";
 import formatFolderName from "@utils/formatDirectoryName/formatDirectoryName";
 import cssOptions from "@utils/vars/cssOptions";
-import phpOptions from "@utils/vars/phpOptions";
+import templateOptions from "@utils/vars/templateOptions";
 
 const getAnswers = async ():Promise<Recipe> => {
     const htmlRegex = /<\/?[a-z][\s\S]*>/i;
@@ -85,7 +85,7 @@ const getAnswers = async ():Promise<Recipe> => {
         process.exit(0);
     }
 
-    const phpOption = await select({
+    const templateOption = await select({
         message: "What PHP Templating System would you like?",
         options: [
           { value: "twig", label: "Twig" },
@@ -98,7 +98,7 @@ const getAnswers = async ():Promise<Recipe> => {
         ],
     });
       
-    if (isCancel(phpOption)) {
+    if (isCancel(templateOption)) {
         process.exit(0);
     }
 
@@ -119,7 +119,7 @@ const getAnswers = async ():Promise<Recipe> => {
         tooling: {
             css: cssOptions.filter((o) => o.name === cssOption)[0],
             ts: ts,
-            php: phpOptions.filter((o) => o.name === phpOption)[0]
+            template: templateOptions.filter((o) => o.name === templateOption)[0]
         }
     }
 };
