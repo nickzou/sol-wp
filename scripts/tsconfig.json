@@ -8,7 +8,7 @@
     "baseUrl": "./",
     "paths": {
       "@utils/*": ["./utils/*"],
-      "@generateTheme/*": ["./generateTheme/*"]
+      "@generateTheme/*": ["createTheme/*"]
     }
   }
 }
