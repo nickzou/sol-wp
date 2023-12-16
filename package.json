@@ -11,7 +11,7 @@
     "wp-env:stop": "wp-env stop",
     "wp-env:reset": "wp-env clean all",
     "wp-env:destroy": "wp-env destroy",
-    "create-theme": "esrun ./scripts/createTheme/generateTheme.ts"
+    "create-theme": "esrun ./scripts/createTheme/createTheme.ts"
   },
   "author": "Nick Zou",
   "license": "ISC",
