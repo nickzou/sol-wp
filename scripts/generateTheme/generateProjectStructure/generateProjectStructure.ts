@@ -11,7 +11,7 @@ const generateProjectStucture = ({theme}:Recipe) => {
         version
     });
 
-    createFolder({ directory: `src/themes`, folderName: })
+    createFolder({ location: `src/themes`, directoryName: directory});
 };
 
 export default generateProjectStucture;
