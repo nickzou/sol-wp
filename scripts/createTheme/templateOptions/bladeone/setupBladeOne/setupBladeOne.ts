@@ -15,7 +15,7 @@ const setupBladeOne = async ({answers, composerPackages}:SetupTemplate) => {
     createFile({
         directoryPath: `wp/themes/${answers.theme.directory}/functions`,
         fileName: setupBladeOneFile.name,
-        fileContent: `${setupBladeOneFile.content} \nadd_action('template_redirect', 'setup_bladeone')`
+        fileContent: `${setupBladeOneFile.content} \nadd_action('template_redirect', 'setup_bladeone');`
     });
 
     appendToFunctionsFile({
