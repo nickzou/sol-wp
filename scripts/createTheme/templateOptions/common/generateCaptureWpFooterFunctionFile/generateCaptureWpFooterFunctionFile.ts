@@ -1,4 +1,4 @@
-import generatePhpFunctionFile from "createTheme/generatePhpFunctionFile/generatePhpFunctionFile";
+import generatePhpFunctionFile from "@createTheme/generatePhpFunctionFile/generatePhpFunctionFile";
 
 const generateCaptureWpFooterFunctionFile = generatePhpFunctionFile({
     name: "capture_wp_footer",

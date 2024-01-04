@@ -1,4 +1,4 @@
-import styleSolutionEnqueuer from "createTheme/styleSolutionEnqueuer/styleSolutionEnqueuer";
+import styleSolutionEnqueuer from "@createTheme/styleSolutionEnqueuer/styleSolutionEnqueuer";
 import { SetupCss } from "@utils/types/SetupCss";
 import formatMessage from "@utils/formatMessage/formatMessage";
 

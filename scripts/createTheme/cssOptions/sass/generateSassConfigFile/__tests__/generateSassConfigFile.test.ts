@@ -1,4 +1,4 @@
-import generateSassConfigFile from "createTheme/cssOptions/sass/generateSassConfigFile/generateSassConfigFile";
+import generateSassConfigFile from "@createTheme/cssOptions/sass/generateSassConfigFile/generateSassConfigFile";
 import { File } from "@utils/types/File"; // Adjust the import path
 
 describe("generateSassConfigFile", () => {

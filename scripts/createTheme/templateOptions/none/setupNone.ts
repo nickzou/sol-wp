@@ -1,4 +1,4 @@
-import generateIndexFile from "createTheme/generateIndexFile/generateIndexFile";
+import generateIndexFile from "@createTheme/generateIndexFile/generateIndexFile";
 import createFile from "@utils/createFile/createFile";
 import { SetupTemplate } from "@utils/types/SetupTemplate";
 

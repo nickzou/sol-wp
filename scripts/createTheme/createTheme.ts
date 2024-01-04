@@ -1,10 +1,10 @@
 import { intro, outro } from "@clack/prompts";
 import createDirectory from "@utils/createDirectory/createDirectory";
-import generateCssFile from "createTheme/generateCssFile/generateCssFile";
+import generateCssFile from "@createTheme/generateCssFile/generateCssFile";
 import createFile from "@utils/createFile/createFile";
-import editWpEnv from "createTheme/editWpEnv/editWpEnv";
+import editWpEnv from "@createTheme/editWpEnv/editWpEnv";
 import { bold, green } from "colorette";
-import generateFunctionsFile from "createTheme/generateFunctionsFile/generateFunctionsFile";
+import generateFunctionsFile from "@createTheme/generateFunctionsFile/generateFunctionsFile";
 import generatePrettierRcFile from "./cssOptions/prettier/generatePrettierRcFile/generatePrettierRcFile";
 import generateTsConfigFile from "./tsOptions/generateTsConfigFile/generateTsConfigFile";
 import installNpmPackages from "@utils/installNpmPackages/installNpmPackages";

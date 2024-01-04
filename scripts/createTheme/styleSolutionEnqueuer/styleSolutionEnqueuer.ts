@@ -1,10 +1,10 @@
 import { Theme } from "@utils/types/Theme";
 import { File } from "@utils/types/File";
 import { CssOption } from "@utils/types/CssOption";
-import generatePhpFunctionFile from "createTheme/generatePhpFunctionFile/generatePhpFunctionFile";
+import generatePhpFunctionFile from "@createTheme/generatePhpFunctionFile/generatePhpFunctionFile";
 import createDirectory from "@utils/createDirectory/createDirectory";
 import createFile from "@utils/createFile/createFile";
-import appendToFunctionsFile from "createTheme/appendToFunctionsFile/appendToFunctionsFile";
+import appendToFunctionsFile from "@createTheme/appendToFunctionsFile/appendToFunctionsFile";
 
 interface styleSolutionEnqueuer {
   functionFile: File;

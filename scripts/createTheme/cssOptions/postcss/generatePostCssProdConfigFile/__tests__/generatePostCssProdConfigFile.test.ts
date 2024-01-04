@@ -1,4 +1,4 @@
-import generatePostCssProdConfigFile from "createTheme/cssOptions/postcss/generatePostCssProdConfigFile/generatePostCssProdConfigFile";
+import generatePostCssProdConfigFile from "@createTheme/cssOptions/postcss/generatePostCssProdConfigFile/generatePostCssProdConfigFile";
 import { File } from "@utils/types/File";
 
 describe("generatePostCssProdConfigFile", () => {

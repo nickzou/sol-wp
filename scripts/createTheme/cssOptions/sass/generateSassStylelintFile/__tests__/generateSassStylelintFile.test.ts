@@ -1,4 +1,4 @@
-import generateSassStylelintFile from "createTheme/cssOptions/sass/generateSassStylelintFile/generateSassStylelintFile";
+import generateSassStylelintFile from "@createTheme/cssOptions/sass/generateSassStylelintFile/generateSassStylelintFile";
 
 describe("generateSassStylelintFile", () => {
   it("should return the correct File object", () => {

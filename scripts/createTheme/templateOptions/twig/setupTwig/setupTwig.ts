@@ -1,7 +1,7 @@
 import generateSetupTwigPhpFunctionFile from "../generateSetupTwigPhpFunctionFile/generateSetupTwigPhpFunctionFile";
 import createFile from "@utils/createFile/createFile";
 import createDirectory from "@utils/createDirectory/createDirectory";
-import appendToFunctionsFile from "createTheme/appendToFunctionsFile/appendToFunctionsFile";
+import appendToFunctionsFile from "@createTheme/appendToFunctionsFile/appendToFunctionsFile";
 import generateIndexTwigFile from "../generateIndexTwigFile/generateIndexTwigFile";
 import generateIndexTwigTemplateFile from "../generateIndexTwigTemplateFile/generateIndexTwigTemplateFile";
 import { SetupTemplate } from "@utils/types/SetupTemplate";

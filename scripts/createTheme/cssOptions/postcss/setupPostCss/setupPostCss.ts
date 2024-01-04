@@ -1,4 +1,4 @@
-import styleSolutionEnqueuer from "createTheme/styleSolutionEnqueuer/styleSolutionEnqueuer";
+import styleSolutionEnqueuer from "@createTheme/styleSolutionEnqueuer/styleSolutionEnqueuer";
 import createDirectory from "@utils/createDirectory/createDirectory";
 import createFile from "@utils/createFile/createFile";
 import generatePostCssConfigFile from "../generatePostCssConfigFile/generatePostCssConfigFile";

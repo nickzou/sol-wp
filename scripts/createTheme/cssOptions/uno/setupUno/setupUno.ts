@@ -1,4 +1,4 @@
-import styleSolutionEnqueuer from "createTheme/styleSolutionEnqueuer/styleSolutionEnqueuer";
+import styleSolutionEnqueuer from "@createTheme/styleSolutionEnqueuer/styleSolutionEnqueuer";
 import generateUnoConfigFile from "../generateUnoConfigFile/generateUnoConfigFile";
 import generateTailwindAndUnoContent from "@utils/generateTailwindAndUnoContent/generateTailwindAndUnoContent";
 import createFile from "@utils/createFile/createFile";

@@ -1,4 +1,4 @@
-import styleSolutionEnqueuer from "createTheme/styleSolutionEnqueuer/styleSolutionEnqueuer";
+import styleSolutionEnqueuer from "@createTheme/styleSolutionEnqueuer/styleSolutionEnqueuer";
 import createDirectory from "@utils/createDirectory/createDirectory";
 import generateTailwindConfigFile from "../generateTailwindConfigFile/generateTailwindConfigFile";
 import createFile from "@utils/createFile/createFile";

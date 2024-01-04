@@ -1,5 +1,5 @@
 import { Recipe } from "@utils/types/Recipe";
-import generateCssFile from "createTheme/generateCssFile/generateCssFile";
+import generateCssFile from "@createTheme/generateCssFile/generateCssFile";
 import createFolder from "@utils/createDirectory/createDirectory";
 
 const generateProjectStucture = ({theme}:Recipe) => {
