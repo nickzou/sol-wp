@@ -9,7 +9,7 @@ const config: JestConfigWithTsJest = {
   moduleFileExtensions: ["ts", "tsx", "js", "jsx", "json", "node"],
   moduleNameMapper: {
     "^@utils/(.*)$": "<rootDir>/utils/$1",
-    "^@generateTheme/(.*)$": "<rootDir>/generateTheme/$1",
+    "^@createTheme/(.*)$": "<rootDir>/createTheme/$1",
   },
 };
 
