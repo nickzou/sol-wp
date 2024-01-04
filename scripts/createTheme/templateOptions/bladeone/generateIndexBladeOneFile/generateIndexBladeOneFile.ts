@@ -2,10 +2,6 @@ import { File } from "@utils/types/File";
 
 const generateIndexBladeOneFile = ():File => {
     const content = `<?php
-    $views = __DIR__ . '/views';
-    $cache = __DIR__ . '/cache';
-    $blade = new eftec\\bladeone\\BladeOne($views,$cache);
-
     $post_data = [];
 
     if(have_posts()) {
