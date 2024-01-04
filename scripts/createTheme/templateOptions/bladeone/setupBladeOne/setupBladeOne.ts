@@ -29,6 +29,11 @@ const setupBladeOne = async ({answers, composerPackages}:SetupTemplate) => {
         directoryName: 'views'
     });
 
+    createDirectory({
+        location: `wp/themes/${answers.theme.directory}`,
+        directoryName: 'cache'
+    });
+
     const bladeOneIndexFile = generateIndexBladeOneFile();
 
     createFile({
