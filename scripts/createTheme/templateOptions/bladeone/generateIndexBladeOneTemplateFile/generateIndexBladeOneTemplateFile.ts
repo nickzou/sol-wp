@@ -7,7 +7,7 @@ const generateIndexBladeOneTemplateFile = ():File => {
     `;
 
     return {
-        name: 'index.blade.twig',
+        name: 'index.blade.php',
         content
     }
 };
