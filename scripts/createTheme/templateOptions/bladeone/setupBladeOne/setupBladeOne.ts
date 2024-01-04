@@ -4,6 +4,7 @@ import createFile from "@utils/createFile/createFile";
 import appendToFunctionsFile from "@createTheme/appendToFunctionsFile/appendToFunctionsFile";
 import createDirectory from "@utils/createDirectory/createDirectory";
 import generateIndexBladeOneFile from "../generateIndexBladeOneFile/generateIndexBladeOneFile";
+import generateIndexBladeOneTemplateFile from "../generateIndexBladeOneTemplateFile/generateIndexBladeOneTemplateFile";
 
 const setupBladeOne = async ({answers, composerPackages}:SetupTemplate) => {
     composerPackages.push(...[
@@ -35,6 +36,15 @@ const setupBladeOne = async ({answers, composerPackages}:SetupTemplate) => {
         fileName: bladeOneIndexFile.name,
         fileContent: bladeOneIndexFile.content
     });
+
+    const bladeOneIndexTemplateFile = generateIndexBladeOneTemplateFile();
+
+    createFile({
+        directoryPath: `wp/themes/${answers.theme.directory}`,
+        fileName: bladeOneIndexTemplateFile.name,
+        fileContent: bladeOneIndexTemplateFile.content
+    });
+    
 };
 
 export default setupBladeOne;
