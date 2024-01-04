@@ -40,7 +40,7 @@ const setupBladeOne = async ({answers, composerPackages}:SetupTemplate) => {
     const bladeOneIndexTemplateFile = generateIndexBladeOneTemplateFile();
 
     createFile({
-        directoryPath: `wp/themes/${answers.theme.directory}`,
+        directoryPath: `wp/themes/${answers.theme.directory}/views`,
         fileName: bladeOneIndexTemplateFile.name,
         fileContent: bladeOneIndexTemplateFile.content
     });
