@@ -5,7 +5,7 @@ import appendToFunctionsFile from "@createTheme/appendToFunctionsFile/appendToFu
 import createDirectory from "@utils/createDirectory/createDirectory";
 import generateIndexBladeOneFile from "../generateIndexBladeOneFile/generateIndexBladeOneFile";
 import generateIndexBladeOneTemplateFile from "../generateIndexBladeOneTemplateFile/generateIndexBladeOneTemplateFile";
-import generateGetGlobalContextFunctionFile from "@createTheme/templateOptions/latte/generateGetGlobalContextFunctionFile/generateGetGlobalContextFunctionFile";
+import generateGetGlobalContextFunctionFile from "@createTheme/templateOptions/common/generateGetGlobalContextFunctionFile/generateGetGlobalContextFunctionFile";
 
 const setupBladeOne = async ({answers, composerPackages}:SetupTemplate) => {
     composerPackages.push(...[
