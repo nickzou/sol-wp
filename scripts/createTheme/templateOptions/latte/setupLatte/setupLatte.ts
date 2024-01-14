@@ -3,7 +3,7 @@ import createFile from "@utils/createFile/createFile";
 import createDirectory from "@utils/createDirectory/createDirectory";
 import generateSetupLattePhpFunctionFile from "../generateSetupLattePhpFunctionFIle/generateSetupLattePhpFunctionFile";
 import appendToFunctionsFile from "@createTheme/appendToFunctionsFile/appendToFunctionsFile";
-import generateGetGlobalContextFunctionFile from "../generateGetGlobalContextFunctionFile/generateGetGlobalContextFunctionFile";
+import generateGetGlobalContextFunctionFile from "@createTheme/templateOptions/common/generateGetGlobalContextFunctionFile/generateGetGlobalContextFunctionFile";
 import generateIndexLatteFile from "../generateIndexLatteFile/generateIndexLatteFile";
 import generateIndexLatteTemplateFile from "../generateIndexLatteTemplateFile/generateIndexLatteTemplateFile";
 
