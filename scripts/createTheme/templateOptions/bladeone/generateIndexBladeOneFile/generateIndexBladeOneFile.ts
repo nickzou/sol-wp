@@ -2,20 +2,8 @@ import { File } from "@utils/types/File";
 
 const generateIndexBladeOneFile = ():File => {
     const content = `<?php
-    $post_data = [];
 
-    if(have_posts()) {
-        while(have_posts()) {
-            the_post();
-            $post_data[] = [
-                'link' => get_the_permalink(),
-                'title' => get_the_title(),
-                'content' => get_the_content(),
-            ];
-        }
-    }
-
-    echo $blade->run("index", $post_data);
+    echo $blade->run("index", get_global_context());
     `;
 
     return {
