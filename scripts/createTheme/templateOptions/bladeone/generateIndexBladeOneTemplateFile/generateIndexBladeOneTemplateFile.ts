@@ -9,7 +9,7 @@ const generateIndexBladeOneTemplateFile = ():File => {
         <title>{{$title}}</title>
         {{ wp_head() }}
     </head>
-    <body class="{{$body_class->implode(' ')}}">
+    <body class="{{implode(' ', $body_class)}}">
         <header>
             <h1>{{$site_name}}</h1>
             <p>{{$site_description}}</p>
