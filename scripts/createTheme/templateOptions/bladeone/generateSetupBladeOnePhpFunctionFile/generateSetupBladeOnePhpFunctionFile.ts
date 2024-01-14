@@ -8,7 +8,8 @@ const generateSetupBladeOneFunctionFile = () => {
   
   global $blade, $posts, $post, $wp_did_header, $wp_query, $wp_rewrite, $wpdb, $wp_version, $wp, $id, $comment, $user_ID;
 
-  $blade = new eftec\\bladeone\\BladeOne($views, $cache);`
+  $blade = new eftec\\bladeone\\BladeOne($views, $cache);
+  $blade->pipeEnable=true;`
     })
 };
 
