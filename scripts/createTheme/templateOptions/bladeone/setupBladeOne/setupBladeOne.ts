@@ -5,6 +5,7 @@ import appendToFunctionsFile from "@createTheme/appendToFunctionsFile/appendToFu
 import createDirectory from "@utils/createDirectory/createDirectory";
 import generateIndexBladeOneFile from "../generateIndexBladeOneFile/generateIndexBladeOneFile";
 import generateIndexBladeOneTemplateFile from "../generateIndexBladeOneTemplateFile/generateIndexBladeOneTemplateFile";
+import generateGetGlobalContextFunctionFile from "@createTheme/templateOptions/latte/generateGetGlobalContextFunctionFile/generateGetGlobalContextFunctionFile";
 
 const setupBladeOne = async ({answers, composerPackages}:SetupTemplate) => {
     composerPackages.push(...[
@@ -32,6 +33,19 @@ const setupBladeOne = async ({answers, composerPackages}:SetupTemplate) => {
     createDirectory({
         location: `wp/themes/${answers.theme.directory}`,
         directoryName: 'cache'
+    });
+
+    const setupGlobalContextFunctionFile = generateGetGlobalContextFunctionFile();
+
+    createFile({
+    directoryPath: `wp/themes/${answers.theme.directory}/functions`,
+    fileName: setupGlobalContextFunctionFile.name,
+    fileContent: setupGlobalContextFunctionFile.content
+    });
+
+    appendToFunctionsFile({
+    themeFolder: answers.theme.directory,
+    functionName: setupGlobalContextFunctionFile.functionName
     });
 
     const bladeOneIndexFile = generateIndexBladeOneFile();
