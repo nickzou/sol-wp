@@ -91,7 +91,7 @@ const getAnswers = async ():Promise<Recipe> => {
           { value: "twig", label: "Twig" },
           { value: "latte", label: "Latte" },
           { value: "bladeone", label: "BladeOne" },
-          { value: "plate", label: "Plate" },
+          { value: "plates", label: "Plates" },
           { value: "smarty", label: "Smarty" },
           { value: "none", label: "None, PHP is a templating engine!" },
         ],
