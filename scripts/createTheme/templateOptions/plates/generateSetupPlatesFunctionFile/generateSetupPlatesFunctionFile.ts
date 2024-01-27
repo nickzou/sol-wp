@@ -3,8 +3,11 @@ import generatePhpFunctionFile from "@createTheme/generatePhpFunctionFile/genera
 const generateSetupPlatesFunctionFile = () => {
     return generatePhpFunctionFile({
         name: "setup_plates",
-        functionBody: `placeholder`
-    })
+        functionBody: `
+    global $views;
+    $views = new League\\Plates\\Engine(get_template_directory() . '/views');
+    `
+    });
 };
 
 export default generateSetupPlatesFunctionFile;
