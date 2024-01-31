@@ -18,8 +18,8 @@ const generateIndexPlatesTemplateFile = ():File => {
             <?php if($posts): ?>
                 <?php foreach($posts as $post): ?>
                     <article>
-                        <h2><a href="<?= $this->e($post->link) ?>"><?=$this->e($post->title)?></a></h2>
-                        <?= $post->content ?>
+                        <h2><a href="<?= $this->e($post['link']) ?>"><?=$this->e($post['title'])?></a></h2>
+                        <?= $post['content'] ?>
                     </article>
                 <?php endforeach; ?>
             <?php else: ?>
