@@ -9,11 +9,11 @@ const generateSetupPlatesFunctionFile = () => {
         'wp_head' => capture_wp_head(),
         'wp_footer' => capture_wp_footer(),
         'language_attributes' => get_language_attributes(),
-        'charset' => get_bloginfo( 'charset' )),
-        'title' => wp_title('|', false)),
-        'body_class' => get_body_class()),
-        'site_name' => get_bloginfo( 'name' )),
-        'site_description' => get_bloginfo( 'description' )),
+        'charset' => get_bloginfo( 'charset' ),
+        'title' => wp_title('|', false),
+        'body_class' => get_body_class(),
+        'site_name' => get_bloginfo( 'name' ),
+        'site_description' => get_bloginfo( 'description' ),
         'posts' => $posts,
         'post' => $post,
         'wp_did_header' => $wp_did_header,
@@ -25,8 +25,7 @@ const generateSetupPlatesFunctionFile = () => {
         'id' => $id,
         'comment' => $comment,
         'user_ID' => $user_ID
-    ]);
-    `
+    ]);`
     });
 };
 
