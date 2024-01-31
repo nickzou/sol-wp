@@ -37,7 +37,7 @@ const generateIndexPlatesTemplateFile = ():File => {
     `;
 
     return {
-        name: `index.twig`,
+        name: `index.php`,
         content,
     }
 };

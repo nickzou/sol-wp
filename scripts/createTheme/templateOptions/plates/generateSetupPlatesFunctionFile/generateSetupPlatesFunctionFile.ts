@@ -3,7 +3,7 @@ import generatePhpFunctionFile from "@createTheme/generatePhpFunctionFile/genera
 const generateSetupPlatesFunctionFile = () => {
     return generatePhpFunctionFile({
         name: "setup_plates",
-        functionBody: ` global $twig, $posts, $post, $wp_did_header, $wp_query, $wp_rewrite, $wpdb, $wp_version, $wp, $id, $comment, $user_ID;
+        functionBody: ` global $views, $posts, $post, $wp_did_header, $wp_query, $wp_rewrite, $wpdb, $wp_version, $wp, $id, $comment, $user_ID;
     $views = new League\\Plates\\Engine(get_template_directory() . '/views');
     $views->addData([
         'wp_head' => capture_wp_head(),
