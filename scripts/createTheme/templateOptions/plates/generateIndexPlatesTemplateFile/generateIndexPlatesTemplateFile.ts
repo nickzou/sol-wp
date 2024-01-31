@@ -21,7 +21,7 @@ const generateIndexPlatesTemplateFile = ():File => {
                         <h2><a href="<?= $this->e($post->link) ?>"><?=$this->e($post->title)?></a></h2>
                         <?= $post->content ?>
                     </article>
-                <?php endfor; ?>
+                <?php endforeach; ?>
             <?php else: ?>
                 No posts found.
             <?php endif; ?>
