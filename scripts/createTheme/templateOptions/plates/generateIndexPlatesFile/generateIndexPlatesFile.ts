@@ -17,7 +17,7 @@ const generateIndexPlatesFile = ():File => {
     };
     
     $context = [
-        'posts => $post_data
+        'posts' => $post_data
     ];
     
     echo $views->render('index', $context);
