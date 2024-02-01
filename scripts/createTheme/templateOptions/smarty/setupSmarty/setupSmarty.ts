@@ -13,7 +13,7 @@ const setupSmarty = async ({answers, composerPackages}:SetupTemplate) => {
     createFile({
         directoryPath: `wp/themes/${answers.theme.directory}/functions`,
         fileName: setupSmartyFile.name,
-        fileContent: `${setupSmartyFile.content} \nadd_action('tempalte_redirect', 'setup_smarty');`
+        fileContent: `${setupSmartyFile.content} \nadd_action('template_redirect', 'setup_smarty');`
     })
 
     createDirectory({
