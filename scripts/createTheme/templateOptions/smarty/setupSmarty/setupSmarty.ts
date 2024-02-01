@@ -2,6 +2,7 @@ import createDirectory from "@utils/createDirectory/createDirectory";
 import { SetupTemplate } from "@utils/types/SetupTemplate";
 import generateSetupSmartyFunctionFile from "../generateSetupSmartyFunctionFile/generateSetupSmartyFunctionFile";
 import createFile from "@utils/createFile/createFile";
+import appendToFunctionsFile from "@createTheme/appendToFunctionsFile/appendToFunctionsFile";
 
 const setupSmarty = async ({answers, composerPackages}:SetupTemplate) => {
     composerPackages.push(...[
@@ -14,7 +15,12 @@ const setupSmarty = async ({answers, composerPackages}:SetupTemplate) => {
         directoryPath: `wp/themes/${answers.theme.directory}/functions`,
         fileName: setupSmartyFile.name,
         fileContent: `${setupSmartyFile.content} \nadd_action('template_redirect', 'setup_smarty');`
-    })
+    });
+
+    appendToFunctionsFile({
+        themeFolder: answers.theme.directory,
+        functionName: setupSmartyFile.functionName
+    });
 
     createDirectory({
         location: `wp/themes/${answers.theme.directory}`,
