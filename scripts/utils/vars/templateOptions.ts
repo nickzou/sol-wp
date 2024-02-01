@@ -6,7 +6,7 @@ const templateOptions: TemplateOption[] = [
   { name: "bladeone", packageName: "eftec/bladeone", extension: 'blade.php' },
   { name: "plates", packageName: "league/plates", extension: 'php'},
   { name: "smarty", packageName: "smarty/smarty", extension: 'tpl' },
-  { name: "none", packageName: null, extension: '.php' },
+  { name: "none", packageName: null, extension: 'php' },
 ];
 
 export default templateOptions;
