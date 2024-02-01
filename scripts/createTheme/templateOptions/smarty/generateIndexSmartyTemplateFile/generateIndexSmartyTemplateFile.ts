@@ -1,6 +1,6 @@
 import { File } from "@utils/types/File";
 
-const generateIndexTwigTemplateFile = ():File => {
+const generateIndexSmartyTemplateFile = ():File => {
     const content = `{* Smarty *}
 <!DOCTYPE html>
     <html {$language_attributes}>
@@ -42,4 +42,4 @@ const generateIndexTwigTemplateFile = ():File => {
     }
 };
 
-export default generateIndexTwigTemplateFile;
+export default generateIndexSmartyTemplateFile;
