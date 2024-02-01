@@ -3,6 +3,7 @@ import { SetupTemplate } from "@utils/types/SetupTemplate";
 import generateSetupSmartyFunctionFile from "../generateSetupSmartyFunctionFile/generateSetupSmartyFunctionFile";
 import createFile from "@utils/createFile/createFile";
 import appendToFunctionsFile from "@createTheme/appendToFunctionsFile/appendToFunctionsFile";
+import generateIndexSmartyFile from "../generateIndexSmartyFile/generateIndexSmartyFile";
 
 const setupSmarty = async ({answers, composerPackages}:SetupTemplate) => {
     composerPackages.push(...[
@@ -45,6 +46,14 @@ const setupSmarty = async ({answers, composerPackages}:SetupTemplate) => {
     createDirectory({
         location: `wp/themes/${answers.theme.directory}/views`,
         directoryName: 'cache'
+    });
+
+    const smartyIndexFile = generateIndexSmartyFile();
+
+    createFile({
+        directoryPath: `wp/themes/${answers.theme.directory}`,
+        fileName: smartyIndexFile.name,
+        fileContent: smartyIndexFile.content
     });
 };
 
