@@ -1,6 +1,6 @@
 import createDirectory from "@utils/createDirectory/createDirectory";
 import { SetupTemplate } from "@utils/types/SetupTemplate";
-import generateSetupSmartyFunctionFile from "../generateSetupSmartyFunctionFile/generateSetupSmartyFunctionFile";
+import generateSetupSmartyPhpFunctionFile from "../generateSetupSmartyPhpFunctionFile/generateSetupSmartyPhpFunctionFile";
 import createFile from "@utils/createFile/createFile";
 import appendToFunctionsFile from "@createTheme/appendToFunctionsFile/appendToFunctionsFile";
 import generateIndexSmartyFile from "../generateIndexSmartyFile/generateIndexSmartyFile";
@@ -10,7 +10,7 @@ const setupSmarty = async ({answers, composerPackages}:SetupTemplate) => {
         "smarty/smarty"
     ]);
 
-    const setupSmartyFile = generateSetupSmartyFunctionFile();
+    const setupSmartyFile = generateSetupSmartyPhpFunctionFile();
 
     createFile({
         directoryPath: `wp/themes/${answers.theme.directory}/functions`,
