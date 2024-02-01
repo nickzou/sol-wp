@@ -17,7 +17,7 @@ const generateIndexSmartyFile = ():File => {
     };
     
     $views->assign('posts', $post_data);
-    $views->display('index.tpl')
+    $views->display('index.tpl');
 ?>`;
 
     return {
