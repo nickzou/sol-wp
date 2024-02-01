@@ -16,7 +16,7 @@ const generateSetupSmartyPhpFunctionFile = () => {
         $views->assign('language_attributes', get_language_attributes());
         $views->assign('charset', get_bloginfo( 'charset' ));
         $views->assign('title', wp_title('|', false));
-        $views->assign('body_class', get_body_class());
+        $views->assign('body_class', implode(' ', get_body_class()));
         $views->assign('site_name', get_bloginfo( 'name' ));
         $views->assign('site_description', get_bloginfo( 'description' ));
         $views->assign('posts', $posts);
