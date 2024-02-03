@@ -4,7 +4,7 @@ import generatePhpFunctionFile from "@createTheme/generatePhpFunctionFile/genera
 const generateGetGlobalContextFunctionFile = () => {
     return generatePhpFunctionFile({
         name: "get_global_context",
-        functionBody: `  global $twig, $posts, $post, $wp_did_header, $wp_query, $wp_rewrite, $wpdb, $wp_version, $wp, $id, $comment, $user_ID;
+        functionBody: `  global $posts, $post, $wp_did_header, $wp_query, $wp_rewrite, $wpdb, $wp_version, $wp, $id, $comment, $user_ID;
     
     $charset = get_bloginfo( 'charset' );
     $title = wp_title('|', false);
