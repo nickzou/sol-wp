@@ -18,7 +18,7 @@ const generateIndexTwigTemplateFile = (): File => {
             {% if posts %}
                 {% for post in posts %}
                     <article>
-                        <h2><a href="{{post.link}}">{{post.title}}</a></h2>
+                        <h2><a href="{{get_permalink(post.ID)}}">{{post.title}}</a></h2>
                         {{post.content | raw}}
                     </article>
                 {% endfor %}
