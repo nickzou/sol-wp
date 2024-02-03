@@ -19,8 +19,6 @@ const generateSetupSmartyPhpFunctionFile = () => {
         $views->assign('body_class', implode(' ', get_body_class()));
         $views->assign('site_name', get_bloginfo( 'name' ));
         $views->assign('site_description', get_bloginfo( 'description' ));
-        $views->assign('posts', $posts);
-        $views->assign('post', $post);
         $views->assign('wp_did_header', $wp_did_header);
         $views->assign('wp_query', $wp_query);
         $views->assign('wp_rewrite', $wp_rewrite);

@@ -10,29 +10,29 @@ const generateIndexSmartyTemplateFile = ():File => {
             <title>{$title}</title>
             {$wp_head|unescape}
         </head>
-        <body class="{$body_class|join(' ')}">
+        <body class="{$body_class}">
             <header>
                 <h1>{$site_name}</h1>
                 <p>{$site_description}</p>
             </header>
             <main>
-                {if $posts }
-                    { foreach $posts as $post }
+                {if $posts}
+                    {foreach $posts as $post}
                         <article>
                             <h2><a href="{$post.link}">{$post.title}</a></h2>
-                            {$post.content | unescaped}
+                            {$post.content | unescape}
                         </article>
-                    { endforeach }
-                { else }
+                    {/foreach}
+                {else}
                     No posts found.
-                { endif }
+                {/if}
             </main>
             
             <footer>
                 <p>&copy; {$smarty.now|date_format:"%Y"} {$site_name}</p>
             </footer>
             
-            {$wp_footer|unescaped}
+            {$wp_footer|unescape}
         </body>
     </html>`;
 
