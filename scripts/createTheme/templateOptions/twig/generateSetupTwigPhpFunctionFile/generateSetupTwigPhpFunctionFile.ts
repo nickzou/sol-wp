@@ -29,7 +29,7 @@ const generateSetupTwigPhpFunctionFile = () => {
     $views->addGlobal('comment', $comment);
     $views->addGlobal('user_ID', $user_ID);
 
-    $get_permalink = new \\Twig\\('get_permalink', function($postId) {
+    $get_permalink = new \\Twig\\TwigFunction('get_permalink', function($postId) {
         return get_permalink($postId);
     });
 
