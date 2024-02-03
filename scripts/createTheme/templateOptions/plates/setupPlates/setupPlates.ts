@@ -1,5 +1,5 @@
 import {SetupTemplate} from "@utils/types/SetupTemplate"
-import generateSetupPlatesFunctionFile from "../generateSetupPlatesFunctionFile/generateSetupPlatesFunctionFile";
+import generateSetupPlatesPhpFunctionFile from "../generateSetupPlatesPhpFunctionFile/generateSetupPlatesPhpFunctionFile";
 import createFile from "@utils/createFile/createFile";
 import createDirectory from "@utils/createDirectory/createDirectory";
 import appendToFunctionsFile from "@createTheme/appendToFunctionsFile/appendToFunctionsFile";
@@ -11,7 +11,7 @@ const setupPlates = async ({answers, composerPackages}:SetupTemplate) => {
         "league/plates"
     ]);
 
-    const setupPlatesFile = generateSetupPlatesFunctionFile();
+    const setupPlatesFile = generateSetupPlatesPhpFunctionFile();
 
     createFile({
         directoryPath: `wp/themes/${answers.theme.directory}/functions`,
