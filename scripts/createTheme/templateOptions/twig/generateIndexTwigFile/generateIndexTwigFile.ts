@@ -19,7 +19,7 @@ const generateIndexTwigFile = ():File => {
         'posts' => $post_data
     ];
 
-    echo $twig->render('index.twig', $context);
+    echo $views->render('index.twig', $context);
 ?>   
     `;
 

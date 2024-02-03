@@ -3,34 +3,34 @@ import generatePhpFunctionFile from "@createTheme/generatePhpFunctionFile/genera
 const generateSetupTwigPhpFunctionFile = () => {
     return generatePhpFunctionFile({
         name: "setup_twig",
-        functionBody: `  global $twig, $posts, $post, $wp_did_header, $wp_query, $wp_rewrite, $wpdb, $wp_version, $wp, $id, $comment, $user_ID;
+        functionBody: `  global $views, $posts, $post, $wp_did_header, $wp_query, $wp_rewrite, $wpdb, $wp_version, $wp, $id, $comment, $user_ID;
     $loader = new \\Twig\\Loader\\FilesystemLoader(get_template_directory() . '/views');
-    $twig = new \\Twig\\Environment($loader, [
+    $views = new \\Twig\\Environment($loader, [
         'debug' => WP_DEBUG
     ]);
     
-    $twig->addGlobal('wp_head', capture_wp_head());
-    $twig->addGlobal('wp_footer', capture_wp_footer());
-    $twig->addGlobal('language_attributes', get_language_attributes());
-    $twig->addGlobal('charset', get_bloginfo( 'charset' ));
-    $twig->addGlobal('title', wp_title('|', false));
-    $twig->addGlobal('body_class', get_body_class());
-    $twig->addGlobal('site_name', get_bloginfo( 'name' ));
-    $twig->addGlobal('site_description', get_bloginfo( 'description' ));
-    $twig->addGlobal('posts', $posts);
-    $twig->addGlobal('post', $post);
-    $twig->addGlobal('wp_did_header', $wp_did_header);
-    $twig->addGlobal('wp_query', $wp_query);
-    $twig->addGlobal('wp_rewrite', $wp_rewrite);
-    $twig->addGlobal('wpdb', $wpdb);
-    $twig->addGlobal('wp_version', $wp_version);
-    $twig->addGlobal('wp', $wp);
-    $twig->addGlobal('id', $id);
-    $twig->addGlobal('comment', $comment);
-    $twig->addGlobal('user_ID', $user_ID);
+    $views->addGlobal('wp_head', capture_wp_head());
+    $views->addGlobal('wp_footer', capture_wp_footer());
+    $views->addGlobal('language_attributes', get_language_attributes());
+    $views->addGlobal('charset', get_bloginfo( 'charset' ));
+    $views->addGlobal('title', wp_title('|', false));
+    $views->addGlobal('body_class', get_body_class());
+    $views->addGlobal('site_name', get_bloginfo( 'name' ));
+    $views->addGlobal('site_description', get_bloginfo( 'description' ));
+    $views->addGlobal('posts', $posts);
+    $views->addGlobal('post', $post);
+    $views->addGlobal('wp_did_header', $wp_did_header);
+    $views->addGlobal('wp_query', $wp_query);
+    $views->addGlobal('wp_rewrite', $wp_rewrite);
+    $views->addGlobal('wpdb', $wpdb);
+    $views->addGlobal('wp_version', $wp_version);
+    $views->addGlobal('wp', $wp);
+    $views->addGlobal('id', $id);
+    $views->addGlobal('comment', $comment);
+    $views->addGlobal('user_ID', $user_ID);
 
     if(WP_DEBUG) {
-        $twig->addExtension(new \\Twig\\Extension\\DebugExtension());
+        $views->addExtension(new \\Twig\\Extension\\DebugExtension());
     }
     `
     });
