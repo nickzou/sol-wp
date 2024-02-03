@@ -20,7 +20,7 @@ const generateIndexSmartyTemplateFile = ():File => {
                     {foreach $posts as $post}
                         <article>
                             <h2><a href="{$post.link}">{$post.title}</a></h2>
-                            {$post.content | unescape}
+                            {$post.content|unescape}
                         </article>
                     {/foreach}
                 {else}
