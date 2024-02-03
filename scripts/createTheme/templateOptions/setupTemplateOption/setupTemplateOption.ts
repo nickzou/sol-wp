@@ -4,6 +4,7 @@ import setupLatte from "../latte/setupLatte/setupLatte";
 import setupNone from "../none/setupNone";
 import setupBladeOne from "../bladeone/setupBladeOne/setupBladeOne";
 import setupPlates from "../plates/setupPlates/setupPlates";
+import setupSmarty from "../smarty/setupSmarty/setupSmarty";
 
 const setupTemplateOption = async ({answers, composerPackages}:SetupTemplate) => {
     const templateOptions = {
@@ -11,7 +12,8 @@ const setupTemplateOption = async ({answers, composerPackages}:SetupTemplate) =>
         latte: setupLatte,
         none: setupNone,
         bladeone: setupBladeOne,
-        plates: setupPlates
+        plates: setupPlates,
+        smarty: setupSmarty
     };
 
     try {
