@@ -3,7 +3,7 @@ import { File } from "@utils/types/File";
 const generateIndexBladeOneFile = ():File => {
     const content = `<?php
 
-    echo $blade->run("index", get_global_context());
+    echo $views->run("index", get_global_context());
     `;
 
     return {
