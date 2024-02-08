@@ -4,7 +4,7 @@ import createDirectory from "@utils/createDirectory/createDirectory";
 import appendToFunctionsFile from "@createTheme/appendToFunctionsFile/appendToFunctionsFile";
 import generateIndexTwigFile from "../generateIndexTwigFile/generateIndexTwigFile";
 import generateIndexTwigTemplateFile from "../generateIndexTwigTemplateFile/generateIndexTwigTemplateFile";
-import { SetupTemplate } from "@utils/types/SetupTemplate";
+import { SetupPhpPackages as SetupTemplate } from "@utils/types/SetupPhpPackages";
 
 const setupTwig = async ({answers, composerPackages}:SetupTemplate) => {
     composerPackages.push(...[
