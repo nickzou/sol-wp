@@ -27,6 +27,7 @@ import prettierConfigOptions from "@utils/vars/prettierConfigOptions";
 import esLintConfigOptions from "@utils/vars/esLintConfigOptions";
 import setupCssOption from "./cssOptions/setupCssOption/setupCssOption";
 import setupTemplateOption from "./templateOptions/setupTemplateOption/setupTemplateOption";
+import setupTestingOptions from "./testingOptions/setupTestingOptions/setupTestingOptions";
 
 intro(bold(`Generate Theme`));
 
@@ -84,6 +85,8 @@ await setupCssOption({functionFile, answers, npmPackages, packageScripts, pretti
   });
 
   await setupTemplateOption({answers, composerPackages});
+
+  await setupTestingOptions({answers, composerPackages});
 
   //JavaScript/TypeScript installs
   const esbuildConfigFile = generateEsbuildConfigFile({
@@ -200,7 +203,7 @@ await setupCssOption({functionFile, answers, npmPackages, packageScripts, pretti
 
   await installNpmPackages(npmPackages);
   await installComposerPackages(
-    [...composerPackages, 'phpunit/phpunit'],
+    composerPackages,
     `wp/themes/${answers.theme.directory}`
   );
 
