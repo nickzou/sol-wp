@@ -200,7 +200,7 @@ await setupCssOption({functionFile, answers, npmPackages, packageScripts, pretti
 
   await installNpmPackages(npmPackages);
   await installComposerPackages(
-    composerPackages,
+    [...composerPackages, 'phpunit/phpunit'],
     `wp/themes/${answers.theme.directory}`
   );
 
