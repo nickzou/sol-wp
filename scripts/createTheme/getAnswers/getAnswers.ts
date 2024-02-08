@@ -110,27 +110,30 @@ const getAnswers = async ():Promise<Recipe> => {
         process.exit(0);
     }
 
-    const getTestingOptions = await multiselect({
-        message: 'Select testing tools.',
-        options: [
-            {
-                value: 'phpunit',
-                label: 'PHPUnit'
-            },
-            {
-                value: 'cypress',
-                label: 'Cypress'
-            },
-            {
-                value: 'playwright',
-                label: 'Playwright'
-            }
-        ]
-    });
+    if (getTesting === true) {
+        var getTestingOptions = await multiselect({
+            message: 'Select testing tools.',
+            options: [
+                {
+                    value: 'phpunit',
+                    label: 'PHPUnit'
+                },
+                {
+                    value: 'cypress',
+                    label: 'Cypress'
+                },
+                {
+                    value: 'playwright',
+                    label: 'Playwright'
+                }
+            ]
+        });
 
-    if (isCancel(getTestingOptions)) {
-        process.exit(0);
+        if (isCancel(getTestingOptions)) {
+            process.exit(0);
+        }
     }
+
 
     const name = getName as string ?? 'Sol WP';
     const directory = getDirectory as string ? formatFolderName(getDirectory) : formatFolderName(name);
