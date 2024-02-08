@@ -1,3 +1,3 @@
 export type TestingOptions = {
-    phpunit: boolean | null;
+    phpunit: boolean;
 };

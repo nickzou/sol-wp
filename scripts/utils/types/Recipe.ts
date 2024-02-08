@@ -10,6 +10,6 @@ export type Recipe = {
     ts: boolean;
     template: TemplateOption;
     testing: boolean;
-    testingOptions: TestingOptions;
+    testingOptions: TestingOptions | null;
   };
 };
