@@ -1,10 +1,30 @@
-import { SetupPhpPackages as SetupTesting } from "@utils/types/SetupPhpPackages";import testingOptions from "@utils/vars/testingOptions";
- "@utils/types/SetupPhpPackages";
-const setupTestingOptions = async ({answers, composerPackages}:SetupTesting) => {
+import { SetupTesting } from "@utils/types/SetupTesting";
+import setupPhpUnit from "../setupPhpUnit/setupPhpUnit";
+
+const setupTestingOptions = async ({answers, composerPackages, npmPackages}:SetupTesting) => {
     if(answers.tooling.testing) {
-        Object.keys(answers.tooling.testingOptions).forEach(key => {
+        const testingOptions = {
+            phpunit: setupPhpUnit,
+            //cypress: null,
+        }
+        Object.keys(answers.tooling.testingOptions).forEach(async key => {
             if (answers.tooling.testingOptions[key]) {
-                composerPackages.push(testingOptions.filter(option => option.name === key)[0].packageName);
+                try {
+                    const optionName = answers.tooling.testingOptions[key];
+                    const optionFunction = testingOptions[optionName];
+
+                    if(optionFunction) {
+                        await optionFunction({answers, composerPackages, npmPackages});
+                    }
+                } catch (error) {
+                    throw error;
+                }
+                // const option = testingOptions.filter( o => o.name === key)[0];
+                // if (option.language === 'php') {
+                //     composerPackages.push(option.packageName);
+                // } else if (option.language === 'javascript') {
+                //     npmPackages.push(option.packageName);
+                // }
             }
         });
     }
