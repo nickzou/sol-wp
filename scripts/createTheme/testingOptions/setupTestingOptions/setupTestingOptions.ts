@@ -10,8 +10,7 @@ const setupTestingOptions = async ({answers, composerPackages, npmPackages}:Setu
         Object.keys(answers.tooling.testingOptions).forEach(async key => {
             if (answers.tooling.testingOptions[key]) {
                 try {
-                    const optionName = answers.tooling.testingOptions[key];
-                    const optionFunction = testingOptions[optionName];
+                    const optionFunction = testingOptions[key];
 
                     if(optionFunction) {
                         await optionFunction({answers, composerPackages, npmPackages});
