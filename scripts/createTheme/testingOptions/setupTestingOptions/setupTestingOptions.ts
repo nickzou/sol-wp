@@ -1,7 +1,15 @@
-import { SetupTesting } from "@utils/types/SetupTesting";
 import setupPhpUnit from "../phpunit/setupPhpUnit/setupPhpUnit";
+import { Recipe } from "@utils/types/Recipe";
+import { PackageScript } from "@utils/vars/packageScripts";
 
-const setupTestingOptions = async ({answers, composerPackages, npmPackages}:SetupTesting) => {
+type SetupTestingOptions = {
+    answers: Recipe;
+    composerPackages: string[];
+    npmPackages: string[];
+    packageScripts: PackageScript[];
+}
+
+const setupTestingOptions = async ({answers, composerPackages, npmPackages, packageScripts}:SetupTestingOptions) => {
     if(answers.tooling.testing) {
         const testingOptions = {
             phpunit: setupPhpUnit,
@@ -13,7 +21,7 @@ const setupTestingOptions = async ({answers, composerPackages, npmPackages}:Setu
                     const optionFunction = testingOptions[key];
 
                     if(optionFunction) {
-                        await optionFunction({answers, composerPackages, npmPackages});
+                        await optionFunction({answers, composerPackages, npmPackages, packageScripts});
                     }
                 } catch (error) {
                     throw error;

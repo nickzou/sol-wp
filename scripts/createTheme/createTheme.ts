@@ -86,7 +86,7 @@ await setupCssOption({functionFile, answers, npmPackages, packageScripts, pretti
 
   await setupTemplateOption({answers, composerPackages});
 
-  await setupTestingOptions({answers, composerPackages});
+  await setupTestingOptions({answers, composerPackages, npmPackages, packageScripts});
 
   //JavaScript/TypeScript installs
   const esbuildConfigFile = generateEsbuildConfigFile({
