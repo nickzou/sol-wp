@@ -1,5 +1,5 @@
 import { SetupTesting } from "@utils/types/SetupTesting";
-import setupPhpUnit from "../setupPhpUnit/setupPhpUnit";
+import setupPhpUnit from "../phpunit/setupPhpUnit/setupPhpUnit";
 
 const setupTestingOptions = async ({answers, composerPackages, npmPackages}:SetupTesting) => {
     if(answers.tooling.testing) {
