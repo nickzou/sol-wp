@@ -2,6 +2,7 @@ import createDirectory from "@utils/createDirectory/createDirectory";
 import createFile from "@utils/createFile/createFile";
 import { SetupTesting } from "@utils/types/SetupTesting"
 import testingOptions from "@utils/vars/testingOptions";
+import generatePhpUnitXml from "../generatePhpUnitXml/generatePhpUnitXml";
 
 const setupPhpUnit = async ({answers, composerPackages}:SetupTesting) => {
     const option = testingOptions.filter(o => o.name === 'phpunit')[0];
@@ -13,10 +14,13 @@ const setupPhpUnit = async ({answers, composerPackages}:SetupTesting) => {
             directoryName: 'tests'
         });
 
-        // createFile({
-        //     directoryPath: `wp/themes/${answers.theme.directory}`,
-        //     fileName: 
-        // })
+        const phpUnitXml = generatePhpUnitXml({themeName: answers.theme.name});
+
+        createFile({
+            directoryPath: `wp/themes/${answers.theme.directory}`,
+            fileName: phpUnitXml.name,
+            fileContent: phpUnitXml.content
+        });
     }
 };
 
