@@ -1,6 +1,7 @@
 import setupPhpUnit from "../phpunit/setupPhpUnit/setupPhpUnit";
 import { Recipe } from "@utils/types/Recipe";
 import { PackageScript } from "@utils/vars/packageScripts";
+import options from "@utils/vars/testingOptions";
 
 type SetupTestingOptions = {
     answers: Recipe;
@@ -21,7 +22,12 @@ const setupTestingOptions = async ({answers, composerPackages, npmPackages, pack
                     const optionFunction = testingOptions[key];
 
                     if(optionFunction) {
-                        await optionFunction({answers, composerPackages, npmPackages, packageScripts});
+                        const currentOption = options.filter( o => o.name === key)[0];
+                        if (currentOption.language === 'php') {
+                            await optionFunction({answers, packages: composerPackages, packageScripts});
+                        } else {
+                            await optionFunction({answers, packages: npmPackages, packageScripts});
+                        }
                     }
                 } catch (error) {
                     throw error;
