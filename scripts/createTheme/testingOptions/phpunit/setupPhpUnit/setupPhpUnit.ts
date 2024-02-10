@@ -6,7 +6,7 @@ import { SetupTestingOption } from "@utils/types/SetupTestingOption";
 
 const setupPhpUnit = async ({answers, packages, packageScripts}:SetupTestingOption) => {
     const option = testingOptions.filter(o => o.name === 'phpunit')[0];
-    packages.push(option.packageName);
+    packages.push(...option.packageName);
 
     createDirectory({
         location: `wp/themes/${answers.theme.directory}`,
