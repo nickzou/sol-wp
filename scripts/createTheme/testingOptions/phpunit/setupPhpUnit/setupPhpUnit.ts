@@ -22,7 +22,7 @@ const setupPhpUnit = async ({answers, packages, packageScripts}:SetupTestingOpti
     });
 
     packageScripts.push({
-        key: 'phpunit',
+        key: 'test:phpunit',
         value: `wp-env run tests-cli --env-cwd=wp-content/themes/${answers.theme.directory} ./vendor/bin/phpunit`
     });
 };
