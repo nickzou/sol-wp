@@ -4,9 +4,7 @@ const generatePhpUnitBootstrap = ():File => {
     const content = `<?php
 require_once dirname(__DIR__).'/vendor/autoload.php';
 
-WP_Mock::bootstrap();
-
-require_once dirname(__DIR__).'/functions.php';`;
+WP_Mock::bootstrap();`;
 
     return {
         name: 'bootstrap.php',
