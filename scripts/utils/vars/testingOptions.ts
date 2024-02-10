@@ -7,7 +7,8 @@ const testingOptions: TestingOption[] = [
             "phpunit/phpunit",
             "10up/wp_mock"
         ],
-        language: 'php' }
+        language: 'php'
+    }
 ];
 
 export default testingOptions;
