@@ -7,7 +7,7 @@ const generateTsConfigFile = (): File => {
     "forceConsistentCasingInFileNames":true,
     "skipLibCheck":true,
     "target": "ES6",
-    "verbatimModuleSyntax":true,
+    "verbatimModuleSyntax":false,
     "allowJs":true,
     "resolveJsonModule":true,
     "moduleDetection":"force",

@@ -17,7 +17,7 @@ const setupJest = async ({answers, packages, packageScripts}:SetupTestingOption)
 
     packageScripts.push({
         key: 'test:jest',
-        value: 'jest .'
+        value: 'jest'
     })
 };
 
