@@ -32,12 +32,6 @@ const setupTestingOptions = async ({answers, composerPackages, npmPackages, pack
                 } catch (error) {
                     throw error;
                 }
-                // const option = testingOptions.filter( o => o.name === key)[0];
-                // if (option.language === 'php') {
-                //     composerPackages.push(option.packageName);
-                // } else if (option.language === 'javascript') {
-                //     npmPackages.push(option.packageName);
-                // }
             }
         });
     }
