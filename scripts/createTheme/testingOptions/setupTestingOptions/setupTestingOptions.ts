@@ -1,4 +1,5 @@
 import setupPhpUnit from "../phpunit/setupPhpUnit/setupPhpUnit";
+import setupWPMock from "../wp_mock/setupWPMock/setupWPMock";
 import { Recipe } from "@utils/types/Recipe";
 import { PackageScript } from "@utils/vars/packageScripts";
 import options from "@utils/vars/testingOptions";
@@ -14,6 +15,7 @@ const setupTestingOptions = async ({answers, composerPackages, npmPackages, pack
     if(answers.tooling.testing) {
         const testingOptions = {
             phpunit: setupPhpUnit,
+            wp_mock: setupWPMock
             //cypress: null,
         }
         Object.keys(answers.tooling.testingOptions).forEach(async key => {
