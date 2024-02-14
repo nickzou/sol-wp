@@ -1,6 +1,6 @@
 import { File } from "@utils/types/File";
 
-const generatePhpUnitBootstrap = ():File => {
+const generateWPMockBootstrap = ():File => {
     const content = `<?php
 require_once dirname(__DIR__).'/vendor/autoload.php';
 
@@ -12,4 +12,4 @@ WP_Mock::bootstrap();`;
     }
 };
 
-export default generatePhpUnitBootstrap;
+export default generateWPMockBootstrap;
