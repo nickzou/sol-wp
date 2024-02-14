@@ -5,6 +5,11 @@ const testingOptions: TestingOption[] = [
         name: "phpunit",
         packageName: ["phpunit/phpunit"],
         language: 'php'
+    },
+    {
+        name: "wp_mock",
+        packageName: ["10up/wp_mock"],
+        language: 'php'
     }
 ];
 
