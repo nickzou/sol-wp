@@ -122,7 +122,7 @@ const getAnswers = async ():Promise<Recipe> => {
                 {
                     value: 'wp_mock',
                     label: 'WP Mock',
-                    hint: 'Adds Mocks to PHP Unit, don\'t select PHP Unit if you select this. PHP Unit will automatically be installed for you.'
+                    hint: 'Adds WordPress Mocks to PHPUnit, don\'t select PHP Unit if you select this. PHP Unit will automatically be installed for you.'
                 },
                 {
                     value: 'cypress',
