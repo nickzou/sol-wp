@@ -3,6 +3,7 @@ import { TestingOptions } from "@utils/types/TestingOptions";
 const reduceTestingOptions= (options:string[]):TestingOptions => {
     const initialOptions: TestingOptions = {
         phpunit: false,
+        wp_mock: false,
         cypress: false,
         playwright: false
     };

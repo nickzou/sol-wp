@@ -1,4 +1,5 @@
 import setupPhpUnit from "../phpunit/setupPhpUnit/setupPhpUnit";
+import setupWPMock from "../wp_mock/setupWPMock/setupWPMock";
 import { Recipe } from "@utils/types/Recipe";
 import { PackageScript } from "@utils/vars/packageScripts";
 import options from "@utils/vars/testingOptions";
@@ -14,6 +15,7 @@ const setupTestingOptions = async ({answers, composerPackages, npmPackages, pack
     if(answers.tooling.testing) {
         const testingOptions = {
             phpunit: setupPhpUnit,
+            wp_mock: setupWPMock
             //cypress: null,
         }
         Object.keys(answers.tooling.testingOptions).forEach(async key => {
@@ -32,12 +34,6 @@ const setupTestingOptions = async ({answers, composerPackages, npmPackages, pack
                 } catch (error) {
                     throw error;
                 }
-                // const option = testingOptions.filter( o => o.name === key)[0];
-                // if (option.language === 'php') {
-                //     composerPackages.push(option.packageName);
-                // } else if (option.language === 'javascript') {
-                //     npmPackages.push(option.packageName);
-                // }
             }
         });
     }

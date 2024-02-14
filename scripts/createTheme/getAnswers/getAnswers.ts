@@ -116,15 +116,23 @@ const getAnswers = async ():Promise<Recipe> => {
             options: [
                 {
                     value: 'phpunit',
-                    label: 'PHPUnit'
+                    label: 'PHPUnit',
+                    hint: 'PHP Unit Testing Framework'
+                },
+                {
+                    value: 'wp_mock',
+                    label: 'WP Mock',
+                    hint: 'Adds WordPress Mocks to PHPUnit, don\'t select PHP Unit if you select this. PHP Unit will automatically be installed for you.'
                 },
                 {
                     value: 'cypress',
-                    label: 'Cypress'
+                    label: 'Cypress',
+                    hint: 'End-to-end Testing Framework. We recommend using either Cypress or Playwright, not both.'
                 },
                 {
                     value: 'playwright',
-                    label: 'Playwright'
+                    label: 'Playwright',
+                    hint: 'Another End-to-end Testing Framework. We recommend using either Cypress or Playwright, not both.'
                 }
             ]
         });
