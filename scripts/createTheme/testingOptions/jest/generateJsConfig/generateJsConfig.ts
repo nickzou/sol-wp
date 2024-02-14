@@ -10,6 +10,7 @@ const config: JestConfigWithTsJest = {
     "^.+\\\.tsx?$": "babel-jest",
   },
   moduleFileExtensions: ["ts", "tsx", "js", "jsx", "json", "node"],
+  roots: ["<rootDir>/src"]
 };
 
 export default config;
