@@ -1,7 +1,7 @@
 import createDirectory from "@utils/createDirectory/createDirectory";
 import createFile from "@utils/createFile/createFile";
 import testingOptions from "@utils/vars/testingOptions";
-import generatePhpUnitXml from "../generatePhpUnitXml/generatePhpUnitXml";
+import generatePhpUnitXml from "../../common/generatePhpUnitXml/generatePhpUnitXml";
 import { SetupTestingOption } from "@utils/types/SetupTestingOption";
 import generatePhpUnitBootstrap from "../generatePhpUnitBootstrap/generatePhpUnitBootstrap";
 
