@@ -3,6 +3,7 @@ import setupWPMock from "../wp_mock/setupWPMock/setupWPMock";
 import { Recipe } from "@utils/types/Recipe";
 import { PackageScript } from "@utils/vars/packageScripts";
 import options from "@utils/vars/testingOptions";
+import setupJest from "../jest/setupJest/setupJest";
 
 type SetupTestingOptions = {
     answers: Recipe;
@@ -15,7 +16,8 @@ const setupTestingOptions = async ({answers, composerPackages, npmPackages, pack
     if(answers.tooling.testing) {
         const testingOptions = {
             phpunit: setupPhpUnit,
-            wp_mock: setupWPMock
+            wp_mock: setupWPMock,
+            jest: setupJest
             //cypress: null,
         }
         Object.keys(answers.tooling.testingOptions).forEach(async key => {

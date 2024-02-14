@@ -125,6 +125,11 @@ const getAnswers = async ():Promise<Recipe> => {
                     hint: 'Adds WordPress Mocks to PHPUnit, don\'t select PHP Unit if you select this. PHP Unit will automatically be installed for you.'
                 },
                 {
+                    value: 'jest',
+                    label: 'Jest',
+                    hint: 'JavaScript/Testing Library'
+                },
+                {
                     value: 'cypress',
                     label: 'Cypress',
                     hint: 'End-to-end Testing Framework. We recommend using either Cypress or Playwright, not both.'
