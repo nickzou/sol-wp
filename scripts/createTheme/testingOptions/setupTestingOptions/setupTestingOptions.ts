@@ -4,6 +4,7 @@ import { Recipe } from "@utils/types/Recipe";
 import { PackageScript } from "@utils/vars/packageScripts";
 import options from "@utils/vars/testingOptions";
 import setupJest from "../jest/setupJest/setupJest";
+import setupCypress from "../cypress/setupCypress/setupCypress";
 
 type SetupTestingOptions = {
     answers: Recipe;
@@ -17,8 +18,8 @@ const setupTestingOptions = async ({answers, composerPackages, npmPackages, pack
         const testingOptions = {
             phpunit: setupPhpUnit,
             wp_mock: setupWPMock,
-            jest: setupJest
-            //cypress: null,
+            jest: setupJest,
+            cypress: setupCypress
         }
         Object.keys(answers.tooling.testingOptions).forEach(async key => {
             if (answers.tooling.testingOptions[key]) {
