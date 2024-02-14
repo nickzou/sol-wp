@@ -10,7 +10,7 @@ const setupJest = async ({answers, packages, packageScripts}:SetupTestingOption)
     const jestConfigFile = generateJsConfig();
 
     createFile({
-        directoryPath: ``,
+        directoryPath: `.`,
         fileName: jestConfigFile.name,
         fileContent: jestConfigFile.content
     });
