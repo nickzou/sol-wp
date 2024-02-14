@@ -27,6 +27,7 @@ import prettierConfigOptions from "@utils/vars/prettierConfigOptions";
 import esLintConfigOptions from "@utils/vars/esLintConfigOptions";
 import setupCssOption from "./cssOptions/setupCssOption/setupCssOption";
 import setupTemplateOption from "./templateOptions/setupTemplateOption/setupTemplateOption";
+import setupTestingOptions from "./testingOptions/setupTestingOptions/setupTestingOptions";
 
 intro(bold(`Generate Theme`));
 
@@ -84,6 +85,8 @@ await setupCssOption({functionFile, answers, npmPackages, packageScripts, pretti
   });
 
   await setupTemplateOption({answers, composerPackages});
+
+  await setupTestingOptions({answers, composerPackages, npmPackages, packageScripts});
 
   //JavaScript/TypeScript installs
   const esbuildConfigFile = generateEsbuildConfigFile({

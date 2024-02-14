@@ -1,8 +1,9 @@
 import { Recipe } from "@utils/types/Recipe";
-import { text, select, confirm, isCancel } from "@clack/prompts";
+import { text, select, confirm, isCancel, multiselect } from "@clack/prompts";
 import formatFolderName from "@utils/formatDirectoryName/formatDirectoryName";
 import cssOptions from "@utils/vars/cssOptions";
 import templateOptions from "@utils/vars/templateOptions";
+import reduceTestingOptions from "@createTheme/reduceTestingOptions/reduceTestingOptions";
 
 const getAnswers = async ():Promise<Recipe> => {
     const htmlRegex = /<\/?[a-z][\s\S]*>/i;
@@ -78,7 +79,7 @@ const getAnswers = async ():Promise<Recipe> => {
     }
 
     const ts = await confirm({
-        message: `Would you to use TypeScript?`,
+        message: `Would you like to use TypeScript?`,
     });
       
     if (isCancel(ts)) {
@@ -101,11 +102,46 @@ const getAnswers = async ():Promise<Recipe> => {
         process.exit(0);
     }
 
+    const getTesting = await confirm({
+        message: `Would you like to set up testing?`,
+    });
+      
+    if (isCancel(getTesting)) {
+        process.exit(0);
+    }
+
+    if (getTesting === true) {
+        var getTestingOptions = await multiselect({
+            message: 'Select testing tools.',
+            options: [
+                {
+                    value: 'phpunit',
+                    label: 'PHPUnit'
+                },
+                {
+                    value: 'cypress',
+                    label: 'Cypress'
+                },
+                {
+                    value: 'playwright',
+                    label: 'Playwright'
+                }
+            ]
+        });
+
+        if (isCancel(getTestingOptions)) {
+            process.exit(0);
+        }
+    }
+
+
     const name = getName as string ?? 'Sol WP';
     const directory = getDirectory as string ? formatFolderName(getDirectory) : formatFolderName(name);
     const author = getAuthor as string ?? 'Sol Wper';
     const description = getDescription as string ?? 'Theme Description';
-    const version = getVersion as string ?? '1.0.0'; 
+    const version = getVersion as string ?? '1.0.0';
+    const testing = getTesting;
+    const testingOptions  = Array.isArray(getTestingOptions) ? getTestingOptions as string[] : null; 
 
     return {
         theme: {
@@ -118,7 +154,9 @@ const getAnswers = async ():Promise<Recipe> => {
         tooling: {
             css: cssOptions.filter((o) => o.name === cssOption)[0],
             ts: ts,
-            template: templateOptions.filter((o) => o.name === templateOption)[0]
+            template: templateOptions.filter((o) => o.name === templateOption)[0],
+            testing: testing,
+            testingOptions: Array.isArray(testingOptions) ? reduceTestingOptions(testingOptions) : null
         }
     }
 };

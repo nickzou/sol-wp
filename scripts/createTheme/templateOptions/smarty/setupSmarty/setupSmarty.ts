@@ -1,5 +1,5 @@
 import createDirectory from "@utils/createDirectory/createDirectory";
-import { SetupTemplate } from "@utils/types/SetupTemplate";
+import { SetupTemplate } from "@utils/types/SetupPhpPackages";
 import generateSetupSmartyPhpFunctionFile from "../generateSetupSmartyPhpFunctionFile/generateSetupSmartyPhpFunctionFile";
 import createFile from "@utils/createFile/createFile";
 import appendToFunctionsFile from "@createTheme/appendToFunctionsFile/appendToFunctionsFile";

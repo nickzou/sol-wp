@@ -1,4 +1,4 @@
-import {SetupTemplate} from "@utils/types/SetupTemplate"
+import {SetupTemplate} from "@utils/types/SetupPhpPackages"
 import generateSetupPlatesPhpFunctionFile from "../generateSetupPlatesPhpFunctionFile/generateSetupPlatesPhpFunctionFile";
 import createFile from "@utils/createFile/createFile";
 import createDirectory from "@utils/createDirectory/createDirectory";

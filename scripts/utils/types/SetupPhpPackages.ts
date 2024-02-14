@@ -1,6 +1,6 @@
 import { Recipe } from "./Recipe"
 
-export type SetupTemplate = {
+export type SetupPhpPackages = {
     answers: Recipe;
     composerPackages?: string[];
 }
