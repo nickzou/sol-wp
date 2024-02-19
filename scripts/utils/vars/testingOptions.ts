@@ -20,6 +20,11 @@ const testingOptions: TestingOption[] = [
         name: "cypress",
         packageName: ["cypress"],
         language: 'javascript'
+    },
+    {
+        name: "playwright",
+        packageName: ["playwright", "@playwright/test"],
+        language: 'javascript'
     }
 ];
 
