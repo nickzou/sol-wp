@@ -5,6 +5,7 @@ import { PackageScript } from "@utils/vars/packageScripts";
 import options from "@utils/vars/testingOptions";
 import setupJest from "../jest/setupJest/setupJest";
 import setupCypress from "../cypress/setupCypress/setupCypress";
+import setupPlaywright from "../playwright/setupPlaywright/setupPlaywright";
 
 type SetupTestingOptions = {
     answers: Recipe;
@@ -19,7 +20,8 @@ const setupTestingOptions = async ({answers, composerPackages, npmPackages, pack
             phpunit: setupPhpUnit,
             wp_mock: setupWPMock,
             jest: setupJest,
-            cypress: setupCypress
+            cypress: setupCypress,
+            playwright: setupPlaywright
         }
         Object.keys(answers.tooling.testingOptions).forEach(async key => {
             if (answers.tooling.testingOptions[key]) {
