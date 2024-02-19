@@ -15,6 +15,16 @@ const testingOptions: TestingOption[] = [
         name: "jest",
         packageName: ["@types/jest", "jest", "ts-jest", "babel-jest"],
         language: 'javascript'
+    },
+    {
+        name: "cypress",
+        packageName: ["cypress"],
+        language: 'javascript'
+    },
+    {
+        name: "playwright",
+        packageName: ["playwright", "@playwright/test"],
+        language: 'javascript'
     }
 ];
 
