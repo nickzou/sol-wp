@@ -28,6 +28,7 @@ import esLintConfigOptions from "@utils/vars/esLintConfigOptions";
 import setupCssOption from "./cssOptions/setupCssOption/setupCssOption";
 import setupTemplateOption from "./templateOptions/setupTemplateOption/setupTemplateOption";
 import setupTestingOptions from "./testingOptions/setupTestingOptions/setupTestingOptions";
+import setupBrowserSync from "@utils/setupBrowserSync/setupBrowserSync";
 
 intro(bold(`Generate Theme`));
 
@@ -168,6 +169,8 @@ await setupCssOption({functionFile, answers, npmPackages, packageScripts, pretti
     fileName: esLintConfigFile.name,
     fileContent: esLintConfigFile.content,
   });
+
+  await setupBrowserSync({npmPackages, packageScripts});
 
   addScriptsToPackageJson([
     ...packageScripts,
