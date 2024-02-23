@@ -11,7 +11,7 @@ const setupBrowserSync = async ({npmPackages, packageScripts}:SetupBrowserSync) 
 
     packageScripts.push(...[{
         key: "browsersync",
-        value: "browser-sync --proxy \"localhost:8888\" --files \"wp/**/*\""
+        value: "browser-sync start --proxy \"localhost:8888\" --files \"wp/**/*\""
     }]);
 };
 
