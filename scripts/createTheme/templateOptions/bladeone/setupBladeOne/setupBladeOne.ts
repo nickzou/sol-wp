@@ -1,4 +1,4 @@
-import { SetupTemplate } from "@utils/types/SetupPhpPackages";
+import { SetupPhpPackages as SetupTemplate } from "@utils/types/SetupPhpPackages";
 import generateSetupBladeOneFunctionFile from "../generateSetupBladeOnePhpFunctionFile/generateSetupBladeOnePhpFunctionFile";
 import createFile from "@utils/createFile/createFile";
 import appendToFunctionsFile from "@createTheme/appendToFunctionsFile/appendToFunctionsFile";
