@@ -62,7 +62,7 @@ const functionFile = generateFunctionsFile();
 
 await setupCssOption({registerAssets, answers, npmPackages, packageScripts, prettierConfigOptions});
 
-await setupJs({registerAssets, answers, npmPackages, esLintConfigOptions});
+await setupJs({registerAssets, answers, npmPackages, packageScripts, esLintConfigOptions});
 
 await styleSolutionEnqueuer({functionFile, theme: answers.theme, registerAssets});
 
@@ -116,29 +116,7 @@ createFile({
 
 await setupBrowserSync({npmPackages, packageScripts});
 
-addScriptsToPackageJson([
-  ...packageScripts,
-  {
-    key: `eslint`,
-    value: `eslint 'src/themes/${answers.theme.directory}/ts/**/*.{js,jsx,ts,tsx}'`,
-  },
-  {
-    key: `eslint:watch`,
-    value: `onchange 'src/themes/${answers.theme.directory}/ts/**/*.{js,jsx,ts,tsx}' -- npm run eslint`,
-  },
-  {
-    key: `esbuild`,
-    value: `esrun esbuild.config.ts --sourcemap`,
-  },
-  {
-    key: `esbuild:watch`,
-    value: `esrun esbuild.watch.ts --sourcemap`,
-  },
-  {
-    key: `esbuild:prod`,
-    value: `esrun esbuild.config.ts --minify`,
-  },
-]);
+addScriptsToPackageJson(packageScripts);
 
 const composerFile = generateComposerFile({
   themeFolder: answers.theme.directory,
@@ -153,6 +131,7 @@ createFile({
 addToGitignore('.gitignore', [`wp/themes/${answers.theme.directory}/vendor`,`wp/themes/${answers.theme.directory}/css`, `wp/themes/${answers.theme.directory}/js`]);
 
 await installNpmPackages(npmPackages);
+
 await installComposerPackages(
   composerPackages,
   `wp/themes/${answers.theme.directory}`

@@ -8,15 +8,17 @@ import generateTsFile from "@createTheme/tsOptions/generateTsFile/generateTsFile
 import {type esLintConfigOptions} from "@utils/vars/esLintConfigOptions";
 import generateJsFile from "@createTheme/jsOptions/generateJsFile/generateJsFile";
 import generateEsbuildWatchFile from "@createTheme/tsOptions/generateEsbuildWatchFile/generateEsbuildWatchFile";
+import { PackageScript } from "@utils/vars/packageScripts";
 
 interface setupJs {
     registerAssets: registerAsset[];
     answers: Recipe;
     npmPackages: string[];
+    packageScripts: PackageScript[];
     esLintConfigOptions: esLintConfigOptions;
 }
 
-const setupJs = async ({registerAssets, answers, npmPackages, esLintConfigOptions}:setupJs) => {
+const setupJs = async ({registerAssets, answers, npmPackages, packageScripts, esLintConfigOptions}:setupJs) => {
     registerAssets.push({
         handle: 'index',
         file: 'index',
@@ -43,18 +45,41 @@ const setupJs = async ({registerAssets, answers, npmPackages, esLintConfigOption
     fileContent: esbuildWatchFile.content,
   });
 
+  const tsConfigFile = generateTsConfigFile();
+
+  createFile({
+    directoryPath: ".",
+    fileName: tsConfigFile.name,
+    fileContent: tsConfigFile.content,
+  });
+
+  packageScripts.push(
+    {
+      key: `eslint`,
+      value: `eslint 'src/themes/${answers.theme.directory}/ts/**/*.{js,jsx,ts,tsx}'`,
+    },
+    {
+      key: `eslint:watch`,
+      value: `onchange 'src/themes/${answers.theme.directory}/ts/**/*.{js,jsx,ts,tsx}' -- npm run eslint`,
+    },
+    {
+      key: `esbuild`,
+      value: `esrun esbuild.config.ts --sourcemap`,
+    },
+    {
+      key: `esbuild:watch`,
+      value: `esrun esbuild.watch.ts --sourcemap`,
+    },
+    {
+      key: `esbuild:prod`,
+      value: `esrun esbuild.config.ts --minify`,
+    },
+  );
+
   if (answers.tooling.ts) {
     createDirectory({
       location: `src/themes/${answers.theme.directory}`,
       directoryName: `ts`,
-    });
-
-    const tsConfigFile = generateTsConfigFile();
-
-    createFile({
-      directoryPath: ".",
-      fileName: tsConfigFile.name,
-      fileContent: tsConfigFile.content,
     });
 
     const tsFile = generateTsFile({ themeName: answers.theme.name });
