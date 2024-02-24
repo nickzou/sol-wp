@@ -62,6 +62,12 @@ const functionFile = generateFunctionsFile();
 await setupCssOption({registerAssets, answers, npmPackages, packageScripts, prettierConfigOptions});
 
 //JavaScript/TypeScript installs
+  registerAssets.push({
+    handle: 'index',
+    file: 'index',
+    fileType: 'js'
+  });
+
   const esbuildConfigFile = generateEsbuildConfigFile({
     themeFolder: answers.theme.directory,
   });
