@@ -6,12 +6,17 @@ import generateTailwindAndUnoContent from "@utils/generateTailwindAndUnoContent/
 import generateTailwindCssFile from "../generateTailwindCssFile/generateTailwindCssFile";
 import { SetupCss } from "@utils/types/SetupCss";
 
-const setupTailwind = async ({functionFile, answers, npmPackages, packageScripts, prettierConfigOptions}:SetupCss) => {
-  await styleSolutionEnqueuer({
-    functionFile,
-    theme: answers.theme,
-    option: answers.tooling.css,
+const setupTailwind = async ({registerAssets, answers, npmPackages, packageScripts, prettierConfigOptions}:SetupCss) => {
+  registerAssets.push({
+    handle: 'tailwind',
+    file: 'tailwind',
+    fileType: 'css'
   });
+  // await styleSolutionEnqueuer({
+  //   functionFile,
+  //   theme: answers.theme,
+  //   option: answers.tooling.css,
+  // });
 
   let tailwindAndUnoContent = generateTailwindAndUnoContent(answers);
 

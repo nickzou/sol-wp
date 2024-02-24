@@ -29,6 +29,8 @@ import setupCssOption from "./cssOptions/setupCssOption/setupCssOption";
 import setupTemplateOption from "./templateOptions/setupTemplateOption/setupTemplateOption";
 import setupTestingOptions from "./testingOptions/setupTestingOptions/setupTestingOptions";
 import setupBrowserSync from "@utils/setupBrowserSync/setupBrowserSync";
+import registerAssets from "@utils/vars/registerAssets";
+import styleSolutionEnqueuer from "./styleSolutionEnqueuer/styleSolutionEnqueuer";
 
 intro(bold(`Generate Theme`));
 
@@ -57,39 +59,15 @@ editWpEnv({ wpEnvFile: `.wp-env.json`, directory: answers.theme.directory });
 
 const functionFile = generateFunctionsFile();
 
-await setupCssOption({functionFile, answers, npmPackages, packageScripts, prettierConfigOptions});
+await setupCssOption({registerAssets, answers, npmPackages, packageScripts, prettierConfigOptions});
 
-  const captureWpHeadFunctionFile = generateCaptureWpHeadFunctionFile;
-
-  createFile({
-    directoryPath: `wp/themes/${answers.theme.directory}/functions`,
-    fileName: captureWpHeadFunctionFile.name,
-    fileContent: captureWpHeadFunctionFile.content
+//JavaScript/TypeScript installs
+  registerAssets.push({
+    handle: 'index',
+    file: 'index',
+    fileType: 'js'
   });
 
-  appendToFunctionsFile({
-    themeFolder: answers.theme.directory,
-    functionName: captureWpHeadFunctionFile.functionName
-  });
-
-  const captureWpFooterFunctionFile = generateCaptureWpFooterFunctionFile;
-
-  createFile({
-    directoryPath: `wp/themes/${answers.theme.directory}/functions`,
-    fileName: captureWpFooterFunctionFile.name,
-    fileContent: captureWpFooterFunctionFile.content
-  });
-
-  appendToFunctionsFile({
-    themeFolder: answers.theme.directory,
-    functionName: captureWpFooterFunctionFile.functionName
-  });
-
-  await setupTemplateOption({answers, composerPackages});
-
-  await setupTestingOptions({answers, composerPackages, npmPackages, packageScripts});
-
-  //JavaScript/TypeScript installs
   const esbuildConfigFile = generateEsbuildConfigFile({
     themeFolder: answers.theme.directory,
   });
@@ -152,6 +130,38 @@ await setupCssOption({functionFile, answers, npmPackages, packageScripts, pretti
     });
   }
 
+  await styleSolutionEnqueuer({functionFile, theme: answers.theme, registerAssets});
+
+  const captureWpHeadFunctionFile = generateCaptureWpHeadFunctionFile;
+
+  createFile({
+    directoryPath: `wp/themes/${answers.theme.directory}/functions`,
+    fileName: captureWpHeadFunctionFile.name,
+    fileContent: captureWpHeadFunctionFile.content
+  });
+
+  appendToFunctionsFile({
+    themeFolder: answers.theme.directory,
+    functionName: captureWpHeadFunctionFile.functionName
+  });
+
+  const captureWpFooterFunctionFile = generateCaptureWpFooterFunctionFile;
+
+  createFile({
+    directoryPath: `wp/themes/${answers.theme.directory}/functions`,
+    fileName: captureWpFooterFunctionFile.name,
+    fileContent: captureWpFooterFunctionFile.content
+  });
+
+  appendToFunctionsFile({
+    themeFolder: answers.theme.directory,
+    functionName: captureWpFooterFunctionFile.functionName
+  });
+
+  await setupTemplateOption({answers, composerPackages});
+
+  await setupTestingOptions({answers, composerPackages, npmPackages, packageScripts});
+
   const prettierRcFile = generatePrettierRcFile({
     plugins: prettierConfigOptions.plugins,
   });
@@ -202,7 +212,7 @@ await setupCssOption({functionFile, answers, npmPackages, packageScripts, pretti
     fileContent: composerFile.content,
   });
 
-  addToGitignore('.gitignore', [`wp/themes/${answers.theme.directory}/vendor`]);
+  addToGitignore('.gitignore', [`wp/themes/${answers.theme.directory}/vendor`,`wp/themes/${answers.theme.directory}/css`, `wp/themes/${answers.theme.directory}/js`]);
 
   await installNpmPackages(npmPackages);
   await installComposerPackages(

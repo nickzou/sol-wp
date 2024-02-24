@@ -5,14 +5,19 @@ import generatePostCssConfigFile from "../generatePostCssConfigFile/generatePost
 import generatePostCssProdConfigFile from "../generatePostCssProdConfigFile/generatePostCssProdConfigFile";
 import { SetupCss } from "@utils/types/SetupCss";
 
-const setupPostCss = async ({functionFile, answers, npmPackages, packageScripts, prettierConfigOptions}:SetupCss) => {
-  await styleSolutionEnqueuer({
-    functionFile,
-    theme: answers.theme,
-    option: answers.tooling.css,
-    cssRegisterName: "styles",
-    cssFileName: "styles",
+const setupPostCss = async ({registerAssets, answers, npmPackages, packageScripts, prettierConfigOptions}:SetupCss) => {
+  registerAssets.push({
+    handle: 'styles',
+    file: 'styles',
+    fileType: 'css'
   });
+  // await styleSolutionEnqueuer({
+  //   functionFile,
+  //   theme: answers.theme,
+  //   option: answers.tooling.css,
+  //   cssRegisterName: "styles",
+  //   cssFileName: "styles",
+  // });
 
   createDirectory({
     location: `src/themes/${answers.theme.directory}`,

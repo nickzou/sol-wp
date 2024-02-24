@@ -5,36 +5,45 @@ import generatePhpFunctionFile from "@createTheme/generatePhpFunctionFile/genera
 import createDirectory from "@utils/createDirectory/createDirectory";
 import createFile from "@utils/createFile/createFile";
 import appendToFunctionsFile from "@createTheme/appendToFunctionsFile/appendToFunctionsFile";
+import { registerAsset } from "@utils/vars/registerAssets";
+import generateStyleRegisterTemplate from "@createTheme/cssOptions/generateStyleRegisterTemplate/generateStyleRegisterTemplate";
+import generateStyleEnqueueTemplate from "@createTheme/cssOptions/generateStyleEnqueueTemplate/generateStyleEnqueueTemplate";
+import generateJsRegisterTemplate from "@createTheme/jsOptions/generateJsRegisterTemplate/generateJsRegisterTemplate";
+import generateJsEnqueueTemplate from "@createTheme/jsOptions/generateJsEnqueueTemplate/generateJsEnqueueTemplate";
 
 interface styleSolutionEnqueuer {
   functionFile: File;
   theme: Theme;
-  option: CssOption;
-  cssRegisterName?: string;
-  cssFileName?: string;
+  registerAssets: registerAsset[]
 }
 
 const styleSolutionEnqueuer = async ({
   functionFile,
   theme,
-  option,
-  cssRegisterName,
-  cssFileName,
+  registerAssets
 }: styleSolutionEnqueuer) => {
+  const cssAssets = registerAssets.filter(a => a.fileType === 'css');
+  const jsAssets:registerAsset[] = registerAssets.filter(a => a.fileType === 'js');
+
+  const cssRegisterString = cssAssets.map(a => generateStyleRegisterTemplate({
+    handle: a.handle,
+    file: a.file
+  }));
+
+  const jsAssetsString = jsAssets.map(a => generateJsRegisterTemplate({handle: a.handle, file: a.file}));
+
   const registerAssetsFile = generatePhpFunctionFile({
     name: "register_assets",
-    functionBody: `wp_register_style( '${
-      cssRegisterName ? cssRegisterName : option.name
-    }', get_template_directory_uri() . '/css/${
-      cssFileName ? cssFileName : option.name
-    }.css', [], '1.0.0', 'all' );`,
+    functionBody: [...cssRegisterString, ...jsAssetsString].join('\n')
   });
+
+  const cssEnqueueString = cssAssets.map( a => generateStyleEnqueueTemplate({handle: a.handle}));
+
+  const jsEnqueueString = jsAssets.map( a => generateJsEnqueueTemplate({handle: a.handle}));
 
   const enqueueAssetsFile = generatePhpFunctionFile({
     name: "enqueue_assets",
-    functionBody: `wp_enqueue_style( '${
-      cssRegisterName ? cssRegisterName : option.name
-    }' );`,
+    functionBody: [...cssEnqueueString, ...jsEnqueueString].join('\n'),
   });
 
   createDirectory({
