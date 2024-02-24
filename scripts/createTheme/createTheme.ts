@@ -31,6 +31,7 @@ import setupTestingOptions from "./testingOptions/setupTestingOptions/setupTesti
 import setupBrowserSync from "@utils/setupBrowserSync/setupBrowserSync";
 import registerAssets from "@utils/vars/registerAssets";
 import styleSolutionEnqueuer from "./styleSolutionEnqueuer/styleSolutionEnqueuer";
+import setupJs from "./setupJs/setupJs/setupJs";
 
 intro(bold(`Generate Theme`));
 
@@ -61,163 +62,96 @@ const functionFile = generateFunctionsFile();
 
 await setupCssOption({registerAssets, answers, npmPackages, packageScripts, prettierConfigOptions});
 
-//JavaScript/TypeScript installs
-  registerAssets.push({
-    handle: 'index',
-    file: 'index',
-    fileType: 'js'
-  });
+await setupJs({registerAssets, answers, npmPackages, esLintConfigOptions});
 
-  const esbuildConfigFile = generateEsbuildConfigFile({
-    themeFolder: answers.theme.directory,
-  });
+await styleSolutionEnqueuer({functionFile, theme: answers.theme, registerAssets});
 
-  createFile({
-    directoryPath: ".",
-    fileName: esbuildConfigFile.name,
-    fileContent: esbuildConfigFile.content,
-  });
+const captureWpHeadFunctionFile = generateCaptureWpHeadFunctionFile;
 
-  if (answers.tooling.ts) {
-    createDirectory({
-      location: `src/themes/${answers.theme.directory}`,
-      directoryName: `ts`,
-    });
+createFile({
+  directoryPath: `wp/themes/${answers.theme.directory}/functions`,
+  fileName: captureWpHeadFunctionFile.name,
+  fileContent: captureWpHeadFunctionFile.content
+});
 
-    const tsConfigFile = generateTsConfigFile();
+appendToFunctionsFile({
+  themeFolder: answers.theme.directory,
+  functionName: captureWpHeadFunctionFile.functionName
+});
 
-    createFile({
-      directoryPath: ".",
-      fileName: tsConfigFile.name,
-      fileContent: tsConfigFile.content,
-    });
+const captureWpFooterFunctionFile = generateCaptureWpFooterFunctionFile;
 
-    const tsFile = generateTsFile({ themeName: answers.theme.name });
+createFile({
+  directoryPath: `wp/themes/${answers.theme.directory}/functions`,
+  fileName: captureWpFooterFunctionFile.name,
+  fileContent: captureWpFooterFunctionFile.content
+});
 
-    createFile({
-      directoryPath: `src/themes/${answers.theme.directory}/ts`,
-      fileName: tsFile.name,
-      fileContent: tsFile.content,
-    });
+appendToFunctionsFile({
+  themeFolder: answers.theme.directory,
+  functionName: captureWpFooterFunctionFile.functionName
+});
 
-    npmPackages.push(...[
-      "@typescript-eslint/eslint-plugin",
-      "@typescript-eslint/parser",
-    ]);
+await setupTemplateOption({answers, composerPackages});
 
-    esLintConfigOptions.extendsArr.push(...[
-      "plugin:@typescript-eslint/eslint-recommended",
-      "plugin:@typescript-eslint/recommended",
-    ]);
+await setupTestingOptions({answers, composerPackages, npmPackages, packageScripts});
 
-    esLintConfigOptions.plugins.push(...[
-      "@typescript/parser",
-    ]);
+const prettierRcFile = generatePrettierRcFile({
+  plugins: prettierConfigOptions.plugins,
+});
 
-    esLintConfigOptions.parser = "@typescript-eslint/parser";
-  } else {
-    createDirectory({
-      location: `src/themes/${answers.theme.directory}`,
-      directoryName: `js`,
-    });
+createFile({
+  directoryPath: ".",
+  fileName: prettierRcFile.name,
+  fileContent: prettierRcFile.content,
+});
 
-    const jsFile = generateJsFile({ themeName: answers.theme.name });
+const esLintConfigFile = generateEsLintConfigFile(esLintConfigOptions);
 
-    createFile({
-      directoryPath: `src/themes/${answers.theme.directory}/js`,
-      fileName: jsFile.name,
-      fileContent: jsFile.content,
-    });
-  }
+createFile({
+  directoryPath: ".",
+  fileName: esLintConfigFile.name,
+  fileContent: esLintConfigFile.content,
+});
 
-  await styleSolutionEnqueuer({functionFile, theme: answers.theme, registerAssets});
+await setupBrowserSync({npmPackages, packageScripts});
 
-  const captureWpHeadFunctionFile = generateCaptureWpHeadFunctionFile;
+addScriptsToPackageJson([
+  ...packageScripts,
+  {
+    key: `eslint`,
+    value: `eslint 'src/themes/${answers.theme.directory}/ts/**/*.{js,jsx,ts,tsx}'`,
+  },
+  {
+    key: `eslint:watch`,
+    value: `onchange 'src/themes/${answers.theme.directory}/ts/**/*.{js,jsx,ts,tsx}' -- npm run eslint`,
+  },
+  {
+    key: `esbuild`,
+    value: `esrun esbuild.config.ts --sourcemap`,
+  },
+  {
+    key: `esbuild:prod`,
+    value: `esrun esbuild.config.ts --minify`,
+  },
+]);
 
-  createFile({
-    directoryPath: `wp/themes/${answers.theme.directory}/functions`,
-    fileName: captureWpHeadFunctionFile.name,
-    fileContent: captureWpHeadFunctionFile.content
-  });
+const composerFile = generateComposerFile({
+  themeFolder: answers.theme.directory,
+});
 
-  appendToFunctionsFile({
-    themeFolder: answers.theme.directory,
-    functionName: captureWpHeadFunctionFile.functionName
-  });
+createFile({
+  directoryPath: `wp/themes/${answers.theme.directory}`,
+  fileName: composerFile.name,
+  fileContent: composerFile.content,
+});
 
-  const captureWpFooterFunctionFile = generateCaptureWpFooterFunctionFile;
+addToGitignore('.gitignore', [`wp/themes/${answers.theme.directory}/vendor`,`wp/themes/${answers.theme.directory}/css`, `wp/themes/${answers.theme.directory}/js`]);
 
-  createFile({
-    directoryPath: `wp/themes/${answers.theme.directory}/functions`,
-    fileName: captureWpFooterFunctionFile.name,
-    fileContent: captureWpFooterFunctionFile.content
-  });
-
-  appendToFunctionsFile({
-    themeFolder: answers.theme.directory,
-    functionName: captureWpFooterFunctionFile.functionName
-  });
-
-  await setupTemplateOption({answers, composerPackages});
-
-  await setupTestingOptions({answers, composerPackages, npmPackages, packageScripts});
-
-  const prettierRcFile = generatePrettierRcFile({
-    plugins: prettierConfigOptions.plugins,
-  });
-
-  createFile({
-    directoryPath: ".",
-    fileName: prettierRcFile.name,
-    fileContent: prettierRcFile.content,
-  });
-
-  const esLintConfigFile = generateEsLintConfigFile(esLintConfigOptions);
-
-  createFile({
-    directoryPath: ".",
-    fileName: esLintConfigFile.name,
-    fileContent: esLintConfigFile.content,
-  });
-
-  await setupBrowserSync({npmPackages, packageScripts});
-
-  addScriptsToPackageJson([
-    ...packageScripts,
-    {
-      key: `eslint`,
-      value: `eslint 'src/themes/${answers.theme.directory}/ts/**/*.{js,jsx,ts,tsx}'`,
-    },
-    {
-      key: `eslint:watch`,
-      value: `onchange 'src/themes/${answers.theme.directory}/ts/**/*.{js,jsx,ts,tsx}' -- npm run eslint`,
-    },
-    {
-      key: `esbuild`,
-      value: `esrun esbuild.config.ts --sourcemap`,
-    },
-    {
-      key: `esbuild:prod`,
-      value: `esrun esbuild.config.ts --minify`,
-    },
-  ]);
-
-  const composerFile = generateComposerFile({
-    themeFolder: answers.theme.directory,
-  });
-
-  createFile({
-    directoryPath: `wp/themes/${answers.theme.directory}`,
-    fileName: composerFile.name,
-    fileContent: composerFile.content,
-  });
-
-  addToGitignore('.gitignore', [`wp/themes/${answers.theme.directory}/vendor`,`wp/themes/${answers.theme.directory}/css`, `wp/themes/${answers.theme.directory}/js`]);
-
-  await installNpmPackages(npmPackages);
-  await installComposerPackages(
-    composerPackages,
-    `wp/themes/${answers.theme.directory}`
-  );
+await installNpmPackages(npmPackages);
+await installComposerPackages(
+  composerPackages,
+  `wp/themes/${answers.theme.directory}`
+);
 
 outro(green(bold("Your theme has been generated!")));
