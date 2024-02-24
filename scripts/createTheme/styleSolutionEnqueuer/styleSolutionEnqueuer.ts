@@ -8,6 +8,8 @@ import appendToFunctionsFile from "@createTheme/appendToFunctionsFile/appendToFu
 import { registerAsset } from "@utils/vars/registerAssets";
 import generateStyleRegisterTemplate from "@createTheme/cssOptions/generateStyleRegisterTemplate/generateStyleRegisterTemplate";
 import generateStyleEnqueueTemplate from "@createTheme/cssOptions/generateStyleEnqueueTemplate/generateStyleEnqueueTemplate";
+import generateJsRegisterTemplate from "@createTheme/jsOptions/generateJsRegisterTemplate/generateJsRegisterTemplate";
+import generateJsEnqueueTemplate from "@createTheme/jsOptions/generateJsEnqueueTemplate/generateJsEnqueueTemplate";
 
 interface styleSolutionEnqueuer {
   functionFile: File;
@@ -21,25 +23,27 @@ const styleSolutionEnqueuer = async ({
   registerAssets
 }: styleSolutionEnqueuer) => {
   const cssAssets = registerAssets.filter(a => a.fileType === 'css');
-  //const jsAssets:registerAsset[] = registerAssets.filter(a => a.fileType === 'js');
+  const jsAssets:registerAsset[] = registerAssets.filter(a => a.fileType === 'js');
 
   const cssRegisterString = cssAssets.map(a => generateStyleRegisterTemplate({
     handle: a.handle,
     file: a.file
   })).join('; \n');
 
-  //const jsAssetsString = '';
+  const jsAssetsString = jsAssets.map(a => generateJsRegisterTemplate({handle: a.handle, file: a.file})).join('; \n');
 
   const registerAssetsFile = generatePhpFunctionFile({
     name: "register_assets",
-    functionBody: cssRegisterString
+    functionBody: cssRegisterString+jsAssetsString
   });
 
   const cssEnqueueString = cssAssets.map( a => generateStyleEnqueueTemplate({handle: a.handle})).join('; \n');
 
+  const jsEnqueueString = jsAssets.map( a => generateJsEnqueueTemplate({handle: a.handle})).join('; \n');
+
   const enqueueAssetsFile = generatePhpFunctionFile({
     name: "enqueue_assets",
-    functionBody: cssEnqueueString,
+    functionBody: cssEnqueueString + jsEnqueueString,
   });
 
   createDirectory({
