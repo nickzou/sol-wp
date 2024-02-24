@@ -4,12 +4,18 @@ import generateTailwindAndUnoContent from "@utils/generateTailwindAndUnoContent/
 import createFile from "@utils/createFile/createFile";
 import { SetupCss } from "@utils/types/SetupCss";
 
-const setupUno = async ({functionFile, answers, npmPackages, packageScripts}:SetupCss) => {
-  await styleSolutionEnqueuer({
-    functionFile,
-    theme: answers.theme,
-    option: answers.tooling.css,
+const setupUno = async ({registerAssets, answers, npmPackages, packageScripts}:SetupCss) => {
+  registerAssets.push({
+    handle: 'uno',
+    file: 'uno',
+    fileType: 'css'
   });
+  
+  // await styleSolutionEnqueuer({
+  //   functionFile,
+  //   theme: answers.theme,
+  //   option: answers.tooling.css,
+  // });
 
   let tailwindAndUnoContent = generateTailwindAndUnoContent(answers);
 

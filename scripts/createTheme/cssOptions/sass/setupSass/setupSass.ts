@@ -5,14 +5,19 @@ import generateSassConfigFile from "../generateSassConfigFile/generateSassConfig
 import generateStylelintFile from "../generateSassStylelintFile/generateSassStylelintFile";
 import { SetupCss } from "@utils/types/SetupCss";
 
-const setupSass = async ({functionFile, answers, npmPackages, packageScripts}:SetupCss) => {
-  await styleSolutionEnqueuer({
-    functionFile,
-    theme: answers.theme,
-    option: answers.tooling.css,
-    cssRegisterName: "styles",
-    cssFileName: "styles",
+const setupSass = async ({registerAssets, answers, npmPackages, packageScripts}:SetupCss) => {
+  registerAssets.push({
+    handle: 'styles',
+    file: 'styles',
+    fileType: 'css'
   });
+  // await styleSolutionEnqueuer({
+  //   functionFile,
+  //   theme: answers.theme,
+  //   option: answers.tooling.css,
+  //   cssRegisterName: "styles",
+  //   cssFileName: "styles",
+  // });
 
   createDirectory({
     location: `src/themes/${answers.theme.directory}`,

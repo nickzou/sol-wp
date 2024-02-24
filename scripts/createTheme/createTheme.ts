@@ -29,6 +29,8 @@ import setupCssOption from "./cssOptions/setupCssOption/setupCssOption";
 import setupTemplateOption from "./templateOptions/setupTemplateOption/setupTemplateOption";
 import setupTestingOptions from "./testingOptions/setupTestingOptions/setupTestingOptions";
 import setupBrowserSync from "@utils/setupBrowserSync/setupBrowserSync";
+import registerAssets from "@utils/vars/registerAssets";
+import styleSolutionEnqueuer from "./styleSolutionEnqueuer/styleSolutionEnqueuer";
 
 intro(bold(`Generate Theme`));
 
@@ -57,7 +59,7 @@ editWpEnv({ wpEnvFile: `.wp-env.json`, directory: answers.theme.directory });
 
 const functionFile = generateFunctionsFile();
 
-await setupCssOption({functionFile, answers, npmPackages, packageScripts, prettierConfigOptions});
+await setupCssOption({registerAssets, answers, npmPackages, packageScripts, prettierConfigOptions});
 
   const captureWpHeadFunctionFile = generateCaptureWpHeadFunctionFile;
 
@@ -151,6 +153,8 @@ await setupCssOption({functionFile, answers, npmPackages, packageScripts, pretti
       fileContent: jsFile.content,
     });
   }
+
+  await styleSolutionEnqueuer({functionFile, theme: answers.theme, registerAssets});
 
   const prettierRcFile = generatePrettierRcFile({
     plugins: prettierConfigOptions.plugins,
