@@ -128,15 +128,15 @@ addScriptsToPackageJson([
   },
   {
     key: `esbuild`,
-    value: `esrun --config=tsconfig.dev.json esbuild.config.ts --sourcemap`,
+    value: `esrun --tsconfig=tsconfig.dev.json esbuild.config.ts --sourcemap`,
   },
   {
     key: `esbuild:watch`,
-    value: `esrun --config=tsconfig.dev.json esbuild.watch.ts --sourcemap`,
+    value: `esrun --tsconfig=tsconfig.dev.json esbuild.watch.ts --sourcemap`,
   },
   {
     key: `esbuild:prod`,
-    value: `esrun --config=tsconfig.dev.json esbuild.config.ts --minify`,
+    value: `esrun --tsconfig=tsconfig.dev.json esbuild.config.ts --minify`,
   },
 ]);
 
