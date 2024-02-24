@@ -33,6 +33,14 @@ const setupJs = async ({registerAssets, answers, npmPackages, esLintConfigOption
     fileContent: esbuildConfigFile.content,
   });
 
+  const tsConfigDevFile = generateTsConfigDevFile();
+
+  createFile({
+    directoryPath: ".",
+    fileName: tsConfigDevFile.name,
+    fileContent: tsConfigDevFile.content,
+  });
+
   if (answers.tooling.ts) {
     createDirectory({
       location: `src/themes/${answers.theme.directory}`,
@@ -45,14 +53,6 @@ const setupJs = async ({registerAssets, answers, npmPackages, esLintConfigOption
       directoryPath: ".",
       fileName: tsConfigFile.name,
       fileContent: tsConfigFile.content,
-    });
-
-    const tsConfigDevFile = generateTsConfigDevFile();
-
-    createFile({
-      directoryPath: ".",
-      fileName: tsConfigDevFile.name,
-      fileContent: tsConfigDevFile.content,
     });
 
     const tsFile = generateTsFile({ themeName: answers.theme.name });
