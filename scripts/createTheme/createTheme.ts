@@ -61,37 +61,7 @@ const functionFile = generateFunctionsFile();
 
 await setupCssOption({registerAssets, answers, npmPackages, packageScripts, prettierConfigOptions});
 
-  const captureWpHeadFunctionFile = generateCaptureWpHeadFunctionFile;
-
-  createFile({
-    directoryPath: `wp/themes/${answers.theme.directory}/functions`,
-    fileName: captureWpHeadFunctionFile.name,
-    fileContent: captureWpHeadFunctionFile.content
-  });
-
-  appendToFunctionsFile({
-    themeFolder: answers.theme.directory,
-    functionName: captureWpHeadFunctionFile.functionName
-  });
-
-  const captureWpFooterFunctionFile = generateCaptureWpFooterFunctionFile;
-
-  createFile({
-    directoryPath: `wp/themes/${answers.theme.directory}/functions`,
-    fileName: captureWpFooterFunctionFile.name,
-    fileContent: captureWpFooterFunctionFile.content
-  });
-
-  appendToFunctionsFile({
-    themeFolder: answers.theme.directory,
-    functionName: captureWpFooterFunctionFile.functionName
-  });
-
-  await setupTemplateOption({answers, composerPackages});
-
-  await setupTestingOptions({answers, composerPackages, npmPackages, packageScripts});
-
-  //JavaScript/TypeScript installs
+//JavaScript/TypeScript installs
   const esbuildConfigFile = generateEsbuildConfigFile({
     themeFolder: answers.theme.directory,
   });
@@ -155,6 +125,36 @@ await setupCssOption({registerAssets, answers, npmPackages, packageScripts, pret
   }
 
   await styleSolutionEnqueuer({functionFile, theme: answers.theme, registerAssets});
+
+  const captureWpHeadFunctionFile = generateCaptureWpHeadFunctionFile;
+
+  createFile({
+    directoryPath: `wp/themes/${answers.theme.directory}/functions`,
+    fileName: captureWpHeadFunctionFile.name,
+    fileContent: captureWpHeadFunctionFile.content
+  });
+
+  appendToFunctionsFile({
+    themeFolder: answers.theme.directory,
+    functionName: captureWpHeadFunctionFile.functionName
+  });
+
+  const captureWpFooterFunctionFile = generateCaptureWpFooterFunctionFile;
+
+  createFile({
+    directoryPath: `wp/themes/${answers.theme.directory}/functions`,
+    fileName: captureWpFooterFunctionFile.name,
+    fileContent: captureWpFooterFunctionFile.content
+  });
+
+  appendToFunctionsFile({
+    themeFolder: answers.theme.directory,
+    functionName: captureWpFooterFunctionFile.functionName
+  });
+
+  await setupTemplateOption({answers, composerPackages});
+
+  await setupTestingOptions({answers, composerPackages, npmPackages, packageScripts});
 
   const prettierRcFile = generatePrettierRcFile({
     plugins: prettierConfigOptions.plugins,
