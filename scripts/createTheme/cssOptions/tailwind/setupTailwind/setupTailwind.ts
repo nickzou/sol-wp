@@ -1,4 +1,3 @@
-import styleSolutionEnqueuer from "@createTheme/styleSolutionEnqueuer/styleSolutionEnqueuer";
 import createDirectory from "@utils/createDirectory/createDirectory";
 import generateTailwindConfigFile from "../generateTailwindConfigFile/generateTailwindConfigFile";
 import createFile from "@utils/createFile/createFile";
@@ -12,11 +11,6 @@ const setupTailwind = async ({registerAssets, answers, npmPackages, packageScrip
     file: 'tailwind',
     fileType: 'css'
   });
-  // await styleSolutionEnqueuer({
-  //   functionFile,
-  //   theme: answers.theme,
-  //   option: answers.tooling.css,
-  // });
 
   let tailwindAndUnoContent = generateTailwindAndUnoContent(answers);
 

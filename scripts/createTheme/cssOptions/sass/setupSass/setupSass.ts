@@ -1,4 +1,3 @@
-import styleSolutionEnqueuer from "@createTheme/styleSolutionEnqueuer/styleSolutionEnqueuer";
 import createDirectory from "@utils/createDirectory/createDirectory";
 import createFile from "@utils/createFile/createFile";
 import generateSassConfigFile from "../generateSassConfigFile/generateSassConfigFile";
@@ -11,13 +10,6 @@ const setupSass = async ({registerAssets, answers, npmPackages, packageScripts}:
     file: 'styles',
     fileType: 'css'
   });
-  // await styleSolutionEnqueuer({
-  //   functionFile,
-  //   theme: answers.theme,
-  //   option: answers.tooling.css,
-  //   cssRegisterName: "styles",
-  //   cssFileName: "styles",
-  // });
 
   createDirectory({
     location: `src/themes/${answers.theme.directory}`,

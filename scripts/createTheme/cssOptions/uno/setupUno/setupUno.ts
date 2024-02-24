@@ -1,4 +1,3 @@
-import styleSolutionEnqueuer from "@createTheme/styleSolutionEnqueuer/styleSolutionEnqueuer";
 import generateUnoConfigFile from "../generateUnoConfigFile/generateUnoConfigFile";
 import generateTailwindAndUnoContent from "@utils/generateTailwindAndUnoContent/generateTailwindAndUnoContent";
 import createFile from "@utils/createFile/createFile";
@@ -10,12 +9,6 @@ const setupUno = async ({registerAssets, answers, npmPackages, packageScripts}:S
     file: 'uno',
     fileType: 'css'
   });
-  
-  // await styleSolutionEnqueuer({
-  //   functionFile,
-  //   theme: answers.theme,
-  //   option: answers.tooling.css,
-  // });
 
   let tailwindAndUnoContent = generateTailwindAndUnoContent(answers);
 
