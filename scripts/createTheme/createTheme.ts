@@ -30,7 +30,7 @@ import setupTemplateOption from "./templateOptions/setupTemplateOption/setupTemp
 import setupTestingOptions from "./testingOptions/setupTestingOptions/setupTestingOptions";
 import setupBrowserSync from "@utils/setupBrowserSync/setupBrowserSync";
 import registerAssets from "@utils/vars/registerAssets";
-import styleSolutionEnqueuer from "./styleSolutionEnqueuer/styleSolutionEnqueuer";
+import assetRegisterAndEnqueuer from "./assetRegisterAndEnqueuer/assetRegisterAndEnqueuer";
 import setupJs from "./setupJs/setupJs/setupJs";
 
 intro(bold(`Generate Theme`));
@@ -64,7 +64,7 @@ await setupCssOption({registerAssets, answers, npmPackages, packageScripts, pret
 
 await setupJs({registerAssets, answers, npmPackages, packageScripts, esLintConfigOptions});
 
-await styleSolutionEnqueuer({functionFile, theme: answers.theme, registerAssets});
+await assetRegisterAndEnqueuer({functionFile, theme: answers.theme, registerAssets});
 
 const captureWpHeadFunctionFile = generateCaptureWpHeadFunctionFile;
 
