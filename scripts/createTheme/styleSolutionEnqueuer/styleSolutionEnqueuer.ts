@@ -28,22 +28,22 @@ const styleSolutionEnqueuer = async ({
   const cssRegisterString = cssAssets.map(a => generateStyleRegisterTemplate({
     handle: a.handle,
     file: a.file
-  })).join('\n');
+  }));
 
-  const jsAssetsString = jsAssets.map(a => generateJsRegisterTemplate({handle: a.handle, file: a.file})).join('\n');
+  const jsAssetsString = jsAssets.map(a => generateJsRegisterTemplate({handle: a.handle, file: a.file}));
 
   const registerAssetsFile = generatePhpFunctionFile({
     name: "register_assets",
-    functionBody: cssRegisterString+jsAssetsString
+    functionBody: [...cssRegisterString, ...jsAssetsString].join('\n')
   });
 
-  const cssEnqueueString = cssAssets.map( a => generateStyleEnqueueTemplate({handle: a.handle})).join('\n');
+  const cssEnqueueString = cssAssets.map( a => generateStyleEnqueueTemplate({handle: a.handle}));
 
-  const jsEnqueueString = jsAssets.map( a => generateJsEnqueueTemplate({handle: a.handle})).join('\n');
+  const jsEnqueueString = jsAssets.map( a => generateJsEnqueueTemplate({handle: a.handle}));
 
   const enqueueAssetsFile = generatePhpFunctionFile({
     name: "enqueue_assets",
-    functionBody: cssEnqueueString + jsEnqueueString,
+    functionBody: [...cssEnqueueString, ...jsEnqueueString].join('\n'),
   });
 
   createDirectory({
