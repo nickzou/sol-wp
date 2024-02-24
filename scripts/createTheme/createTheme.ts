@@ -212,7 +212,7 @@ await setupCssOption({registerAssets, answers, npmPackages, packageScripts, pret
     fileContent: composerFile.content,
   });
 
-  addToGitignore('.gitignore', [`wp/themes/${answers.theme.directory}/vendor`]);
+  addToGitignore('.gitignore', [`wp/themes/${answers.theme.directory}/vendor`,`wp/themes/${answers.theme.directory}/css`, `wp/themes/${answers.theme.directory}/js`]);
 
   await installNpmPackages(npmPackages);
   await installComposerPackages(
