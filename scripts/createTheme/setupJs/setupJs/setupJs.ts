@@ -7,7 +7,6 @@ import generateTsConfigFile from "@createTheme/tsOptions/generateTsConfigFile/ge
 import generateTsFile from "@createTheme/tsOptions/generateTsFile/generateTsFile";
 import {type esLintConfigOptions} from "@utils/vars/esLintConfigOptions";
 import generateJsFile from "@createTheme/jsOptions/generateJsFile/generateJsFile";
-import generateTsConfigDevFile from "@createTheme/tsOptions/generateTsConfigDevFile/generateTsConfigDevFile";
 import generateEsbuildWatchFile from "@createTheme/tsOptions/generateEsbuildWatchFile/generateEsbuildWatchFile";
 
 interface setupJs {
@@ -42,14 +41,6 @@ const setupJs = async ({registerAssets, answers, npmPackages, esLintConfigOption
     directoryPath: ".",
     fileName: esbuildWatchFile.name,
     fileContent: esbuildWatchFile.content,
-  });
-
-  const tsConfigDevFile = generateTsConfigDevFile();
-
-  createFile({
-    directoryPath: ".",
-    fileName: tsConfigDevFile.name,
-    fileContent: tsConfigDevFile.content,
   });
 
   if (answers.tooling.ts) {
