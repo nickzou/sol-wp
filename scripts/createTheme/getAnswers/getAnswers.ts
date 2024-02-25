@@ -132,7 +132,7 @@ const getAnswers = async ():Promise<Recipe> => {
                 {
                     value: 'jest',
                     label: 'Jest',
-                    hint: 'JavaScript/Testing Library'
+                    hint: 'JavaScript Unit Testing Library'
                 },
                 {
                     value: 'cypress',
