@@ -4,7 +4,7 @@ import generateSassConfigFile from "../generateSassConfigFile/generateSassConfig
 import generateStylelintFile from "../generateSassStylelintFile/generateSassStylelintFile";
 import { SetupCss } from "@utils/types/SetupCss";
 
-const setupSass = async ({registerAssets, answers, npmPackages, packageScripts}:SetupCss) => {
+const setupSass = async ({registerAssets, answers, npmPackages, watchScripts, packageScripts}:SetupCss) => {
   registerAssets.push({
     handle: 'styles',
     file: 'styles',
@@ -51,6 +51,8 @@ const setupSass = async ({registerAssets, answers, npmPackages, packageScripts}:
         'concurrently "npm run sass:watch" "npm run sass:prettier:watch" "npm run stylelint:watch"',
     },
   ]);
+
+  watchScripts.push("'npm run style:watch'");
 
   const sassConfigFile = generateSassConfigFile({
     themeFolder: answers.theme.directory,
