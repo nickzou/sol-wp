@@ -28,6 +28,7 @@ import setupBrowserSync from "@utils/setupBrowserSync/setupBrowserSync";
 import registerAssets from "@utils/vars/registerAssets";
 import assetRegisterAndEnqueuer from "./assetRegisterAndEnqueuer/assetRegisterAndEnqueuer";
 import setupJs from "./setupJs/setupJs/setupJs";
+import watchScripts from "@utils/vars/watchScripts";
 
 intro(bold(`Generate Theme`));
 
@@ -56,7 +57,7 @@ editWpEnv({ wpEnvFile: `.wp-env.json`, directory: answers.theme.directory });
 
 const functionFile = generateFunctionsFile();
 
-await setupCssOption({registerAssets, answers, npmPackages, packageScripts, prettierConfigOptions});
+await setupCssOption({registerAssets, answers, npmPackages, packageScripts, watchScripts, prettierConfigOptions});
 
 await setupJs({registerAssets, answers, npmPackages, packageScripts, esLintConfigOptions});
 
@@ -112,7 +113,12 @@ createFile({
 
 await setupBrowserSync({npmPackages, packageScripts});
 
-addScriptsToPackageJson(packageScripts);
+addScriptsToPackageJson([...packageScripts,
+  {
+    key: 'watch',
+    value: watchScripts.join(' ')
+  }
+]);
 
 const composerFile = generateComposerFile({
   themeFolder: answers.theme.directory,
