@@ -45,7 +45,7 @@ const generateEsLintConfigFile = ({
     "linebreak-style": ["error", "unix"],
     "quotes": [
       "error",
-      "single",
+      "double",
       {
         "allowTemplateLiterals": true
       }

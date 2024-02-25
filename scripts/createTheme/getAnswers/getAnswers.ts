@@ -125,9 +125,14 @@ const getAnswers = async ():Promise<Recipe> => {
                     hint: 'Adds WordPress Mocks to PHPUnit, don\'t select PHP Unit if you select this. PHP Unit will automatically be installed for you.'
                 },
                 {
+                    value: 'phpstan',
+                    label: 'PHPStan',
+                    hint: 'PHP Static Analysis tool'
+                },
+                {
                     value: 'jest',
                     label: 'Jest',
-                    hint: 'JavaScript/Testing Library'
+                    hint: 'JavaScript Unit Testing Library'
                 },
                 {
                     value: 'cypress',
