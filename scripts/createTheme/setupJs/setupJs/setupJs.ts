@@ -96,6 +96,7 @@ const setupJs = async ({registerAssets, answers, npmPackages, packageScripts, wa
     npmPackages.push(...[
       "@typescript-eslint/eslint-plugin",
       "@typescript-eslint/parser",
+      "@typescript/eslint-plugin-parser@latest"
     ]);
 
     esLintConfigOptions.extendsArr.push(...[
