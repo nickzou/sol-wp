@@ -15,10 +15,11 @@ interface setupJs {
     answers: Recipe;
     npmPackages: string[];
     packageScripts: PackageScript[];
+    watchScripts: string[];
     esLintConfigOptions: esLintConfigOptions;
 }
 
-const setupJs = async ({registerAssets, answers, npmPackages, packageScripts, esLintConfigOptions}:setupJs) => {
+const setupJs = async ({registerAssets, answers, npmPackages, packageScripts, watchScripts, esLintConfigOptions}:setupJs) => {
     registerAssets.push({
         handle: 'index',
         file: 'index',
@@ -75,6 +76,8 @@ const setupJs = async ({registerAssets, answers, npmPackages, packageScripts, es
       value: `esrun esbuild.config.ts --minify`,
     },
   );
+
+  watchScripts.push("'npm run watch esbuild:watch'");
 
   if (answers.tooling.ts) {
     createDirectory({

@@ -59,7 +59,7 @@ const functionFile = generateFunctionsFile();
 
 await setupCssOption({registerAssets, answers, npmPackages, packageScripts, watchScripts, prettierConfigOptions});
 
-await setupJs({registerAssets, answers, npmPackages, packageScripts, esLintConfigOptions});
+await setupJs({registerAssets, answers, npmPackages, packageScripts, watchScripts, esLintConfigOptions});
 
 await assetRegisterAndEnqueuer({functionFile, theme: answers.theme, registerAssets});
 
