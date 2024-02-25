@@ -103,9 +103,9 @@ const setupJs = async ({registerAssets, answers, npmPackages, packageScripts, wa
       "plugin:@typescript-eslint/recommended",
     ]);
 
-    esLintConfigOptions.plugins.push(...[
-      "@typescript/parser",
-    ]);
+    // esLintConfigOptions.plugins.push(...[
+    //   "@typescript/parser",
+    // ]);
 
     esLintConfigOptions.parser = "@typescript-eslint/parser";
   } else {
