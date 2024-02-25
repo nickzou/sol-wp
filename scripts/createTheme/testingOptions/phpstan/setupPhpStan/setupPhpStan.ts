@@ -30,10 +30,16 @@ const setupPhpStan = async ({answers, packages, packageScripts}:SetupTestingOpti
         fileContent: phpStanBootstrapFile.content
     });
 
-    packageScripts.push({
-        key: 'phpstan',
-        value: `wp/themes/${answers.theme.directory}/vendor/bin/phpstan analyse wp/themes/${answers.theme.directory}`
-    });
+    packageScripts.push(
+        {
+            key: 'phpstan',
+            value: `wp/themes/${answers.theme.directory}/vendor/bin/phpstan analyse wp/themes/${answers.theme.directory}`
+        },
+        {
+            key: 'phpstan:watch',
+            value: `onchange "wp/themes/${answers.theme.directory}/**/*.php" -- npm run phpstan`
+        }
+    );
 };
 
 export default setupPhpStan;
