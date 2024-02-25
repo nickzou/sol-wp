@@ -9,9 +9,7 @@ const generatePhpStanNeon = (themeFolder:string):File => {
         - wp/themes/${themeFolder}/vendor
     bootstrapFiles:
         - wp/themes/${themeFolder}/vendor/php-stubs/wordpress-stubs/wordpress-stubs.php
-        - phpstan/bootstrap.php
-    ignoreErrors:
-        - '#File ends with a trailing whitespace#'`;
+        - phpstan/bootstrap.php`;
 
     return {
         name: 'phpstan.neon',
