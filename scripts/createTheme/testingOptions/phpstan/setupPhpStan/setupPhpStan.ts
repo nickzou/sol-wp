@@ -5,7 +5,7 @@ import createFile from "@utils/createFile/createFile";
 import createDirectory from "@utils/createDirectory/createDirectory";
 import generatePhpStanBootstrapFile from "../generatePhpStanBootstrapFile/generatePhpStanBootstrapFile";
 
-const setupPhpStan = async ({answers, packages, packageScripts}:SetupTestingOption) => {
+const setupPhpStan = async ({answers, packages, packageScripts, watchScripts}:SetupTestingOption) => {
     const option = testingOptions.filter(o => o.name === 'phpstan')[0];
     packages.push(...option.packageName);
 
@@ -40,6 +40,8 @@ const setupPhpStan = async ({answers, packages, packageScripts}:SetupTestingOpti
             value: `onchange "wp/themes/${answers.theme.directory}/**/*.php" -- npm run phpstan`
         }
     );
+
+    watchScripts.push("'npm run phpstan:watch'");
 };
 
 export default setupPhpStan;
