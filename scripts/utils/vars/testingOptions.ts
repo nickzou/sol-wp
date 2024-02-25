@@ -12,6 +12,11 @@ const testingOptions: TestingOption[] = [
         language: 'php'
     },
     {
+        name: "phpstan",
+        packageName: ["phpstan/phpstan", "szepeviktor/phpstan-wordpress"],
+        language: 'php'
+    },
+    {
         name: "jest",
         packageName: ["@types/jest", "jest", "ts-jest", "babel-jest"],
         language: 'javascript'
