@@ -91,7 +91,7 @@ appendToFunctionsFile({
 
 await setupTemplateOption({answers, composerPackages});
 
-await setupTestingOptions({answers, composerPackages, npmPackages, packageScripts});
+await setupTestingOptions({answers, composerPackages, npmPackages, packageScripts, watchScripts});
 
 const prettierRcFile = generatePrettierRcFile({
   plugins: prettierConfigOptions.plugins,

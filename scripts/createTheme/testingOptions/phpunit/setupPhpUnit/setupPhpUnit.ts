@@ -4,7 +4,7 @@ import testingOptions from "@utils/vars/testingOptions";
 import generatePhpUnitXml from "../../common/generatePhpUnitXml/generatePhpUnitXml";
 import { SetupTestingOption } from "@utils/types/SetupTestingOption";
 
-const setupPhpUnit = async ({answers, packages, packageScripts}:SetupTestingOption) => {
+const setupPhpUnit = async ({answers, packages, packageScripts, watchScripts}:SetupTestingOption) => {
     const option = testingOptions.filter(o => o.name === 'phpunit')[0];
     packages.push(...option.packageName);
 
@@ -21,10 +21,18 @@ const setupPhpUnit = async ({answers, packages, packageScripts}:SetupTestingOpti
         fileContent: phpUnitXml.content
     });
 
-    packageScripts.push({
-        key: 'test:phpunit',
-        value: `wp-env run tests-cli --env-cwd=wp-content/themes/${answers.theme.directory} ./vendor/bin/phpunit`
-    });
+    packageScripts.push(
+        {
+            key: 'test:phpunit',
+            value: `wp-env run tests-cli --env-cwd=wp-content/themes/${answers.theme.directory} ./vendor/bin/phpunit`
+        },
+        {
+            key: 'test:phpunit:watch',
+            value: `onchange "wp/themes/${answers.theme.directory}" -- npm run test:phpunit`
+        }
+    );
+
+    watchScripts.push("'npm run test:phpunit:watch'");
 };
 
 export default setupPhpUnit;

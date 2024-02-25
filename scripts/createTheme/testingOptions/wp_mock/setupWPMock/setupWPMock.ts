@@ -5,7 +5,7 @@ import { SetupTestingOption } from "@utils/types/SetupTestingOption"
 import testingOptions from "@utils/vars/testingOptions";
 import generateWPMockBootstrap from "../generateWPMockBootstrap/generateWPMockBootstrap";
 
-const setupWPMock = async({answers, packages, packageScripts}:SetupTestingOption) => {
+const setupWPMock = async({answers, packages, packageScripts, watchScripts}:SetupTestingOption) => {
     const option = testingOptions.filter(o => o.name === 'wp_mock')[0];
     packages.push(...option.packageName);
 
@@ -30,10 +30,18 @@ const setupWPMock = async({answers, packages, packageScripts}:SetupTestingOption
         fileContent: bootstrapFile.content
     });
 
-    packageScripts.push({
-        key: 'test:wpmock',
-        value: `wp-env run tests-cli --env-cwd=wp-content/themes/${answers.theme.directory} ./vendor/bin/phpunit`
-    });
+    packageScripts.push(
+        {
+            key: 'test:wpmock',
+            value: `wp-env run tests-cli --env-cwd=wp-content/themes/${answers.theme.directory} ./vendor/bin/phpunit`
+        },
+        {
+            key: 'test:wpmock:watch',
+            value: `onchange "wp/themes/${answers.theme.directory}" -- npm run test:wpmock`
+        }
+    );
+
+    watchScripts.push("'npm run test:wpmock:watch'");
 };
 
 export default setupWPMock;

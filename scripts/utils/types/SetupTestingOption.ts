@@ -5,4 +5,5 @@ export type SetupTestingOption = {
     answers: Recipe;
     packages: string[];
     packageScripts?: PackageScript[];
+    watchScripts?: string[];
 }

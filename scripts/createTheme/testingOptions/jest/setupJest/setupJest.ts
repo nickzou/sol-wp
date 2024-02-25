@@ -3,7 +3,7 @@ import testingOptions from "@utils/vars/testingOptions";
 import generateJsConfig from "../generateJsConfig/generateJsConfig";
 import createFile from "@utils/createFile/createFile";
 
-const setupJest = async ({answers, packages, packageScripts}:SetupTestingOption) => {
+const setupJest = async ({packages, packageScripts, watchScripts}:SetupTestingOption) => {
     const option = testingOptions.filter(o => o.name === 'jest')[0];
     packages.push(...option.packageName);
 
@@ -15,10 +15,18 @@ const setupJest = async ({answers, packages, packageScripts}:SetupTestingOption)
         fileContent: jestConfigFile.content
     });
 
-    packageScripts.push({
-        key: 'test:jest',
-        value: 'jest'
-    })
+    packageScripts.push(
+        {
+            key: 'test:jest',
+            value: 'jest'
+        },
+        {
+            key: 'test:jest:watch',
+            value: 'jest --watch'
+        }
+    );
+
+    watchScripts.push("'npm run test:jest:watch'");
 };
 
 export default setupJest;
