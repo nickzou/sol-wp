@@ -4,7 +4,7 @@ import generatePostCssConfigFile from "../generatePostCssConfigFile/generatePost
 import generatePostCssProdConfigFile from "../generatePostCssProdConfigFile/generatePostCssProdConfigFile";
 import { SetupCss } from "@utils/types/SetupCss";
 
-const setupPostCss = async ({registerAssets, answers, npmPackages, packageScripts, prettierConfigOptions}:SetupCss) => {
+const setupPostCss = async ({registerAssets, answers, npmPackages, packageScripts, watchScripts, prettierConfigOptions}:SetupCss) => {
   registerAssets.push({
     handle: 'styles',
     file: 'styles',
@@ -30,6 +30,8 @@ const setupPostCss = async ({registerAssets, answers, npmPackages, packageScript
       value: `postcss src/themes/${answers.theme.directory}/css/**/*.css --dir wp/themes/${answers.theme.directory}/css --config .postcssrc.json --watch`,
     },
   ]);
+
+  watchScripts.push("'npm run css:watch'");
 
   const postCssConfigFile = generatePostCssConfigFile();
 
