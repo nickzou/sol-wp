@@ -11,17 +11,17 @@ import generateStyleEnqueueTemplate from "@createTheme/cssOptions/generateStyleE
 import generateJsRegisterTemplate from "@createTheme/jsOptions/generateJsRegisterTemplate/generateJsRegisterTemplate";
 import generateJsEnqueueTemplate from "@createTheme/jsOptions/generateJsEnqueueTemplate/generateJsEnqueueTemplate";
 
-interface styleSolutionEnqueuer {
+interface assetRegisterAndEnqueuer {
   functionFile: File;
   theme: Theme;
   registerAssets: registerAsset[]
 }
 
-const styleSolutionEnqueuer = async ({
+const assetRegisterAndEnqueuer = async ({
   functionFile,
   theme,
   registerAssets
-}: styleSolutionEnqueuer) => {
+}: assetRegisterAndEnqueuer) => {
   const cssAssets = registerAssets.filter(a => a.fileType === 'css');
   const jsAssets:registerAsset[] = registerAssets.filter(a => a.fileType === 'js');
 
@@ -85,4 +85,4 @@ const styleSolutionEnqueuer = async ({
   });
 };
 
-export default styleSolutionEnqueuer;
+export default assetRegisterAndEnqueuer;

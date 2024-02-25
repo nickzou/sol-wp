@@ -6,13 +6,9 @@ import editWpEnv from "@createTheme/editWpEnv/editWpEnv";
 import { bold, green } from "colorette";
 import generateFunctionsFile from "@createTheme/generateFunctionsFile/generateFunctionsFile";
 import generatePrettierRcFile from "./cssOptions/prettier/generatePrettierRcFile/generatePrettierRcFile";
-import generateTsConfigFile from "./tsOptions/generateTsConfigFile/generateTsConfigFile";
 import installNpmPackages from "@utils/installNpmPackages/installNpmPackages";
 import generateEsLintConfigFile from "./generateEsLintConfigFile/generateEsLintConfigFile";
 import addScriptsToPackageJson from "@utils/addScriptsToPackageJson/addScriptsToPackageJson";
-import generateEsbuildConfigFile from "./tsOptions/generateEsbuildConfigFile/generateEsbuildConfigFile";
-import generateTsFile from "./tsOptions/generateTsFile/generateTsFile";
-import generateJsFile from "./jsOptions/generateJsFile/generateJsFile";
 import generateComposerFile from "./generateComposerFile/generateComposerFile";
 import installComposerPackages from "@utils/installComposerPackages/installComposerPackages";
 import addToGitignore from "@utils/addToGitignore/addToGitignore";
@@ -30,8 +26,9 @@ import setupTemplateOption from "./templateOptions/setupTemplateOption/setupTemp
 import setupTestingOptions from "./testingOptions/setupTestingOptions/setupTestingOptions";
 import setupBrowserSync from "@utils/setupBrowserSync/setupBrowserSync";
 import registerAssets from "@utils/vars/registerAssets";
-import styleSolutionEnqueuer from "./styleSolutionEnqueuer/styleSolutionEnqueuer";
+import assetRegisterAndEnqueuer from "./assetRegisterAndEnqueuer/assetRegisterAndEnqueuer";
 import setupJs from "./setupJs/setupJs/setupJs";
+import watchScripts from "@utils/vars/watchScripts";
 
 intro(bold(`Generate Theme`));
 
@@ -60,11 +57,11 @@ editWpEnv({ wpEnvFile: `.wp-env.json`, directory: answers.theme.directory });
 
 const functionFile = generateFunctionsFile();
 
-await setupCssOption({registerAssets, answers, npmPackages, packageScripts, prettierConfigOptions});
+await setupCssOption({registerAssets, answers, npmPackages, packageScripts, watchScripts, prettierConfigOptions});
 
-await setupJs({registerAssets, answers, npmPackages, esLintConfigOptions});
+await setupJs({registerAssets, answers, npmPackages, packageScripts, watchScripts, esLintConfigOptions});
 
-await styleSolutionEnqueuer({functionFile, theme: answers.theme, registerAssets});
+await assetRegisterAndEnqueuer({functionFile, theme: answers.theme, registerAssets});
 
 const captureWpHeadFunctionFile = generateCaptureWpHeadFunctionFile;
 
@@ -114,30 +111,15 @@ createFile({
   fileContent: esLintConfigFile.content,
 });
 
-await setupBrowserSync({npmPackages, packageScripts});
+watchScripts.push("'npm run eslint:watch'");
 
-addScriptsToPackageJson([
-  ...packageScripts,
+await setupBrowserSync({npmPackages, packageScripts, watchScripts});
+
+addScriptsToPackageJson([...packageScripts,
   {
-    key: `eslint`,
-    value: `eslint 'src/themes/${answers.theme.directory}/ts/**/*.{js,jsx,ts,tsx}'`,
-  },
-  {
-    key: `eslint:watch`,
-    value: `onchange 'src/themes/${answers.theme.directory}/ts/**/*.{js,jsx,ts,tsx}' -- npm run eslint`,
-  },
-  {
-    key: `esbuild`,
-    value: `esrun esbuild.config.ts --sourcemap`,
-  },
-  {
-    key: `esbuild:watch`,
-    value: `esrun esbuild.watch.ts --sourcemap`,
-  },
-  {
-    key: `esbuild:prod`,
-    value: `esrun esbuild.config.ts --minify`,
-  },
+    key: 'watch',
+    value: watchScripts.join(' ')
+  }
 ]);
 
 const composerFile = generateComposerFile({
@@ -150,9 +132,14 @@ createFile({
   fileContent: composerFile.content,
 });
 
-addToGitignore('.gitignore', [`wp/themes/${answers.theme.directory}/vendor`,`wp/themes/${answers.theme.directory}/css`, `wp/themes/${answers.theme.directory}/js`]);
+addToGitignore('.gitignore', [
+  `wp/themes/${answers.theme.directory}/vendor`,
+  `wp/themes/${answers.theme.directory}/css`,
+  `wp/themes/${answers.theme.directory}/js`
+]);
 
 await installNpmPackages(npmPackages);
+
 await installComposerPackages(
   composerPackages,
   `wp/themes/${answers.theme.directory}`

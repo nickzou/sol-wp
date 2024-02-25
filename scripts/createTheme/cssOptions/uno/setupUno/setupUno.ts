@@ -1,21 +1,14 @@
-import styleSolutionEnqueuer from "@createTheme/styleSolutionEnqueuer/styleSolutionEnqueuer";
 import generateUnoConfigFile from "../generateUnoConfigFile/generateUnoConfigFile";
 import generateTailwindAndUnoContent from "@utils/generateTailwindAndUnoContent/generateTailwindAndUnoContent";
 import createFile from "@utils/createFile/createFile";
 import { SetupCss } from "@utils/types/SetupCss";
 
-const setupUno = async ({registerAssets, answers, npmPackages, packageScripts}:SetupCss) => {
+const setupUno = async ({registerAssets, answers, npmPackages, watchScripts, packageScripts}:SetupCss) => {
   registerAssets.push({
     handle: 'uno',
     file: 'uno',
     fileType: 'css'
   });
-  
-  // await styleSolutionEnqueuer({
-  //   functionFile,
-  //   theme: answers.theme,
-  //   option: answers.tooling.css,
-  // });
 
   let tailwindAndUnoContent = generateTailwindAndUnoContent(answers);
 
@@ -24,6 +17,8 @@ const setupUno = async ({registerAssets, answers, npmPackages, packageScripts}:S
     { key: "uno:prod", value: "unocss --minify" },
     { key: "uno:watch", value: "unocss --watch" },
   ]);
+
+  watchScripts.push("'npm run uno:watch'");
 
   const unoConfigFile = generateUnoConfigFile({
     content: tailwindAndUnoContent,

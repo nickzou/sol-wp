@@ -1,23 +1,15 @@
-import styleSolutionEnqueuer from "@createTheme/styleSolutionEnqueuer/styleSolutionEnqueuer";
 import createDirectory from "@utils/createDirectory/createDirectory";
 import createFile from "@utils/createFile/createFile";
 import generateSassConfigFile from "../generateSassConfigFile/generateSassConfigFile";
 import generateStylelintFile from "../generateSassStylelintFile/generateSassStylelintFile";
 import { SetupCss } from "@utils/types/SetupCss";
 
-const setupSass = async ({registerAssets, answers, npmPackages, packageScripts}:SetupCss) => {
+const setupSass = async ({registerAssets, answers, npmPackages, watchScripts, packageScripts}:SetupCss) => {
   registerAssets.push({
     handle: 'styles',
     file: 'styles',
     fileType: 'css'
   });
-  // await styleSolutionEnqueuer({
-  //   functionFile,
-  //   theme: answers.theme,
-  //   option: answers.tooling.css,
-  //   cssRegisterName: "styles",
-  //   cssFileName: "styles",
-  // });
 
   createDirectory({
     location: `src/themes/${answers.theme.directory}`,
@@ -59,6 +51,8 @@ const setupSass = async ({registerAssets, answers, npmPackages, packageScripts}:
         'concurrently "npm run sass:watch" "npm run sass:prettier:watch" "npm run stylelint:watch"',
     },
   ]);
+
+  watchScripts.push("'npm run style:watch'");
 
   const sassConfigFile = generateSassConfigFile({
     themeFolder: answers.theme.directory,

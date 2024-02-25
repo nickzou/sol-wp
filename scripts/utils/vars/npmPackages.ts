@@ -10,6 +10,7 @@ let npmPackages = [
     "glob",
     "@types/glob",
     "browserslist",
+    "concurrently",
 ];
 
 export default npmPackages;

@@ -8,5 +8,6 @@ export type SetupCss = {
     answers: Recipe;
     npmPackages?: string[];
     packageScripts?: PackageScript[];
+    watchScripts: string[];
     prettierConfigOptions?:PrettierConfigOptions;
 };

@@ -1,4 +1,3 @@
-import styleSolutionEnqueuer from "@createTheme/styleSolutionEnqueuer/styleSolutionEnqueuer";
 import createDirectory from "@utils/createDirectory/createDirectory";
 import generateTailwindConfigFile from "../generateTailwindConfigFile/generateTailwindConfigFile";
 import createFile from "@utils/createFile/createFile";
@@ -6,17 +5,12 @@ import generateTailwindAndUnoContent from "@utils/generateTailwindAndUnoContent/
 import generateTailwindCssFile from "../generateTailwindCssFile/generateTailwindCssFile";
 import { SetupCss } from "@utils/types/SetupCss";
 
-const setupTailwind = async ({registerAssets, answers, npmPackages, packageScripts, prettierConfigOptions}:SetupCss) => {
+const setupTailwind = async ({registerAssets, answers, npmPackages, packageScripts, watchScripts, prettierConfigOptions}:SetupCss) => {
   registerAssets.push({
     handle: 'tailwind',
     file: 'tailwind',
     fileType: 'css'
   });
-  // await styleSolutionEnqueuer({
-  //   functionFile,
-  //   theme: answers.theme,
-  //   option: answers.tooling.css,
-  // });
 
   let tailwindAndUnoContent = generateTailwindAndUnoContent(answers);
 
@@ -39,6 +33,8 @@ const setupTailwind = async ({registerAssets, answers, npmPackages, packageScrip
       value: `tailwindcss -i ./src/themes/${answers.theme.directory}/css/tailwind.css -o ./wp/themes/${answers.theme.directory}/css/tailwind.css --watch`,
     },
   ]);
+
+  watchScripts.push("'npm run tailwind:watch'");
 
   const tailwindConfigFile = generateTailwindConfigFile({
     content: tailwindAndUnoContent,
