@@ -12,10 +12,11 @@ type SetupTestingOptions = {
     answers: Recipe;
     composerPackages: string[];
     npmPackages: string[];
+    watchScripts: string[];
     packageScripts: PackageScript[];
 }
 
-const setupTestingOptions = async ({answers, composerPackages, npmPackages, packageScripts}:SetupTestingOptions) => {
+const setupTestingOptions = async ({answers, composerPackages, npmPackages, watchScripts, packageScripts}:SetupTestingOptions) => {
     if(answers.tooling.testing) {
         const testingOptions = {
             phpunit: setupPhpUnit,
@@ -33,9 +34,9 @@ const setupTestingOptions = async ({answers, composerPackages, npmPackages, pack
                     if(optionFunction) {
                         const currentOption = options.filter( o => o.name === key)[0];
                         if (currentOption.language === 'php') {
-                            await optionFunction({answers, packages: composerPackages, packageScripts});
+                            await optionFunction({answers, packages: composerPackages, packageScripts, watchScripts});
                         } else {
-                            await optionFunction({answers, packages: npmPackages, packageScripts});
+                            await optionFunction({answers, packages: npmPackages, packageScripts, watchScripts});
                         }
                     }
                 } catch (error) {
