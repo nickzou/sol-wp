@@ -113,7 +113,7 @@ createFile({
 
 watchScripts.push("'npm run eslint:watch'");
 
-await setupBrowserSync({npmPackages, packageScripts});
+await setupBrowserSync({npmPackages, packageScripts, watchScripts});
 
 addScriptsToPackageJson([...packageScripts,
   {
@@ -132,7 +132,11 @@ createFile({
   fileContent: composerFile.content,
 });
 
-addToGitignore('.gitignore', [`wp/themes/${answers.theme.directory}/vendor`,`wp/themes/${answers.theme.directory}/css`, `wp/themes/${answers.theme.directory}/js`]);
+addToGitignore('.gitignore', [
+  `wp/themes/${answers.theme.directory}/vendor`,
+  `wp/themes/${answers.theme.directory}/css`,
+  `wp/themes/${answers.theme.directory}/js`
+]);
 
 await installNpmPackages(npmPackages);
 
