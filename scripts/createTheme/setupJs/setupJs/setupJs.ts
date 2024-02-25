@@ -77,7 +77,7 @@ const setupJs = async ({registerAssets, answers, npmPackages, packageScripts, wa
     },
   );
 
-  watchScripts.push("'npm run watch esbuild:watch'");
+  watchScripts.push("'npm run esbuild:watch'");
 
   if (answers.tooling.ts) {
     createDirectory({
