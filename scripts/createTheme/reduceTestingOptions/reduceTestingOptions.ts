@@ -4,6 +4,7 @@ const reduceTestingOptions= (options:string[]):TestingOptions => {
     const initialOptions: TestingOptions = {
         phpunit: false,
         wp_mock: false,
+        phpstan: false,
         jest: false,
         cypress: false,
         playwright: false
