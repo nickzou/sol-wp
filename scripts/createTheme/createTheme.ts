@@ -111,6 +111,8 @@ createFile({
   fileContent: esLintConfigFile.content,
 });
 
+watchScripts.push("'npm run eslint:watch'");
+
 await setupBrowserSync({npmPackages, packageScripts});
 
 addScriptsToPackageJson([...packageScripts,
