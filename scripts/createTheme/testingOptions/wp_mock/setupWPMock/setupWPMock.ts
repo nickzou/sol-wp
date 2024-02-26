@@ -37,7 +37,7 @@ const setupWPMock = async({answers, packages, packageScripts, watchScripts}:Setu
         },
         {
             key: 'test:wpmock:watch',
-            value: `onchange "wp/themes/${answers.theme.directory}" -- npm run test:wpmock`
+            value: `onchange "wp/themes/${answers.theme.directory}/**/*.php" -- npm run test:wpmock`
         }
     );
 
