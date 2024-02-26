@@ -28,7 +28,7 @@ const setupPhpUnit = async ({answers, packages, packageScripts, watchScripts}:Se
         },
         {
             key: 'test:phpunit:watch',
-            value: `onchange "wp/themes/${answers.theme.directory}" -- npm run test:phpunit`
+            value: `onchange "wp/themes/${answers.theme.directory}/**/*.php" -- npm run test:phpunit`
         }
     );
 
