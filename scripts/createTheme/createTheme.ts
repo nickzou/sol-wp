@@ -117,8 +117,8 @@ await setupBrowserSync({npmPackages, packageScripts, watchScripts});
 
 addScriptsToPackageJson([...packageScripts,
   {
-    key: 'watch',
-    value: watchScripts.join(' ')
+    key: "watch",
+    value: watchScripts.join(" ")
   }
 ]);
 
@@ -132,7 +132,7 @@ createFile({
   fileContent: composerFile.content,
 });
 
-addToGitignore('.gitignore', [
+addToGitignore(".gitignore", [
   `wp/themes/${answers.theme.directory}/vendor`,
   `wp/themes/${answers.theme.directory}/css`,
   `wp/themes/${answers.theme.directory}/js`
