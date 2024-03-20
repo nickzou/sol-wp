@@ -29,6 +29,7 @@ import registerAssets from "@utils/vars/registerAssets";
 import assetRegisterAndEnqueuer from "./assetRegisterAndEnqueuer/assetRegisterAndEnqueuer";
 import setupJs from "./setupJs/setupJs/setupJs";
 import watchScripts from "@utils/vars/watchScripts";
+import devScripts from "@utils/vars/devScripts";
 
 intro(bold(`Generate Theme`));
 
@@ -57,7 +58,7 @@ editWpEnv({ wpEnvFile: `.wp-env.json`, directory: answers.theme.directory });
 
 const functionFile = generateFunctionsFile();
 
-await setupCssOption({registerAssets, answers, npmPackages, packageScripts, watchScripts, prettierConfigOptions});
+await setupCssOption({registerAssets, answers, npmPackages, packageScripts, watchScripts, devScripts, prettierConfigOptions});
 
 await setupJs({registerAssets, answers, npmPackages, packageScripts, watchScripts, esLintConfigOptions});
 
@@ -121,6 +122,11 @@ addScriptsToPackageJson([...packageScripts,
     value: watchScripts.join(" ")
   }
 ]);
+
+addScriptsToPackageJson([...packageScripts, {
+  key: "dev",
+  value: devScripts.join(" & ")
+}]);
 
 const composerFile = generateComposerFile({
   themeFolder: answers.theme.directory,
