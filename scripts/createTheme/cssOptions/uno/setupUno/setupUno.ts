@@ -3,7 +3,7 @@ import generateTailwindAndUnoContent from "@utils/generateTailwindAndUnoContent/
 import createFile from "@utils/createFile/createFile";
 import { SetupCss } from "@utils/types/SetupCss";
 
-const setupUno = async ({registerAssets, answers, npmPackages, watchScripts, packageScripts}:SetupCss) => {
+const setupUno = async ({registerAssets, answers, npmPackages, watchScripts, devScripts, packageScripts}:SetupCss) => {
   registerAssets.push({
     handle: 'uno',
     file: 'uno',
@@ -19,6 +19,8 @@ const setupUno = async ({registerAssets, answers, npmPackages, watchScripts, pac
   ]);
 
   watchScripts.push("'npm run uno:watch'");
+
+  devScripts.push("'npm run uno'");
 
   const unoConfigFile = generateUnoConfigFile({
     content: tailwindAndUnoContent,
