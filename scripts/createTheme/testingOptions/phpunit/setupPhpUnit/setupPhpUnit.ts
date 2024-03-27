@@ -4,7 +4,7 @@ import testingOptions from "@utils/vars/testingOptions";
 import generatePhpUnitXml from "../../common/generatePhpUnitXml/generatePhpUnitXml";
 import { SetupTestingOption } from "@utils/types/SetupTestingOption";
 
-const setupPhpUnit = async ({answers, packages, packageScripts, watchScripts}:SetupTestingOption) => {
+const setupPhpUnit = async ({answers, packages, packageScripts, watchScripts, devScripts}:SetupTestingOption) => {
   const option = testingOptions.filter(o => o.name === "phpunit")[0];
   packages.push(...option.packageName);
 
@@ -33,6 +33,8 @@ const setupPhpUnit = async ({answers, packages, packageScripts, watchScripts}:Se
   );
 
   watchScripts.push("'npm run test:phpunit:watch'");
+
+  devScripts.push("'npm run test:phpunit'");
 };
 
 export default setupPhpUnit;
