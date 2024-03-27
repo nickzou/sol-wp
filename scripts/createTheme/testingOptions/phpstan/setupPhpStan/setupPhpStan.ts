@@ -32,18 +32,18 @@ const setupPhpStan = async ({answers, packages, packageScripts, watchScripts, de
 
   packageScripts.push(
     {
-      key: "phpstan",
+      key: "test:phpstan",
       value: `wp/themes/${answers.theme.directory}/vendor/bin/phpstan analyse wp/themes/${answers.theme.directory}`
     },
     {
-      key: "phpstan:watch",
+      key: "test:phpstan:watch",
       value: `onchange "wp/themes/${answers.theme.directory}/**/*.php" -- npm run phpstan`
     }
   );
 
-  watchScripts.push("'npm run phpstan:watch'");
+  watchScripts.push("'npm run test:phpstan:watch'");
 
-  devScripts.push("'npm run phpstan'");
+  devScripts.push("'npm run test:phpstan'");
 };
 
 export default setupPhpStan;
