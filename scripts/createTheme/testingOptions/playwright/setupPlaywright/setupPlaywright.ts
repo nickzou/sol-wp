@@ -4,27 +4,27 @@ import generatePlaywrightConfig from "../generatePlaywrightConfig/generatePlaywr
 import createFile from "@utils/createFile/createFile";
 import createDirectory from "@utils/createDirectory/createDirectory";
 
-const setupPlaywright = async({answers, packages, packageScripts}:SetupTestingOption) => {
-    const option = testingOptions.filter( o => o.name === 'playwright')[0];
-    packages.push(...option.packageName);
+const setupPlaywright = async({packages, packageScripts}:SetupTestingOption) => {
+  const option = testingOptions.filter( o => o.name === "playwright")[0];
+  packages.push(...option.packageName);
 
-    const playwrightConfigFile = generatePlaywrightConfig();
+  const playwrightConfigFile = generatePlaywrightConfig();
 
-    createFile({
-        directoryPath: '.',
-        fileName: playwrightConfigFile.name,
-        fileContent: playwrightConfigFile.content
-    });
+  createFile({
+    directoryPath: ".",
+    fileName: playwrightConfigFile.name,
+    fileContent: playwrightConfigFile.content
+  });
 
-    createDirectory({
-        location: '.',
-        directoryName: 'playwright'
-    });
+  createDirectory({
+    location: ".",
+    directoryName: "playwright"
+  });
 
-    packageScripts.push(...[{
-        key: 'test:playwright',
-        value: 'playwright test'
-    }]);
+  packageScripts.push(...[{
+    key: "test:playwright",
+    value: "playwright test"
+  }]);
 };
 
 export default setupPlaywright;

@@ -16,15 +16,16 @@ interface setupJs {
     npmPackages: string[];
     packageScripts: PackageScript[];
     watchScripts: string[];
+    devScripts: string[];
     esLintConfigOptions: esLintConfigOptions;
 }
 
-const setupJs = async ({registerAssets, answers, npmPackages, packageScripts, watchScripts, esLintConfigOptions}:setupJs) => {
-    registerAssets.push({
-        handle: 'index',
-        file: 'index',
-        fileType: 'js'
-    });
+const setupJs = async ({registerAssets, answers, npmPackages, packageScripts, watchScripts, devScripts, esLintConfigOptions}:setupJs) => {
+  registerAssets.push({
+    handle: 'index',
+    file: 'index',
+    fileType: 'js'
+  });
 
   const esbuildConfigFile = generateEsbuildConfigFile({
     themeFolder: answers.theme.directory,
@@ -79,6 +80,10 @@ const setupJs = async ({registerAssets, answers, npmPackages, packageScripts, wa
 
   watchScripts.push("'npm run esbuild:watch'");
 
+  devScripts.push("'npm run eslint'");
+
+  devScripts.push("'npm run esbuild'");
+  
   if (answers.tooling.ts) {
     createDirectory({
       location: `src/themes/${answers.theme.directory}`,

@@ -29,6 +29,7 @@ import registerAssets from "@utils/vars/registerAssets";
 import assetRegisterAndEnqueuer from "./assetRegisterAndEnqueuer/assetRegisterAndEnqueuer";
 import setupJs from "./setupJs/setupJs/setupJs";
 import watchScripts from "@utils/vars/watchScripts";
+import devScripts from "@utils/vars/devScripts";
 
 intro(bold(`Generate Theme`));
 
@@ -57,9 +58,9 @@ editWpEnv({ wpEnvFile: `.wp-env.json`, directory: answers.theme.directory });
 
 const functionFile = generateFunctionsFile();
 
-await setupCssOption({registerAssets, answers, npmPackages, packageScripts, watchScripts, prettierConfigOptions});
+await setupCssOption({registerAssets, answers, npmPackages, packageScripts, watchScripts, devScripts, prettierConfigOptions});
 
-await setupJs({registerAssets, answers, npmPackages, packageScripts, watchScripts, esLintConfigOptions});
+await setupJs({registerAssets, answers, npmPackages, packageScripts, watchScripts, devScripts, esLintConfigOptions});
 
 await assetRegisterAndEnqueuer({functionFile, theme: answers.theme, registerAssets});
 
@@ -91,7 +92,7 @@ appendToFunctionsFile({
 
 await setupTemplateOption({answers, composerPackages});
 
-await setupTestingOptions({answers, composerPackages, npmPackages, packageScripts, watchScripts});
+await setupTestingOptions({answers, composerPackages, npmPackages, packageScripts, watchScripts, devScripts});
 
 const prettierRcFile = generatePrettierRcFile({
   plugins: prettierConfigOptions.plugins,
@@ -117,10 +118,15 @@ await setupBrowserSync({npmPackages, packageScripts, watchScripts});
 
 addScriptsToPackageJson([...packageScripts,
   {
-    key: 'watch',
-    value: watchScripts.join(' ')
+    key: "watch",
+    value: watchScripts.join(" ")
   }
 ]);
+
+addScriptsToPackageJson([...packageScripts, {
+  key: "dev",
+  value: devScripts.join(" & ")
+}]);
 
 const composerFile = generateComposerFile({
   themeFolder: answers.theme.directory,
@@ -132,7 +138,7 @@ createFile({
   fileContent: composerFile.content,
 });
 
-addToGitignore('.gitignore', [
+addToGitignore(".gitignore", [
   `wp/themes/${answers.theme.directory}/vendor`,
   `wp/themes/${answers.theme.directory}/css`,
   `wp/themes/${answers.theme.directory}/js`

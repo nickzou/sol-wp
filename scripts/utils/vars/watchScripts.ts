@@ -1,3 +1,3 @@
-const watchScripts = ['concurrently'];
+const watchScripts = ["concurrently"];
 
 export default watchScripts;

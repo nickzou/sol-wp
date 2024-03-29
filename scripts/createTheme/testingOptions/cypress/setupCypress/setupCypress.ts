@@ -4,30 +4,30 @@ import generateCypressConfig from "../generateCypressConfig/generateCypressConfi
 import createFile from "@utils/createFile/createFile";
 import createDirectory from "@utils/createDirectory/createDirectory";
 
-const setupCypress = async({answers, packages, packageScripts}:SetupTestingOption) => {
-    const option = testingOptions.filter(o => o.name === 'cypress')[0];
-    packages.push(...option.packageName);
+const setupCypress = async({packages, packageScripts}:SetupTestingOption) => {
+  const option = testingOptions.filter(o => o.name === "cypress")[0];
+  packages.push(...option.packageName);
 
-    const cypressConfigFile = generateCypressConfig();
+  const cypressConfigFile = generateCypressConfig();
 
-    createFile({
-        directoryPath: '.',
-        fileName: cypressConfigFile.name,
-        fileContent: cypressConfigFile.content
-    });
+  createFile({
+    directoryPath: ".",
+    fileName: cypressConfigFile.name,
+    fileContent: cypressConfigFile.content
+  });
 
-    createDirectory({
-        location: '.',
-        directoryName: 'cypress'
-    });
+  createDirectory({
+    location: ".",
+    directoryName: "cypress"
+  });
 
-    packageScripts.push(...[{
-        key: 'test:cypress-open',
-        value: 'cypress open'
-    }, {
-        key: 'test:cypress',
-        value: 'cypress run'
-    }]);
+  packageScripts.push(...[{
+    key: "test:cypress-open",
+    value: "cypress open"
+  }, {
+    key: "test:cypress",
+    value: "cypress run"
+  }]);
 };
 
 export default setupCypress;

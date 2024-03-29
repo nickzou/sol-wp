@@ -4,7 +4,7 @@ import generatePostCssConfigFile from "../generatePostCssConfigFile/generatePost
 import generatePostCssProdConfigFile from "../generatePostCssProdConfigFile/generatePostCssProdConfigFile";
 import { SetupCss } from "@utils/types/SetupCss";
 
-const setupPostCss = async ({registerAssets, answers, npmPackages, packageScripts, watchScripts, prettierConfigOptions}:SetupCss) => {
+const setupPostCss = async ({registerAssets, answers, npmPackages, packageScripts, watchScripts, devScripts, prettierConfigOptions}:SetupCss) => {
   registerAssets.push({
     handle: 'styles',
     file: 'styles',
@@ -32,6 +32,8 @@ const setupPostCss = async ({registerAssets, answers, npmPackages, packageScript
   ]);
 
   watchScripts.push("'npm run css:watch'");
+
+  devScripts.push("'npm run css'");
 
   const postCssConfigFile = generatePostCssConfigFile();
 

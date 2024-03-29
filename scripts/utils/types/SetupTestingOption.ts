@@ -1,9 +1,10 @@
 import { PackageScript } from "@utils/vars/packageScripts";
-import { Recipe } from "./Recipe"
+import { Recipe } from "./Recipe";
 
 export type SetupTestingOption = {
-    answers: Recipe;
-    packages: string[];
-    packageScripts?: PackageScript[];
-    watchScripts?: string[];
+  answers: Recipe;
+  packages: string[];
+  packageScripts?: PackageScript[];
+  watchScripts?: string[];
+  devScripts?: string[];
 }
