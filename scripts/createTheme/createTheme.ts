@@ -127,6 +127,9 @@ addScriptsToPackageJson([...packageScripts,
 addScriptsToPackageJson([...packageScripts, {
   key: "dev",
   value: devScripts.join(" & ")
+}, {
+  key: "prod",
+  value: prodScripts.join( " & ")
 }]);
 
 const composerFile = generateComposerFile({
