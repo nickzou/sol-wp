@@ -5,7 +5,7 @@ import generateTailwindAndUnoContent from "@utils/generateTailwindAndUnoContent/
 import generateTailwindCssFile from "../generateTailwindCssFile/generateTailwindCssFile";
 import { SetupCss } from "@utils/types/SetupCss";
 
-const setupTailwind = async ({registerAssets, answers, npmPackages, packageScripts, watchScripts, devScripts, prettierConfigOptions}:SetupCss) => {
+const setupTailwind = async ({registerAssets, answers, npmPackages, packageScripts, watchScripts, devScripts, prodScripts, prettierConfigOptions}:SetupCss) => {
   registerAssets.push({
     handle: 'tailwind',
     file: 'tailwind',
@@ -37,6 +37,8 @@ const setupTailwind = async ({registerAssets, answers, npmPackages, packageScrip
   watchScripts.push("'npm run tailwind:watch'");
 
   devScripts.push("'npm run tailwind'");
+
+  prodScripts.push("'npm run tailwind:prod'");
 
   const tailwindConfigFile = generateTailwindConfigFile({
     content: tailwindAndUnoContent,

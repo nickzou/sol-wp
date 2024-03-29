@@ -4,7 +4,7 @@ import generateSassConfigFile from "../generateSassConfigFile/generateSassConfig
 import generateStylelintFile from "../generateSassStylelintFile/generateSassStylelintFile";
 import { SetupCss } from "@utils/types/SetupCss";
 
-const setupSass = async ({registerAssets, answers, npmPackages, watchScripts, devScripts, packageScripts}:SetupCss) => {
+const setupSass = async ({registerAssets, answers, npmPackages, watchScripts, devScripts, prodScripts, packageScripts}:SetupCss) => {
   registerAssets.push({
     handle: 'styles',
     file: 'styles',
@@ -48,13 +48,25 @@ const setupSass = async ({registerAssets, answers, npmPackages, watchScripts, de
     {
       key: "style:watch",
       value:
-        'concurrently "npm run sass:watch" "npm run sass:prettier:watch" "npm run stylelint:watch"',
+        "concurrently 'npm run sass:watch' 'npm run sass:prettier:watch' 'npm run stylelint:watch'",
     },
+    {
+      key: "style:dev",
+      value:
+        "concurrently 'npm run sass' 'npm run sass:prettier' 'npm run stylelint'"
+    },
+    {
+      key: "style:prod",
+      value:
+        "concurrently 'npm run sass:prod' 'npm run sass:prettier' 'npm run stylelint'"
+    }
   ]);
 
   watchScripts.push("'npm run style:watch'");
 
-  devScripts.push("'npm run sass'");
+  devScripts.push("'npm run style:dev'");
+
+  prodScripts.push("'npm run style:prod'");
 
   const sassConfigFile = generateSassConfigFile({
     themeFolder: answers.theme.directory,

@@ -1,7 +1,7 @@
 import { SetupCss } from "@utils/types/SetupCss";
 import formatMessage from "@utils/formatMessage/formatMessage";
 
-const setupNone = async({registerAssets, answers}:SetupCss) => {
+const setupNone = async({registerAssets}:SetupCss) => {
   registerAssets.push({
     handle: 'styles',
     file: 'styles',

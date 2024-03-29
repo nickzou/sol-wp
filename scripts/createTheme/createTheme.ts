@@ -30,6 +30,7 @@ import assetRegisterAndEnqueuer from "./assetRegisterAndEnqueuer/assetRegisterAn
 import setupJs from "./setupJs/setupJs/setupJs";
 import watchScripts from "@utils/vars/watchScripts";
 import devScripts from "@utils/vars/devScripts";
+import prodScripts from "@utils/vars/prodScripts";
 
 intro(bold(`Generate Theme`));
 
@@ -58,7 +59,7 @@ editWpEnv({ wpEnvFile: `.wp-env.json`, directory: answers.theme.directory });
 
 const functionFile = generateFunctionsFile();
 
-await setupCssOption({registerAssets, answers, npmPackages, packageScripts, watchScripts, devScripts, prettierConfigOptions});
+await setupCssOption({registerAssets, answers, npmPackages, packageScripts, watchScripts, devScripts, prodScripts, prettierConfigOptions});
 
 await setupJs({registerAssets, answers, npmPackages, packageScripts, watchScripts, devScripts, esLintConfigOptions});
 
