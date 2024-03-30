@@ -4,7 +4,7 @@ import generatePlaywrightConfig from "../generatePlaywrightConfig/generatePlaywr
 import createFile from "@utils/createFile/createFile";
 import createDirectory from "@utils/createDirectory/createDirectory";
 
-const setupPlaywright = async({packages, packageScripts}:SetupTestingOption) => {
+const setupPlaywright = async({packages, packageScripts, prodScripts}:SetupTestingOption) => {
   const option = testingOptions.filter( o => o.name === "playwright")[0];
   packages.push(...option.packageName);
 
@@ -25,6 +25,8 @@ const setupPlaywright = async({packages, packageScripts}:SetupTestingOption) => 
     key: "test:playwright",
     value: "playwright test"
   }]);
+
+  prodScripts.push("'npm run test:playwright'");
 };
 
 export default setupPlaywright;

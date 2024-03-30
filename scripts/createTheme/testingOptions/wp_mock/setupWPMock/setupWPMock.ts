@@ -5,7 +5,7 @@ import { SetupTestingOption } from "@utils/types/SetupTestingOption";
 import testingOptions from "@utils/vars/testingOptions";
 import generateWPMockBootstrap from "../generateWPMockBootstrap/generateWPMockBootstrap";
 
-const setupWPMock = async({answers, packages, packageScripts, watchScripts, devScripts}:SetupTestingOption) => {
+const setupWPMock = async({answers, packages, packageScripts, watchScripts, devScripts, prodScripts}:SetupTestingOption) => {
   const option = testingOptions.filter(o => o.name === "wp_mock")[0];
   packages.push(...option.packageName);
 
@@ -44,6 +44,8 @@ const setupWPMock = async({answers, packages, packageScripts, watchScripts, devS
   watchScripts.push("'npm run test:wpmock:watch'");
 
   devScripts.push("'npm run test:wpmock'");
+
+  prodScripts.push("'npm run test:wpmock'");
 };
 
 export default setupWPMock;

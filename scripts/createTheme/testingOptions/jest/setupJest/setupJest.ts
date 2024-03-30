@@ -3,7 +3,7 @@ import testingOptions from "@utils/vars/testingOptions";
 import generateJsConfig from "../generateJsConfig/generateJsConfig";
 import createFile from "@utils/createFile/createFile";
 
-const setupJest = async ({packages, packageScripts, watchScripts, devScripts}:SetupTestingOption) => {
+const setupJest = async ({packages, packageScripts, watchScripts, devScripts, prodScripts}:SetupTestingOption) => {
   const option = testingOptions.filter(o => o.name === "jest")[0];
   packages.push(...option.packageName);
 
@@ -29,6 +29,8 @@ const setupJest = async ({packages, packageScripts, watchScripts, devScripts}:Se
   watchScripts.push("'npm run test:jest:watch'");
 
   devScripts.push("'npm run test:jest'");
+
+  prodScripts.push("'npm run test:jest'");
 };
 
 export default setupJest;
