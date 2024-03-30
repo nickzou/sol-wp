@@ -17,10 +17,11 @@ interface setupJs {
     packageScripts: PackageScript[];
     watchScripts: string[];
     devScripts: string[];
+    prodScripts: string[];
     esLintConfigOptions: esLintConfigOptions;
 }
 
-const setupJs = async ({registerAssets, answers, npmPackages, packageScripts, watchScripts, devScripts, esLintConfigOptions}:setupJs) => {
+const setupJs = async ({registerAssets, answers, npmPackages, packageScripts, watchScripts, devScripts, prodScripts, esLintConfigOptions}:setupJs) => {
   registerAssets.push({
     handle: 'index',
     file: 'index',
@@ -83,6 +84,10 @@ const setupJs = async ({registerAssets, answers, npmPackages, packageScripts, wa
   devScripts.push("'npm run eslint'");
 
   devScripts.push("'npm run esbuild'");
+
+  prodScripts.push("'npm run eslint'");
+
+  prodScripts.push("'npm run esbuild:prod'");
   
   if (answers.tooling.ts) {
     createDirectory({
