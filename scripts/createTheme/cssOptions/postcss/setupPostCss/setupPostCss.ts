@@ -31,7 +31,7 @@ const setupPostCss = async ({registerAssets, answers, npmPackages, packageScript
     },
   ]);
 
-  watchScripts.push("npm run css:watch");
+  watchScripts.push("'npm run css:watch'");
 
   devScripts.push("npm run css");
 

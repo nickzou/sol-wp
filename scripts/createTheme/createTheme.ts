@@ -113,7 +113,7 @@ createFile({
   fileContent: esLintConfigFile.content,
 });
 
-watchScripts.push("npm run eslint:watch");
+watchScripts.push("'npm run eslint:watch'");
 
 await setupBrowserSync({npmPackages, packageScripts, watchScripts});
 

@@ -34,7 +34,7 @@ const setupTailwind = async ({registerAssets, answers, npmPackages, packageScrip
     },
   ]);
 
-  watchScripts.push("npm run tailwind:watch");
+  watchScripts.push("'npm run tailwind:watch'");
 
   devScripts.push("npm run tailwind");
 
