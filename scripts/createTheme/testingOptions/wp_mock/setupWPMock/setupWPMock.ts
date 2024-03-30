@@ -41,11 +41,11 @@ const setupWPMock = async({answers, packages, packageScripts, watchScripts, devS
     }
   );
 
-  watchScripts.push("'npm run test:wpmock:watch'");
+  watchScripts.push("npm run test:wpmock:watch");
 
-  devScripts.push("'npm run test:wpmock'");
+  devScripts.push("npm run test:wpmock");
 
-  prodScripts.push("'npm run test:wpmock'");
+  prodScripts.push("npm run test:wpmock");
 };
 
 export default setupWPMock;

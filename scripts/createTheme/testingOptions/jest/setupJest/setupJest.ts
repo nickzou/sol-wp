@@ -26,11 +26,11 @@ const setupJest = async ({packages, packageScripts, watchScripts, devScripts, pr
     }
   );
 
-  watchScripts.push("'npm run test:jest:watch'");
+  watchScripts.push("npm run test:jest:watch");
 
-  devScripts.push("'npm run test:jest'");
+  devScripts.push("npm run test:jest");
 
-  prodScripts.push("'npm run test:jest'");
+  prodScripts.push("npm run test:jest");
 };
 
 export default setupJest;

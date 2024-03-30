@@ -19,11 +19,11 @@ const setupUno = async ({registerAssets, answers, npmPackages, watchScripts, dev
     { key: "uno:watch", value: "unocss --watch" },
   ]);
 
-  watchScripts.push("'npm run uno:watch'");
+  watchScripts.push("npm run uno:watch");
 
-  devScripts.push("'npm run uno'");
+  devScripts.push("npm run uno");
 
-  prodScripts.push("'npm run uno:prod'");
+  prodScripts.push("npm run uno:prod");
 
   const unoConfigFile = generateUnoConfigFile({
     content: tailwindAndUnoContent,

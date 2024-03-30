@@ -29,7 +29,7 @@ const setupCypress = async({packages, packageScripts, prodScripts}:SetupTestingO
     value: "cypress run"
   }]);
 
-  prodScripts.push("'npm run test:cypress'");
+  prodScripts.push("npm run test:cypress");
 };
 
 export default setupCypress;

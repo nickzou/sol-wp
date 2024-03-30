@@ -32,11 +32,11 @@ const setupPhpUnit = async ({answers, packages, packageScripts, watchScripts, de
     }
   );
 
-  watchScripts.push("'npm run test:phpunit:watch'");
+  watchScripts.push("npm run test:phpunit:watch");
 
-  devScripts.push("'npm run test:phpunit'");
+  devScripts.push("npm run test:phpunit");
 
-  prodScripts.push("'npm run test:phpunit'");
+  prodScripts.push("npm run test:phpunit");
 };
 
 export default setupPhpUnit;

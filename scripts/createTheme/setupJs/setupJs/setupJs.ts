@@ -79,15 +79,15 @@ const setupJs = async ({registerAssets, answers, npmPackages, packageScripts, wa
     },
   );
 
-  watchScripts.push("'npm run esbuild:watch'");
+  watchScripts.push("npm run esbuild:watch");
 
-  devScripts.push("'npm run eslint'");
+  devScripts.push("npm run eslint");
 
-  devScripts.push("'npm run esbuild'");
+  devScripts.push("npm run esbuild");
 
-  prodScripts.push("'npm run eslint'");
+  prodScripts.push("npm run eslint");
 
-  prodScripts.push("'npm run esbuild:prod'");
+  prodScripts.push("npm run esbuild:prod");
   
   if (answers.tooling.ts) {
     createDirectory({

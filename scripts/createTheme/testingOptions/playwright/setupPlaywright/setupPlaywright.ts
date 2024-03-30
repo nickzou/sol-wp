@@ -26,7 +26,7 @@ const setupPlaywright = async({packages, packageScripts, prodScripts}:SetupTesti
     value: "playwright test"
   }]);
 
-  prodScripts.push("'npm run test:playwright'");
+  prodScripts.push("npm run test:playwright");
 };
 
 export default setupPlaywright;

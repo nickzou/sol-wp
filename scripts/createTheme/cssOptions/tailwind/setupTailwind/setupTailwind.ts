@@ -34,11 +34,11 @@ const setupTailwind = async ({registerAssets, answers, npmPackages, packageScrip
     },
   ]);
 
-  watchScripts.push("'npm run tailwind:watch'");
+  watchScripts.push("npm run tailwind:watch");
 
-  devScripts.push("'npm run tailwind'");
+  devScripts.push("npm run tailwind");
 
-  prodScripts.push("'npm run tailwind:prod'");
+  prodScripts.push("npm run tailwind:prod");
 
   const tailwindConfigFile = generateTailwindConfigFile({
     content: tailwindAndUnoContent,

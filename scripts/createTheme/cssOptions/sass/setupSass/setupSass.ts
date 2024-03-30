@@ -62,11 +62,11 @@ const setupSass = async ({registerAssets, answers, npmPackages, watchScripts, de
     }
   ]);
 
-  watchScripts.push("'npm run style:watch'");
+  watchScripts.push("npm run style:watch");
 
-  devScripts.push("'npm run style:dev'");
+  devScripts.push("npm run style:dev");
 
-  prodScripts.push("'npm run style:prod'");
+  prodScripts.push("npm run style:prod");
 
   const sassConfigFile = generateSassConfigFile({
     themeFolder: answers.theme.directory,

@@ -41,11 +41,11 @@ const setupPhpStan = async ({answers, packages, packageScripts, watchScripts, de
     }
   );
 
-  watchScripts.push("'npm run test:phpstan:watch'");
+  watchScripts.push("npm run test:phpstan:watch");
 
-  devScripts.push("'npm run test:phpstan'");
+  devScripts.push("npm run test:phpstan");
 
-  prodScripts.push("'npm run test:phpstan'");
+  prodScripts.push("npm run test:phpstan");
 };
 
 export default setupPhpStan;
