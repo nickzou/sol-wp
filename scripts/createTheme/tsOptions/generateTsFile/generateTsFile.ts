@@ -5,7 +5,7 @@ interface generateTsFile {
 }
 
 const generateTsFile = ({ themeName }: generateTsFile): File => {
-  const content = `console.log('hello ${themeName}');`;
+  const content = `console.log("hello ${themeName}");`;
 
   return {
     name: "index.ts",

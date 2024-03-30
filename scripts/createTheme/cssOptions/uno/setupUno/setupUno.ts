@@ -2,6 +2,7 @@ import generateUnoConfigFile from "../generateUnoConfigFile/generateUnoConfigFil
 import generateTailwindAndUnoContent from "@utils/generateTailwindAndUnoContent/generateTailwindAndUnoContent";
 import createFile from "@utils/createFile/createFile";
 import { SetupCss } from "@utils/types/SetupCss";
+import prodScripts from "@utils/vars/prodScripts";
 
 const setupUno = async ({registerAssets, answers, npmPackages, watchScripts, devScripts, packageScripts}:SetupCss) => {
   registerAssets.push({
@@ -18,9 +19,11 @@ const setupUno = async ({registerAssets, answers, npmPackages, watchScripts, dev
     { key: "uno:watch", value: "unocss --watch" },
   ]);
 
-  watchScripts.push("'npm run uno:watch'");
+  watchScripts.push("npm run uno:watch");
 
-  devScripts.push("'npm run uno'");
+  devScripts.push("npm run uno");
+
+  prodScripts.push("npm run uno:prod");
 
   const unoConfigFile = generateUnoConfigFile({
     content: tailwindAndUnoContent,

@@ -4,7 +4,7 @@ import generateCypressConfig from "../generateCypressConfig/generateCypressConfi
 import createFile from "@utils/createFile/createFile";
 import createDirectory from "@utils/createDirectory/createDirectory";
 
-const setupCypress = async({packages, packageScripts}:SetupTestingOption) => {
+const setupCypress = async({packages, packageScripts, prodScripts}:SetupTestingOption) => {
   const option = testingOptions.filter(o => o.name === "cypress")[0];
   packages.push(...option.packageName);
 
@@ -28,6 +28,8 @@ const setupCypress = async({packages, packageScripts}:SetupTestingOption) => {
     key: "test:cypress",
     value: "cypress run"
   }]);
+
+  prodScripts.push("npm run test:cypress");
 };
 
 export default setupCypress;

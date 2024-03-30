@@ -5,7 +5,7 @@ interface generateJsFile {
 }
 
 const generateJsFile = ({ themeName }: generateJsFile): File => {
-  const content = `console.log('hello ${themeName}');`;
+  const content = `console.log("hello ${themeName}");`;
 
   return {
     name: "index.js",

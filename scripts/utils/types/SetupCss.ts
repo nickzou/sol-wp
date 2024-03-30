@@ -10,5 +10,6 @@ export type SetupCss = {
     packageScripts?: PackageScript[];
     watchScripts: string[];
     devScripts: string[];
+    prodScripts: string[];
     prettierConfigOptions?:PrettierConfigOptions;
 };

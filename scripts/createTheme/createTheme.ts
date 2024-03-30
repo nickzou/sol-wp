@@ -30,6 +30,7 @@ import assetRegisterAndEnqueuer from "./assetRegisterAndEnqueuer/assetRegisterAn
 import setupJs from "./setupJs/setupJs/setupJs";
 import watchScripts from "@utils/vars/watchScripts";
 import devScripts from "@utils/vars/devScripts";
+import prodScripts from "@utils/vars/prodScripts";
 
 intro(bold(`Generate Theme`));
 
@@ -58,9 +59,9 @@ editWpEnv({ wpEnvFile: `.wp-env.json`, directory: answers.theme.directory });
 
 const functionFile = generateFunctionsFile();
 
-await setupCssOption({registerAssets, answers, npmPackages, packageScripts, watchScripts, devScripts, prettierConfigOptions});
+await setupCssOption({registerAssets, answers, npmPackages, packageScripts, watchScripts, devScripts, prodScripts, prettierConfigOptions});
 
-await setupJs({registerAssets, answers, npmPackages, packageScripts, watchScripts, devScripts, esLintConfigOptions});
+await setupJs({registerAssets, answers, npmPackages, packageScripts, watchScripts, devScripts, prodScripts, esLintConfigOptions});
 
 await assetRegisterAndEnqueuer({functionFile, theme: answers.theme, registerAssets});
 
@@ -92,7 +93,7 @@ appendToFunctionsFile({
 
 await setupTemplateOption({answers, composerPackages});
 
-await setupTestingOptions({answers, composerPackages, npmPackages, packageScripts, watchScripts, devScripts});
+await setupTestingOptions({answers, composerPackages, npmPackages, packageScripts, watchScripts, devScripts, prodScripts  });
 
 const prettierRcFile = generatePrettierRcFile({
   plugins: prettierConfigOptions.plugins,
@@ -112,7 +113,7 @@ createFile({
   fileContent: esLintConfigFile.content,
 });
 
-watchScripts.push("'npm run eslint:watch'");
+watchScripts.push("npm run eslint:watch");
 
 await setupBrowserSync({npmPackages, packageScripts, watchScripts});
 
@@ -126,6 +127,9 @@ addScriptsToPackageJson([...packageScripts,
 addScriptsToPackageJson([...packageScripts, {
   key: "dev",
   value: devScripts.join(" & ")
+}, {
+  key: "prod",
+  value: prodScripts.join( " & ")
 }]);
 
 const composerFile = generateComposerFile({

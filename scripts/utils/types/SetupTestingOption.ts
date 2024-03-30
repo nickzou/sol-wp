@@ -7,4 +7,5 @@ export type SetupTestingOption = {
   packageScripts?: PackageScript[];
   watchScripts?: string[];
   devScripts?: string[];
+  prodScripts?: string[];
 }
