@@ -79,7 +79,7 @@ const setupJs = async ({registerAssets, answers, npmPackages, packageScripts, wa
     },
   );
 
-  watchScripts.push("npm run esbuild:watch");
+  watchScripts.push("'npm run esbuild:watch'");
 
   devScripts.push("npm run eslint");
 

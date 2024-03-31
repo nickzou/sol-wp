@@ -62,7 +62,7 @@ const setupSass = async ({registerAssets, answers, npmPackages, watchScripts, de
     }
   ]);
 
-  watchScripts.push("npm run style:watch");
+  watchScripts.push("'npm run style:watch'");
 
   devScripts.push("npm run style:dev");
 
