@@ -16,9 +16,9 @@
   "author": "Nick Zou",
   "license": "ISC",
   "devDependencies": {
-    "@babel/core": "^7.22.15",
-    "@babel/preset-env": "^7.22.15",
-    "@babel/preset-typescript": "^7.22.15",
+    "@babel/core": "^7.24.3",
+    "@babel/preset-env": "^7.24.3",
+    "@babel/preset-typescript": "^7.24.1",
     "@clack/prompts": "^0.7.0",
     "@types/jest": "^29.5.4",
     "@wordpress/env": "^9.4.0",
